@@ -1,0 +1,85 @@
+/* Colour Classes */
+.has-green-100-color,
+.text--green-100 {
+  color: var(--col-green-100);
+}
+.has-green-100-background-color,
+.bg--green-100 {
+  background-color: var(--col-green-100);
+}
+
+.has-green-200-color,
+.text--green-200 {
+  color: var(--col-green-200);
+}
+.has-green-200-background-color,
+.bg--green-200 {
+  background-color: var(--col-green-200);
+}
+
+.has-green-300-color,
+.text--green-300 {
+  color: var(--col-green-300);
+}
+.has-green-300-background-color,
+.bg--green-300 {
+  background-color: var(--col-green-300);
+}
+
+.has-green-400-color,
+.text--green-400 {
+  color: var(--col-green-400);
+}
+.has-green-400-background-color,
+.bg--green-400 {
+  background-color: var(--col-green-400);
+}
+
+.has-green-500-color,
+.text--green-500 {
+  color: var(--col-green-500);
+}
+.has-green-500-background-color,
+.bg--green-500 {
+  background-color: var(--col-green-500);
+}
+
+.has-green-900-color,
+.text--green-900 {
+  color: var(--col-green-900);
+}
+.has-green-900-background-color,
+.bg--green-900 {
+  background-color: var(--col-green-900);
+}
+
+.has-accent-400-color,
+.text--accent-400 {
+  color: var(--col-accent-400);
+}
+.has-accent-400-background-color,
+.bg--accent-400 {
+  background-color: var(--col-accent-400);
+}
+
+/* ILLUSTRATIONS */
+.illustration-bg-1,
+.illustration-bg-2,
+.illustration-bg-3 {
+  background-repeat: no-repeat;
+}
+.illustration-left {
+  background-position: left center;
+}
+.illustration-right {
+  background-position: right center;
+}
+.illustration-bg-1 {
+  background-image: url(../img/bg-1.svg);
+}
+.illustration-bg-2 {
+  background-image: url(../img/bg-2.svg);
+}
+.illustration-bg-3 {
+  background-image: url(../img/bg-3.svg);
+}

@@ -1,0 +1,118 @@
+/* bubblegum-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Bubblegum Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/bubblegum-sans-v20-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* nunito-sans-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/nunito-sans-v15-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* nunito-sans-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Nunito Sans";
+  font-style: normal;
+  font-weight: 700;
+  src: url("../fonts/nunito-sans-v15-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+:root {
+  font-variant-ligatures: none;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--ff-body);
+  font-weight: var(--fw-400);
+  font-size: var(--fs-400);
+  // line-height: 1.556;
+  line-height: 1.4;
+  font-style: normal;
+  color: var(--col-darkest);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
+  font-family: var(--ff-heading);
+  font-weight: var(--fw-400);
+  line-height: 1.1;
+  text-wrap: balance;
+  margin-bottom: 0.5em;
+}
+
+h1,
+.h1 {
+  font-size: var(--fs-900);
+  color: var(--col-green-500);
+}
+h2,
+.h2 {
+  font-size: var(--fs-800);
+  color: var(--col-green-500);
+}
+h3,
+.h3 {
+  font-size: var(--fs-700);
+  color: var(--col-green-500);
+}
+small,
+.has-small-font-size,
+.fs-200 {
+  font-size: var(--fs-200);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.has-medium-font-size {
+  font-size: var(--fs-500);
+}
+.fs-600 {
+  font-size: var(--fs-600);
+}
+
+.has-large-font-size,
+.fs-700 {
+  font-size: var(--fs-700);
+}
+
+.fw-400 {
+  font-weight: var(--fw-400);
+}
+strong,
+.fw-bold,
+.fw-700 {
+  font-weight: var(--fw-700);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.ff-heading {
+  font-family: var(--ff-heading);
+}
+
+.w-constrained {
+  max-width: 65ch;
+}
+
+// p:not([class]) {
+//     max-width: 70ch;
+// }

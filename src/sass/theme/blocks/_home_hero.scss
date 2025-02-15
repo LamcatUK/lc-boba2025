@@ -1,0 +1,22 @@
+.home_hero {
+  min-height: 450px;
+  display: flex;
+  align-items: center;
+  background-color: var(--col-green-300);
+
+  &__logo {
+    width: min(300px, 80vw);
+  }
+
+  #home-hero-carousel .splide__track {
+    overflow: hidden;
+  }
+  .splide__slide {
+    width: 100%; /* Ensure images fill slides */
+    height: 450px;
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+}

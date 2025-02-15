@@ -1,0 +1,18 @@
+.page_hero {
+  min-height: 400px;
+  display: flex;
+  align-items: start;
+  background-color: var(--col-green-200);
+
+  #page-hero-carousel .splide__track {
+    overflow: hidden;
+  }
+  .splide__slide {
+    width: 100%; /* Ensure images fill slides */
+    height: 450px;
+    img {
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+}

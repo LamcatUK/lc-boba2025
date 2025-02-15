@@ -1,0 +1,185 @@
+.az-filter {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  @media (min-width: 576px) {
+    grid-template-columns: repeat(13, 1fr);
+  }
+  gap: 0.5rem;
+  width: max-content;
+
+  .show-all {
+    grid-column: span 7;
+    font-weight: bold;
+    outline: 1px solid red;
+
+    margin-top: 0.5rem;
+
+    @media (min-width: 576px) {
+      margin-top: 0;
+      grid-column: span 13;
+    }
+  }
+}
+
+.az-filter a {
+  font-weight: var(--fw-700);
+  background-color: var(--col-green-500);
+  display: grid;
+  place-content: center;
+  border-radius: 0 17px 0 17px;
+  color: white;
+  height: 35px;
+  text-decoration: none;
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--transition), transform var(--transition);
+  &:hover {
+    box-shadow: var(--shadow-sm);
+    transform: translateY(2px);
+    color: white;
+  }
+}
+
+.az-filter a:not(.show-all) {
+  aspect-ratio: 1;
+  width: 35px;
+}
+
+.az-filter a.active {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(2px);
+  background-color: var(--col-accent-400);
+}
+
+.az-filter a.inactive {
+  opacity: 0.3;
+  font-weight: var(--fw-400);
+  pointer-events: none;
+}
+
+.plant-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.plant-item {
+  border-bottom: 1px solid var(--col-green-200);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.plant-link {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "image common"
+    "image scientific"
+    "aka aka";
+  column-gap: 1rem;
+  row-gap: 0.25rem;
+  align-items: center;
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Thumbnail */
+.plant-thumb {
+  grid-area: image;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* Name & Latin Name */
+.plant-name {
+  grid-area: common;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.plant-scientific {
+  grid-area: scientific;
+  font-style: italic;
+  color: #666;
+}
+
+/* Alternative Names */
+.plant-alternative {
+  grid-area: aka;
+  font-size: 0.875rem;
+  color: #888;
+}
+
+/* Tablet & Larger Screens: Keep "aka" beside image */
+@media (min-width: 576px) {
+  .plant-link {
+    grid-template-areas:
+      "image common"
+      "image scientific"
+      "image aka";
+  }
+}
+
+/* Improve UX: Add Hover Effect */
+.plant-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.plant-image {
+  position: relative;
+  margin-bottom: 1rem;
+  img {
+    margin-bottom: 0;
+  }
+}
+
+.plant-caption {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #000;
+  font-size: 0.75rem;
+  padding-inline: 10px;
+}
+
+.photo-attribution {
+  color: #aaa;
+  text-decoration: none;
+}
+
+.photo-attribution:hover {
+  color: #fff;
+}
+
+/* plant info table */
+
+.plant-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: max-content;
+  margin-bottom: 1rem;
+  font-size: var(--fs-500);
+}
+
+/* Each row now acts as a flex container */
+.plant-info__row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 1rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--col-green-300);
+}
+
+/* Remove border from last row */
+.plant-info__row:last-child {
+  border-bottom: none;
+}
+
+/* Ensure first column is bold */
+.plant-info__title {
+  font-weight: var(--fw-700);
+  white-space: nowrap;
+}

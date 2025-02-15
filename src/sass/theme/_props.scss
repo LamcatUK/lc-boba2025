@@ -1,0 +1,71 @@
+$col-primary: #5d7f9c;
+$col-dark: #666666;
+$col-darkest: #4a4a4a;
+$col-light: #f2f2f2;
+
+:root {
+  /* Colours */
+
+  --hsl-green-100: 60 18% 97%; // #f8f8f5
+  --col-green-100: hsl(var(--hsl-green-100));
+
+  --hsl-green-200: 60 15% 94%; // #f1f1ec
+  --col-green-200: hsl(var(--hsl-green-200));
+
+  --hsl-green-300: 60 17% 87%; //#e4e4d9;
+  --col-green-300: hsl(var(--hsl-green-300));
+
+  --hsl-green-400: 83 38% 56%; //#99b964;
+  --col-green-400: hsl(var(--hsl-green-400));
+
+  --hsl-green-500: 126 22% 29%; //#3a5a3d;
+  --col-green-500: hsl(var(--hsl-green-500));
+
+  --hsl-green-900: 150 43% 14%; //#143223;
+  --col-green-900: hsl(var(--hsl-green-900));
+
+  --hsl-accent-400: 336 38% 40%; //#8B3F5D;
+  --col-accent-400: hsl(var(--hsl-accent-400));
+
+  /* Font Sizes */
+  /* Scale for headings and body text */
+  --fs-900: clamp(2.5rem, calc(2rem + 2vw), 3rem); /* H1, H2 - 48pt */
+  --fs-800: clamp(2rem, calc(1.75rem + 1vw), 2.5rem); /* Between H1 & H3 */
+  --fs-700: clamp(1.5rem, calc(1.25rem + 1vw), 2rem); /* H3 - 24pt */
+  --fs-600: clamp(
+    1.25rem,
+    calc(1.125rem + 0.5vw),
+    1.75rem
+  ); /* Large paragraph */
+  --fs-500: clamp(1rem, calc(0.875rem + 0.5vw), 1.25rem); /* Mid-sized text */
+
+  /* Static text sizes */
+  --fs-400: 1rem; /* Body - 16pt */
+  --fs-300: 0.875rem; /* Small text - 16pt */
+  --fs-200: 0.75rem; /* Tiny text - 12pt */
+
+  /* Font Families */
+  --ff-body: "Nunito Sans", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  --ff-heading: "Bubblegum Sans", "Segoe UI", Tahoma, Geneva, Verdana,
+    sans-serif;
+
+  /* Font Weights */
+  --fw-400: 400;
+  --fw-700: 700;
+
+  /* Effects */
+  --transition: 250ms ease-out;
+
+  /* Shadow */
+
+  --shadow-lg: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px; // tailwind #38
+  --shadow-sm: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
+    rgba(0, 0, 0, 0.06) 0px 1px 2px 0px; // tailwind #36
+
+  /* Site General */
+  --h-top: 65px;
+  --h-top-md: 65px;
+  --h-top-lg: 54px;
+  --h-top-xl: 81px;
+}

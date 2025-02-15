@@ -1,0 +1,85 @@
+.product {
+  --_pad: 0.75rem;
+  --_br1: 2rem;
+
+  &__card {
+    text-decoration: none;
+
+    box-shadow: var(--shadow-lg);
+
+    transition: box-shadow var(--transition), transform var(--transition);
+
+    display: grid;
+    grid-template-areas: "stack";
+
+    color: var(--col-green-900);
+
+    &:hover {
+      box-shadow: var(--shadow-sm);
+      transform: translateY(2px);
+      color: var(--col-green-900);
+      .product__detail {
+        transform: translateY(0);
+      }
+      .product__price {
+        opacity: 1;
+      }
+    }
+
+    --_br2: calc(var(--_br1) - var(--_pad));
+    border-radius: 0 var(--_br1) 0 var(--_br1);
+    display: grid;
+    gap: 1rem;
+    overflow: hidden;
+  }
+
+  &__image {
+    grid-area: stack;
+    //   border-radius: 0 var(--_br2) 0 var(--_br2);
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 5 / 6;
+  }
+
+  &__detail {
+    grid-area: stack;
+    background-color: var(--col-green-100);
+    height: max-content;
+    align-self: end;
+    justify-items: start;
+    padding: var(--_pad) calc(var(--_pad) * 2);
+    h3 {
+      font-size: var(--fs-500);
+      margin-bottom: 0.5rem;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      transform: translateY(100%);
+      transition: transform var(--transition);
+    }
+  }
+
+  .reserve {
+    background-color: var(--col-accent-400);
+    color: white;
+    font-size: var(--fs-300);
+    font-weight: var(--fw-700);
+    justify-self: end;
+    padding-inline: 1.5rem;
+    padding-block: 0.5rem;
+    border-radius: 0 var(--_br2) 0 var(--_br2);
+  }
+
+  &__price {
+    grid-area: stack;
+    margin-top: var(--_pad);
+    margin-left: var(--_pad);
+    width: max-content;
+    height: max-content;
+    background-color: var(--col-green-100);
+    padding-inline: 0.5rem;
+    transition: opacity var(--transition);
+    @media (hover: hover) and (pointer: fine) {
+      opacity: 0;
+    }
+  }
+}

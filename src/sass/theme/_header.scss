@@ -1,0 +1,95 @@
+header {
+  background-color: white;
+  transition: var(--transition);
+
+  .navbar {
+    // border-bottom: 1px solid hsla(0 0% 80% / 1);
+    box-shadow: var(--shadow-lg);
+  }
+
+  a.nav-link {
+    color: var(--col-green-900);
+    font-size: var(--fs-400);
+    font-weight: var(--fw-700);
+    transition: var(--transition);
+    white-space: nowrap;
+    @media (min-width: 992px) {
+      &:hover {
+        color: var(--col-green-400);
+      }
+    }
+  }
+
+  .nav-button > a.nav-link {
+    @extend .button;
+    @extend .button-primary;
+    padding-inline: 2rem !important;
+    height: 36px;
+    border-radius: 0 18px 0 18px;
+    padding-block: 10px;
+    @media (max-width: 991px) {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .logo {
+    background-image: url(../img/boba-wide.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: inline-block;
+    aspect-ratio: 427 / 117;
+    max-width: 100%;
+
+    width: 180px;
+
+    @media (min-width: 992px) {
+      margin-right: 3rem;
+      width: 210px;
+    }
+    @media (min-width: 1200px) {
+      margin-right: 5rem;
+      width: 240px;
+    }
+  }
+
+  &.hide {
+    transform: translateY(-100%);
+  }
+
+  .dropdown-menu {
+    border-color: transparent;
+    border-radius: 0;
+    background-color: var(--col-green-400);
+    a {
+      color: var(--col-dark);
+    }
+    .dropdown-item {
+      padding: 0 1rem;
+      line-height: 24px;
+      padding-block: 5px;
+      transition: background-color var(--transition), color var(--transition);
+      &:hover {
+        color: white;
+        background-color: var(--col-green-400);
+        opacity: 1;
+      }
+    }
+  }
+
+  .current-menu-item,
+  .current_page_parent,
+  .dropdown.current-page-ancestor,
+  .dropdown.current-menu-item {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 4px;
+      display: block;
+      background-color: var(--col-green-400);
+      margin-top: 18px; // 1.5rem - border width
+    }
+  }
+}
