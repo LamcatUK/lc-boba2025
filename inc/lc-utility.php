@@ -84,6 +84,10 @@ foreach ($social_types as $type) {
 
 // Generate a single shortcode to output all social icons
 add_shortcode('social_icons', function () {
+    $atts = shortcode_atts([
+        'class' => '',
+    ], $atts, 'social_icons');
+
     $social = get_field('social', 'option');
     if (!$social) {
         return '';
@@ -106,7 +110,7 @@ add_shortcode('social_icons', function () {
         }
     }
 
-    return !empty($icons) ? '<div class="social-icons">' . implode(' ', $icons) . '</div>' : '';
+    return !empty($icons) ? '<div class="social-icons ' . $class . '">' . implode(' ', $icons) . '</div>' : '';
 });
 
 
@@ -169,16 +173,6 @@ if (is_admin()) {
     add_action('enqueue_block_editor_assets', 'lc_disable_editor_fullscreen_by_default');
 }
 
-
-
-// God I hate Gravity Forms
-// Change textarea rows to 4 instead of 10
-add_filter('gform_field_content', function ($field_content, $field) {
-    if ($field->type == 'textarea') {
-        return str_replace("rows='10'", "rows='4'", $field_content);
-    }
-    return $field_content;
-}, 10, 2);
 
 
 function get_the_top_ancestor_id()
