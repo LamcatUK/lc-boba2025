@@ -3,31 +3,13 @@
     "title": "New Product",
     "fields": [
         {
-            "key": "field_67b21b21ab83f",
-            "label": "Add New Product",
-            "name": "",
-            "aria-label": "",
-            "type": "message",
-            "instructions": "",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "",
-                "class": "",
-                "id": ""
-            },
-            "message": "",
-            "new_lines": "wpautop",
-            "esc_html": 0
-        },
-        {
             "key": "field_67b21b34ab840",
             "label": "Product Name",
             "name": "product_name",
             "aria-label": "",
             "type": "text",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -106,9 +88,9 @@
             },
             "default_value": "",
             "allow_in_bindings": 0,
-            "tabs": "all",
-            "toolbar": "full",
-            "media_upload": 1,
+            "tabs": "visual",
+            "toolbar": "basic",
+            "media_upload": 0,
             "delay": 0
         },
         {
@@ -116,9 +98,9 @@
             "label": "Price",
             "name": "price",
             "aria-label": "",
-            "type": "number",
+            "type": "text",
             "instructions": "",
-            "required": 0,
+            "required": 1,
             "conditional_logic": 0,
             "wrapper": {
                 "width": "",
@@ -126,11 +108,9 @@
                 "id": ""
             },
             "default_value": "",
-            "min": "",
-            "max": "",
-            "allow_in_bindings": 0,
-            "placeholder": "",
-            "step": "",
+            "maxlength": "",
+            "allow_in_bindings": 1,
+            "placeholder": "0.00",
             "prepend": "",
             "append": ""
         },
@@ -175,7 +155,7 @@
                 "id": ""
             },
             "taxonomy": "product_tag",
-            "add_term": 1,
+            "add_term": 0,
             "save_terms": 0,
             "load_terms": 0,
             "return_format": "id",
@@ -185,6 +165,27 @@
             "multiple": 0,
             "allow_null": 0,
             "bidirectional_target": []
+        },
+        {
+            "key": "field_67b23110899b8",
+            "label": "New Tags",
+            "name": "new_tags",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter new tags, separated by commas.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -205,5 +206,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1739726148
+    "modified": 1739731264
 }

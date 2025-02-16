@@ -215,8 +215,10 @@ p {
 }
 
 abbr[title] {
+  -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
   cursor: help;
+  -webkit-text-decoration-skip-ink: none;
   text-decoration-skip-ink: none;
 }
 
@@ -2008,7 +2010,7 @@ progress {
     -webkit-overflow-scrolling: touch;
   }
 }
-.form-label {
+.form-label, .acf-field .acf-label label {
   margin-bottom: 0.5rem;
 }
 
@@ -2038,7 +2040,12 @@ progress {
   color: #6c757d;
 }
 
-.form-control, #cmApp_signupEmail, .ginput_container input:not([type=checkbox]), .ginput_container textarea {
+.form-control, .acf-field .acf-input input[type=text],
+.acf-field .acf-input input[type=email],
+.acf-field .acf-input input[type=number],
+.acf-field .acf-input input[type=url],
+.acf-field .acf-input input[type=password],
+.acf-field .acf-input textarea {
   display: block;
   width: 100%;
   padding: 0.375rem 0.75rem;
@@ -2049,42 +2056,89 @@ progress {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid #ced4da;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
   border-radius: 0.375rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .form-control, #cmApp_signupEmail, .ginput_container input:not([type=checkbox]), .ginput_container textarea {
+  .form-control, .acf-field .acf-input input[type=text],
+  .acf-field .acf-input input[type=email],
+  .acf-field .acf-input input[type=number],
+  .acf-field .acf-input input[type=url],
+  .acf-field .acf-input input[type=password],
+  .acf-field .acf-input textarea {
     transition: none;
   }
 }
-.form-control[type=file], [type=file]#cmApp_signupEmail, .ginput_container input[type=file]:not([type=checkbox]), .ginput_container textarea[type=file] {
+.form-control[type=file], .acf-field .acf-input input[type=file][type=text],
+.acf-field .acf-input input[type=file][type=email],
+.acf-field .acf-input input[type=file][type=number],
+.acf-field .acf-input input[type=file][type=url],
+.acf-field .acf-input input[type=file][type=password],
+.acf-field .acf-input textarea[type=file] {
   overflow: hidden;
 }
-.form-control[type=file]:not(:disabled):not([readonly]), [type=file]#cmApp_signupEmail:not(:disabled):not([readonly]), .ginput_container input[type=file]:not(:disabled):not([readonly]):not([type=checkbox]), .ginput_container textarea[type=file]:not(:disabled):not([readonly]) {
+.form-control[type=file]:not(:disabled):not([readonly]), .acf-field .acf-input input[type=file][type=text]:not(:disabled):not([readonly]),
+.acf-field .acf-input input[type=file][type=email]:not(:disabled):not([readonly]),
+.acf-field .acf-input input[type=file][type=number]:not(:disabled):not([readonly]),
+.acf-field .acf-input input[type=file][type=url]:not(:disabled):not([readonly]),
+.acf-field .acf-input input[type=file][type=password]:not(:disabled):not([readonly]),
+.acf-field .acf-input textarea[type=file]:not(:disabled):not([readonly]) {
   cursor: pointer;
 }
-.form-control:focus, #cmApp_signupEmail:focus, .ginput_container input:focus:not([type=checkbox]), .ginput_container textarea:focus {
+.form-control:focus, .acf-field .acf-input input[type=text]:focus,
+.acf-field .acf-input input[type=email]:focus,
+.acf-field .acf-input input[type=number]:focus,
+.acf-field .acf-input input[type=url]:focus,
+.acf-field .acf-input input[type=password]:focus,
+.acf-field .acf-input textarea:focus {
   color: #212529;
   background-color: #fff;
   border-color: #aebfce;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(93, 127, 156, 0.25);
 }
-.form-control::-webkit-date-and-time-value, #cmApp_signupEmail::-webkit-date-and-time-value, .ginput_container input:not([type=checkbox])::-webkit-date-and-time-value, .ginput_container textarea::-webkit-date-and-time-value {
+.form-control::-webkit-date-and-time-value, .acf-field .acf-input input[type=text]::-webkit-date-and-time-value,
+.acf-field .acf-input input[type=email]::-webkit-date-and-time-value,
+.acf-field .acf-input input[type=number]::-webkit-date-and-time-value,
+.acf-field .acf-input input[type=url]::-webkit-date-and-time-value,
+.acf-field .acf-input input[type=password]::-webkit-date-and-time-value,
+.acf-field .acf-input textarea::-webkit-date-and-time-value {
   height: 1.5em;
 }
-.form-control::placeholder, #cmApp_signupEmail::placeholder, .ginput_container input:not([type=checkbox])::placeholder, .ginput_container textarea::placeholder {
+.form-control::-moz-placeholder, .acf-field .acf-input input[type=text]::-moz-placeholder, .acf-field .acf-input input[type=email]::-moz-placeholder, .acf-field .acf-input input[type=number]::-moz-placeholder, .acf-field .acf-input input[type=url]::-moz-placeholder, .acf-field .acf-input input[type=password]::-moz-placeholder, .acf-field .acf-input textarea::-moz-placeholder {
   color: #6c757d;
   opacity: 1;
 }
-.form-control:disabled, #cmApp_signupEmail:disabled, .ginput_container input:disabled:not([type=checkbox]), .ginput_container textarea:disabled {
+.form-control::placeholder, .acf-field .acf-input input[type=text]::placeholder,
+.acf-field .acf-input input[type=email]::placeholder,
+.acf-field .acf-input input[type=number]::placeholder,
+.acf-field .acf-input input[type=url]::placeholder,
+.acf-field .acf-input input[type=password]::placeholder,
+.acf-field .acf-input textarea::placeholder {
+  color: #6c757d;
+  opacity: 1;
+}
+.form-control:disabled, .acf-field .acf-input input[type=text]:disabled,
+.acf-field .acf-input input[type=email]:disabled,
+.acf-field .acf-input input[type=number]:disabled,
+.acf-field .acf-input input[type=url]:disabled,
+.acf-field .acf-input input[type=password]:disabled,
+.acf-field .acf-input textarea:disabled {
   background-color: #e9ecef;
   opacity: 1;
 }
-.form-control::file-selector-button, #cmApp_signupEmail::file-selector-button, .ginput_container input:not([type=checkbox])::file-selector-button, .ginput_container textarea::file-selector-button {
+.form-control::file-selector-button, .acf-field .acf-input input[type=text]::file-selector-button,
+.acf-field .acf-input input[type=email]::file-selector-button,
+.acf-field .acf-input input[type=number]::file-selector-button,
+.acf-field .acf-input input[type=url]::file-selector-button,
+.acf-field .acf-input input[type=password]::file-selector-button,
+.acf-field .acf-input textarea::file-selector-button {
   padding: 0.375rem 0.75rem;
   margin: -0.375rem -0.75rem;
+  -webkit-margin-end: 0.75rem;
   margin-inline-end: 0.75rem;
   color: #212529;
   background-color: #e9ecef;
@@ -2097,11 +2151,21 @@ progress {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .form-control::file-selector-button, #cmApp_signupEmail::file-selector-button, .ginput_container input:not([type=checkbox])::file-selector-button, .ginput_container textarea::file-selector-button {
+  .form-control::file-selector-button, .acf-field .acf-input input[type=text]::file-selector-button,
+  .acf-field .acf-input input[type=email]::file-selector-button,
+  .acf-field .acf-input input[type=number]::file-selector-button,
+  .acf-field .acf-input input[type=url]::file-selector-button,
+  .acf-field .acf-input input[type=password]::file-selector-button,
+  .acf-field .acf-input textarea::file-selector-button {
     transition: none;
   }
 }
-.form-control:hover:not(:disabled):not([readonly])::file-selector-button, #cmApp_signupEmail:hover:not(:disabled):not([readonly])::file-selector-button, .ginput_container input:hover:not(:disabled):not([readonly]):not([type=checkbox])::file-selector-button, .ginput_container textarea:hover:not(:disabled):not([readonly])::file-selector-button {
+.form-control:hover:not(:disabled):not([readonly])::file-selector-button, .acf-field .acf-input input[type=text]:hover:not(:disabled):not([readonly])::file-selector-button,
+.acf-field .acf-input input[type=email]:hover:not(:disabled):not([readonly])::file-selector-button,
+.acf-field .acf-input input[type=number]:hover:not(:disabled):not([readonly])::file-selector-button,
+.acf-field .acf-input input[type=url]:hover:not(:disabled):not([readonly])::file-selector-button,
+.acf-field .acf-input input[type=password]:hover:not(:disabled):not([readonly])::file-selector-button,
+.acf-field .acf-input textarea:hover:not(:disabled):not([readonly])::file-selector-button {
   background-color: #dde0e3;
 }
 
@@ -2133,6 +2197,7 @@ progress {
 .form-control-sm::file-selector-button {
   padding: 0.25rem 0.5rem;
   margin: -0.25rem -0.5rem;
+  -webkit-margin-end: 0.5rem;
   margin-inline-end: 0.5rem;
 }
 
@@ -2145,10 +2210,12 @@ progress {
 .form-control-lg::file-selector-button {
   padding: 0.5rem 1rem;
   margin: -0.5rem -1rem;
+  -webkit-margin-end: 1rem;
   margin-inline-end: 1rem;
 }
 
-textarea.form-control, textarea#cmApp_signupEmail, .ginput_container textarea {
+textarea.form-control,
+.acf-field .acf-input textarea {
   min-height: calc(1.5em + 0.75rem + 2px);
 }
 textarea.form-control-sm {
@@ -2180,7 +2247,7 @@ textarea.form-control-lg {
   height: calc(1.5em + 1rem + 2px);
 }
 
-.form-select {
+.form-select, .acf-input select {
   display: block;
   width: 100%;
   padding: 0.375rem 2.25rem 0.375rem 0.75rem;
@@ -2197,26 +2264,28 @@ textarea.form-control-lg {
   border: 1px solid #ced4da;
   border-radius: 0.375rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .form-select {
+  .form-select, .acf-input select {
     transition: none;
   }
 }
-.form-select:focus {
+.form-select:focus, .acf-input select:focus {
   border-color: #aebfce;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(93, 127, 156, 0.25);
 }
-.form-select[multiple], .form-select[size]:not([size="1"]) {
+.form-select[multiple], .acf-input select[multiple], .form-select[size]:not([size="1"]), .acf-input select[size]:not([size="1"]) {
   padding-right: 0.75rem;
   background-image: none;
 }
-.form-select:disabled {
+.form-select:disabled, .acf-input select:disabled {
   background-color: #e9ecef;
 }
-.form-select:-moz-focusring {
+.form-select:-moz-focusring, .acf-input select:-moz-focusring {
   color: transparent;
   text-shadow: 0 0 0 #212529;
 }
@@ -2237,13 +2306,16 @@ textarea.form-control-lg {
   border-radius: 0.5rem;
 }
 
-.form-check, .ginput_container input[type=checkbox] {
+.form-check, .acf-field[data-type=checkbox],
+.acf-field[data-type=radio] {
   display: block;
   min-height: 1.5rem;
   padding-left: 1.5em;
   margin-bottom: 0.125rem;
 }
-.form-check .form-check-input, .ginput_container input[type=checkbox] .form-check-input {
+.form-check .form-check-input, .acf-field[data-type=checkbox] .form-check-input, .acf-field[data-type=checkbox] input,
+.acf-field[data-type=radio] .form-check-input,
+.acf-field[data-type=radio] input {
   float: left;
   margin-left: -1.5em;
 }
@@ -2253,13 +2325,16 @@ textarea.form-control-lg {
   padding-left: 0;
   text-align: right;
 }
-.form-check-reverse .form-check-input {
+.form-check-reverse .form-check-input, .form-check-reverse .acf-field[data-type=checkbox] input, .acf-field[data-type=checkbox] .form-check-reverse input,
+.form-check-reverse .acf-field[data-type=radio] input,
+.acf-field[data-type=radio] .form-check-reverse input {
   float: right;
   margin-right: -1.5em;
   margin-left: 0;
 }
 
-.form-check-input {
+.form-check-input, .acf-field[data-type=checkbox] input,
+.acf-field[data-type=radio] input {
   width: 1em;
   height: 1em;
   margin-top: 0.25em;
@@ -2269,44 +2344,62 @@ textarea.form-control-lg {
   background-position: center;
   background-size: contain;
   border: 1px solid rgba(0, 0, 0, 0.25);
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
+  -webkit-print-color-adjust: exact;
   print-color-adjust: exact;
 }
-.form-check-input[type=checkbox] {
+.form-check-input[type=checkbox], .acf-field[data-type=checkbox] input[type=checkbox],
+.acf-field[data-type=radio] input[type=checkbox] {
   border-radius: 0.25em;
 }
-.form-check-input[type=radio] {
+.form-check-input[type=radio], .acf-field[data-type=checkbox] input[type=radio],
+.acf-field[data-type=radio] input[type=radio] {
   border-radius: 50%;
 }
-.form-check-input:active {
+.form-check-input:active, .acf-field[data-type=checkbox] input:active,
+.acf-field[data-type=radio] input:active {
   filter: brightness(90%);
 }
-.form-check-input:focus {
+.form-check-input:focus, .acf-field[data-type=checkbox] input:focus,
+.acf-field[data-type=radio] input:focus {
   border-color: #aebfce;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(93, 127, 156, 0.25);
 }
-.form-check-input:checked {
+.form-check-input:checked, .acf-field[data-type=checkbox] input:checked,
+.acf-field[data-type=radio] input:checked {
   background-color: #5d7f9c;
   border-color: #5d7f9c;
 }
-.form-check-input:checked[type=checkbox] {
+.form-check-input:checked[type=checkbox], .acf-field[data-type=checkbox] input:checked[type=checkbox],
+.acf-field[data-type=radio] input:checked[type=checkbox] {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
 }
-.form-check-input:checked[type=radio] {
+.form-check-input:checked[type=radio], .acf-field[data-type=checkbox] input:checked[type=radio],
+.acf-field[data-type=radio] input:checked[type=radio] {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='%23fff'/%3e%3c/svg%3e");
 }
-.form-check-input[type=checkbox]:indeterminate {
+.form-check-input[type=checkbox]:indeterminate, .acf-field[data-type=checkbox] input[type=checkbox]:indeterminate,
+.acf-field[data-type=radio] input[type=checkbox]:indeterminate {
   background-color: #5d7f9c;
   border-color: #5d7f9c;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10h8'/%3e%3c/svg%3e");
 }
-.form-check-input:disabled {
+.form-check-input:disabled, .acf-field[data-type=checkbox] input:disabled,
+.acf-field[data-type=radio] input:disabled {
   pointer-events: none;
   filter: none;
   opacity: 0.5;
 }
-.form-check-input[disabled] ~ .form-check-label, .form-check-input:disabled ~ .form-check-label {
+.form-check-input[disabled] ~ .form-check-label, .acf-field[data-type=checkbox] .form-check-input[disabled] ~ label,
+.acf-field[data-type=radio] .form-check-input[disabled] ~ label, .acf-field[data-type=checkbox] input[disabled] ~ .form-check-label, .acf-field[data-type=checkbox] input[disabled] ~ label,
+.acf-field[data-type=radio] input[disabled] ~ .form-check-label,
+.acf-field[data-type=radio] input[disabled] ~ label, .form-check-input:disabled ~ .form-check-label, .acf-field[data-type=checkbox] .form-check-input:disabled ~ label,
+.acf-field[data-type=radio] .form-check-input:disabled ~ label, .acf-field[data-type=checkbox] input:disabled ~ .form-check-label, .acf-field[data-type=checkbox] input:disabled ~ label,
+.acf-field[data-type=radio] input:disabled ~ .form-check-label,
+.acf-field[data-type=radio] input:disabled ~ label {
   cursor: default;
   opacity: 0.5;
 }
@@ -2314,7 +2407,9 @@ textarea.form-control-lg {
 .form-switch {
   padding-left: 2.5em;
 }
-.form-switch .form-check-input {
+.form-switch .form-check-input, .form-switch .acf-field[data-type=checkbox] input, .acf-field[data-type=checkbox] .form-switch input,
+.form-switch .acf-field[data-type=radio] input,
+.acf-field[data-type=radio] .form-switch input {
   width: 2em;
   margin-left: -2.5em;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgba%280, 0, 0, 0.25%29'/%3e%3c/svg%3e");
@@ -2323,14 +2418,20 @@ textarea.form-control-lg {
   transition: background-position 0.15s ease-in-out;
 }
 @media (prefers-reduced-motion: reduce) {
-  .form-switch .form-check-input {
+  .form-switch .form-check-input, .form-switch .acf-field[data-type=checkbox] input, .acf-field[data-type=checkbox] .form-switch input,
+  .form-switch .acf-field[data-type=radio] input,
+  .acf-field[data-type=radio] .form-switch input {
     transition: none;
   }
 }
-.form-switch .form-check-input:focus {
+.form-switch .form-check-input:focus, .form-switch .acf-field[data-type=checkbox] input:focus, .acf-field[data-type=checkbox] .form-switch input:focus,
+.form-switch .acf-field[data-type=radio] input:focus,
+.acf-field[data-type=radio] .form-switch input:focus {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23aebfce'/%3e%3c/svg%3e");
 }
-.form-switch .form-check-input:checked {
+.form-switch .form-check-input:checked, .form-switch .acf-field[data-type=checkbox] input:checked, .acf-field[data-type=checkbox] .form-switch input:checked,
+.form-switch .acf-field[data-type=radio] input:checked,
+.acf-field[data-type=radio] .form-switch input:checked {
   background-position: right center;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23fff'/%3e%3c/svg%3e");
 }
@@ -2338,7 +2439,9 @@ textarea.form-control-lg {
   padding-right: 2.5em;
   padding-left: 0;
 }
-.form-switch.form-check-reverse .form-check-input {
+.form-switch.form-check-reverse .form-check-input, .form-switch.form-check-reverse .acf-field[data-type=checkbox] input, .acf-field[data-type=checkbox] .form-switch.form-check-reverse input,
+.form-switch.form-check-reverse .acf-field[data-type=radio] input,
+.acf-field[data-type=radio] .form-switch.form-check-reverse input {
   margin-right: -2.5em;
   margin-left: 0;
 }
@@ -2364,6 +2467,8 @@ textarea.form-control-lg {
   height: 1.5rem;
   padding: 0;
   background-color: transparent;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
 }
 .form-range:focus {
@@ -2385,11 +2490,14 @@ textarea.form-control-lg {
   background-color: #5d7f9c;
   border: 0;
   border-radius: 1rem;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-appearance: none;
   appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .form-range::-webkit-slider-thumb {
+    -webkit-transition: none;
     transition: none;
   }
 }
@@ -2411,11 +2519,14 @@ textarea.form-control-lg {
   background-color: #5d7f9c;
   border: 0;
   border-radius: 1rem;
+  -moz-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -moz-appearance: none;
   appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
   .form-range::-moz-range-thumb {
+    -moz-transition: none;
     transition: none;
   }
 }
@@ -2444,9 +2555,15 @@ textarea.form-control-lg {
 .form-floating {
   position: relative;
 }
-.form-floating > .form-control, .form-floating > #cmApp_signupEmail, .ginput_container .form-floating > input:not([type=checkbox]), .ginput_container .form-floating > textarea,
+.form-floating > .form-control, .acf-field .acf-input .form-floating > input[type=text],
+.acf-field .acf-input .form-floating > input[type=email],
+.acf-field .acf-input .form-floating > input[type=number],
+.acf-field .acf-input .form-floating > input[type=url],
+.acf-field .acf-input .form-floating > input[type=password],
+.acf-field .acf-input .form-floating > textarea,
 .form-floating > .form-control-plaintext,
-.form-floating > .form-select {
+.form-floating > .form-select,
+.acf-input .form-floating > select {
   height: calc(3.5rem + 2px);
   line-height: 1.25;
 }
@@ -2471,40 +2588,90 @@ textarea.form-control-lg {
     transition: none;
   }
 }
-.form-floating > .form-control, .form-floating > #cmApp_signupEmail, .ginput_container .form-floating > input:not([type=checkbox]), .ginput_container .form-floating > textarea,
+.form-floating > .form-control, .acf-field .acf-input .form-floating > input[type=text],
+.acf-field .acf-input .form-floating > input[type=email],
+.acf-field .acf-input .form-floating > input[type=number],
+.acf-field .acf-input .form-floating > input[type=url],
+.acf-field .acf-input .form-floating > input[type=password],
+.acf-field .acf-input .form-floating > textarea,
 .form-floating > .form-control-plaintext {
   padding: 1rem 0.75rem;
 }
-.form-floating > .form-control::placeholder, .form-floating > #cmApp_signupEmail::placeholder, .ginput_container .form-floating > input:not([type=checkbox])::placeholder, .ginput_container .form-floating > textarea::placeholder,
+.form-floating > .form-control::-moz-placeholder, .acf-field .acf-input .form-floating > input[type=text]::-moz-placeholder, .acf-field .acf-input .form-floating > input[type=email]::-moz-placeholder, .acf-field .acf-input .form-floating > input[type=number]::-moz-placeholder, .acf-field .acf-input .form-floating > input[type=url]::-moz-placeholder, .acf-field .acf-input .form-floating > input[type=password]::-moz-placeholder, .acf-field .acf-input .form-floating > textarea::-moz-placeholder, .form-floating > .form-control-plaintext::-moz-placeholder {
+  color: transparent;
+}
+.form-floating > .form-control::placeholder, .acf-field .acf-input .form-floating > input[type=text]::placeholder,
+.acf-field .acf-input .form-floating > input[type=email]::placeholder,
+.acf-field .acf-input .form-floating > input[type=number]::placeholder,
+.acf-field .acf-input .form-floating > input[type=url]::placeholder,
+.acf-field .acf-input .form-floating > input[type=password]::placeholder,
+.acf-field .acf-input .form-floating > textarea::placeholder,
 .form-floating > .form-control-plaintext::placeholder {
   color: transparent;
 }
-.form-floating > .form-control:focus, .form-floating > #cmApp_signupEmail:focus, .ginput_container .form-floating > input:focus:not([type=checkbox]), .ginput_container .form-floating > textarea:focus, .form-floating > .form-control:not(:placeholder-shown), .form-floating > #cmApp_signupEmail:not(:placeholder-shown), .ginput_container .form-floating > input:not(:placeholder-shown):not([type=checkbox]), .ginput_container .form-floating > textarea:not(:placeholder-shown),
+.form-floating > .form-control:not(:-moz-placeholder-shown), .acf-field .acf-input .form-floating > input[type=text]:not(:-moz-placeholder-shown), .acf-field .acf-input .form-floating > input[type=email]:not(:-moz-placeholder-shown), .acf-field .acf-input .form-floating > input[type=number]:not(:-moz-placeholder-shown), .acf-field .acf-input .form-floating > input[type=url]:not(:-moz-placeholder-shown), .acf-field .acf-input .form-floating > input[type=password]:not(:-moz-placeholder-shown), .acf-field .acf-input .form-floating > textarea:not(:-moz-placeholder-shown), .form-floating > .form-control-plaintext:not(:-moz-placeholder-shown) {
+  padding-top: 1.625rem;
+  padding-bottom: 0.625rem;
+}
+.form-floating > .form-control:focus, .acf-field .acf-input .form-floating > input[type=text]:focus,
+.acf-field .acf-input .form-floating > input[type=email]:focus,
+.acf-field .acf-input .form-floating > input[type=number]:focus,
+.acf-field .acf-input .form-floating > input[type=url]:focus,
+.acf-field .acf-input .form-floating > input[type=password]:focus,
+.acf-field .acf-input .form-floating > textarea:focus, .form-floating > .form-control:not(:placeholder-shown), .acf-field .acf-input .form-floating > input[type=text]:not(:placeholder-shown),
+.acf-field .acf-input .form-floating > input[type=email]:not(:placeholder-shown),
+.acf-field .acf-input .form-floating > input[type=number]:not(:placeholder-shown),
+.acf-field .acf-input .form-floating > input[type=url]:not(:placeholder-shown),
+.acf-field .acf-input .form-floating > input[type=password]:not(:placeholder-shown),
+.acf-field .acf-input .form-floating > textarea:not(:placeholder-shown),
 .form-floating > .form-control-plaintext:focus,
 .form-floating > .form-control-plaintext:not(:placeholder-shown) {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
-.form-floating > .form-control:-webkit-autofill, .form-floating > #cmApp_signupEmail:-webkit-autofill, .ginput_container .form-floating > input:-webkit-autofill:not([type=checkbox]), .ginput_container .form-floating > textarea:-webkit-autofill,
+.form-floating > .form-control:-webkit-autofill, .acf-field .acf-input .form-floating > input[type=text]:-webkit-autofill,
+.acf-field .acf-input .form-floating > input[type=email]:-webkit-autofill,
+.acf-field .acf-input .form-floating > input[type=number]:-webkit-autofill,
+.acf-field .acf-input .form-floating > input[type=url]:-webkit-autofill,
+.acf-field .acf-input .form-floating > input[type=password]:-webkit-autofill,
+.acf-field .acf-input .form-floating > textarea:-webkit-autofill,
 .form-floating > .form-control-plaintext:-webkit-autofill {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
-.form-floating > .form-select {
+.form-floating > .form-select, .acf-input .form-floating > select {
   padding-top: 1.625rem;
   padding-bottom: 0.625rem;
 }
-.form-floating > .form-control:focus ~ label, .form-floating > #cmApp_signupEmail:focus ~ label, .ginput_container .form-floating > input:focus:not([type=checkbox]) ~ label, .ginput_container .form-floating > textarea:focus ~ label,
-.form-floating > .form-control:not(:placeholder-shown) ~ label,
-.form-floating > #cmApp_signupEmail:not(:placeholder-shown) ~ label,
-.ginput_container .form-floating > input:not(:placeholder-shown):not([type=checkbox]) ~ label,
-.ginput_container .form-floating > textarea:not(:placeholder-shown) ~ label,
-.form-floating > .form-control-plaintext ~ label,
-.form-floating > .form-select ~ label {
+.form-floating > .form-control:not(:-moz-placeholder-shown) ~ label, .acf-field .acf-input .form-floating > input[type=text]:not(:-moz-placeholder-shown) ~ label, .acf-field .acf-input .form-floating > input[type=email]:not(:-moz-placeholder-shown) ~ label, .acf-field .acf-input .form-floating > input[type=number]:not(:-moz-placeholder-shown) ~ label, .acf-field .acf-input .form-floating > input[type=url]:not(:-moz-placeholder-shown) ~ label, .acf-field .acf-input .form-floating > input[type=password]:not(:-moz-placeholder-shown) ~ label, .acf-field .acf-input .form-floating > textarea:not(:-moz-placeholder-shown) ~ label {
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
-.form-floating > .form-control:-webkit-autofill ~ label, .form-floating > #cmApp_signupEmail:-webkit-autofill ~ label, .ginput_container .form-floating > input:-webkit-autofill:not([type=checkbox]) ~ label, .ginput_container .form-floating > textarea:-webkit-autofill ~ label {
+.form-floating > .form-control:focus ~ label, .acf-field .acf-input .form-floating > input[type=text]:focus ~ label,
+.acf-field .acf-input .form-floating > input[type=email]:focus ~ label,
+.acf-field .acf-input .form-floating > input[type=number]:focus ~ label,
+.acf-field .acf-input .form-floating > input[type=url]:focus ~ label,
+.acf-field .acf-input .form-floating > input[type=password]:focus ~ label,
+.acf-field .acf-input .form-floating > textarea:focus ~ label,
+.form-floating > .form-control:not(:placeholder-shown) ~ label,
+.acf-field .acf-input .form-floating > input[type=text]:not(:placeholder-shown) ~ label,
+.acf-field .acf-input .form-floating > input[type=email]:not(:placeholder-shown) ~ label,
+.acf-field .acf-input .form-floating > input[type=number]:not(:placeholder-shown) ~ label,
+.acf-field .acf-input .form-floating > input[type=url]:not(:placeholder-shown) ~ label,
+.acf-field .acf-input .form-floating > input[type=password]:not(:placeholder-shown) ~ label,
+.acf-field .acf-input .form-floating > textarea:not(:placeholder-shown) ~ label,
+.form-floating > .form-control-plaintext ~ label,
+.form-floating > .form-select ~ label,
+.acf-input .form-floating > select ~ label {
+  opacity: 0.65;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+}
+.form-floating > .form-control:-webkit-autofill ~ label, .acf-field .acf-input .form-floating > input[type=text]:-webkit-autofill ~ label,
+.acf-field .acf-input .form-floating > input[type=email]:-webkit-autofill ~ label,
+.acf-field .acf-input .form-floating > input[type=number]:-webkit-autofill ~ label,
+.acf-field .acf-input .form-floating > input[type=url]:-webkit-autofill ~ label,
+.acf-field .acf-input .form-floating > input[type=password]:-webkit-autofill ~ label,
+.acf-field .acf-input .form-floating > textarea:-webkit-autofill ~ label {
   opacity: 0.65;
   transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
 }
@@ -2519,16 +2686,28 @@ textarea.form-control-lg {
   align-items: stretch;
   width: 100%;
 }
-.input-group > .form-control, .input-group > #cmApp_signupEmail, .ginput_container .input-group > input:not([type=checkbox]), .ginput_container .input-group > textarea,
+.input-group > .form-control, .acf-field .acf-input .input-group > input[type=text],
+.acf-field .acf-input .input-group > input[type=email],
+.acf-field .acf-input .input-group > input[type=number],
+.acf-field .acf-input .input-group > input[type=url],
+.acf-field .acf-input .input-group > input[type=password],
+.acf-field .acf-input .input-group > textarea,
 .input-group > .form-select,
+.acf-input .input-group > select,
 .input-group > .form-floating {
   position: relative;
   flex: 1 1 auto;
   width: 1%;
   min-width: 0;
 }
-.input-group > .form-control:focus, .input-group > #cmApp_signupEmail:focus, .ginput_container .input-group > input:focus:not([type=checkbox]), .ginput_container .input-group > textarea:focus,
+.input-group > .form-control:focus, .acf-field .acf-input .input-group > input[type=text]:focus,
+.acf-field .acf-input .input-group > input[type=email]:focus,
+.acf-field .acf-input .input-group > input[type=number]:focus,
+.acf-field .acf-input .input-group > input[type=url]:focus,
+.acf-field .acf-input .input-group > input[type=password]:focus,
+.acf-field .acf-input .input-group > textarea:focus,
 .input-group > .form-select:focus,
+.acf-input .input-group > select:focus,
 .input-group > .form-floating:focus-within {
   z-index: 5;
 }
@@ -2555,8 +2734,14 @@ textarea.form-control-lg {
   border-radius: 0.375rem;
 }
 
-.input-group-lg > .form-control, .input-group-lg > #cmApp_signupEmail, .ginput_container .input-group-lg > input:not([type=checkbox]), .ginput_container .input-group-lg > textarea,
+.input-group-lg > .form-control, .acf-field .acf-input .input-group-lg > input[type=text],
+.acf-field .acf-input .input-group-lg > input[type=email],
+.acf-field .acf-input .input-group-lg > input[type=number],
+.acf-field .acf-input .input-group-lg > input[type=url],
+.acf-field .acf-input .input-group-lg > input[type=password],
+.acf-field .acf-input .input-group-lg > textarea,
 .input-group-lg > .form-select,
+.acf-input .input-group-lg > select,
 .input-group-lg > .input-group-text,
 .input-group-lg > .btn {
   padding: 0.5rem 1rem;
@@ -2564,8 +2749,14 @@ textarea.form-control-lg {
   border-radius: 0.5rem;
 }
 
-.input-group-sm > .form-control, .input-group-sm > #cmApp_signupEmail, .ginput_container .input-group-sm > input:not([type=checkbox]), .ginput_container .input-group-sm > textarea,
+.input-group-sm > .form-control, .acf-field .acf-input .input-group-sm > input[type=text],
+.acf-field .acf-input .input-group-sm > input[type=email],
+.acf-field .acf-input .input-group-sm > input[type=number],
+.acf-field .acf-input .input-group-sm > input[type=url],
+.acf-field .acf-input .input-group-sm > input[type=password],
+.acf-field .acf-input .input-group-sm > textarea,
 .input-group-sm > .form-select,
+.acf-input .input-group-sm > select,
 .input-group-sm > .input-group-text,
 .input-group-sm > .btn {
   padding: 0.25rem 0.5rem;
@@ -2573,28 +2764,37 @@ textarea.form-control-lg {
   border-radius: 0.25rem;
 }
 
-.input-group-lg > .form-select,
-.input-group-sm > .form-select {
+.input-group-lg > .form-select, .acf-input .input-group-lg > select,
+.input-group-sm > .form-select,
+.acf-input .input-group-sm > select {
   padding-right: 3rem;
 }
 
 .input-group:not(.has-validation) > :not(:last-child):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating),
 .input-group:not(.has-validation) > .dropdown-toggle:nth-last-child(n+3),
 .input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-control,
-.input-group:not(.has-validation) > .form-floating:not(:last-child) > #cmApp_signupEmail,
-.ginput_container .input-group:not(.has-validation) > .form-floating:not(:last-child) > input:not([type=checkbox]),
-.ginput_container .input-group:not(.has-validation) > .form-floating:not(:last-child) > textarea,
-.input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select {
+.acf-field .acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > input[type=text],
+.acf-field .acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > input[type=email],
+.acf-field .acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > input[type=number],
+.acf-field .acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > input[type=url],
+.acf-field .acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > input[type=password],
+.acf-field .acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > textarea,
+.input-group:not(.has-validation) > .form-floating:not(:last-child) > .form-select,
+.acf-input .input-group:not(.has-validation) > .form-floating:not(:last-child) > select {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 .input-group.has-validation > :nth-last-child(n+3):not(.dropdown-toggle):not(.dropdown-menu):not(.form-floating),
 .input-group.has-validation > .dropdown-toggle:nth-last-child(n+4),
 .input-group.has-validation > .form-floating:nth-last-child(n+3) > .form-control,
-.input-group.has-validation > .form-floating:nth-last-child(n+3) > #cmApp_signupEmail,
-.ginput_container .input-group.has-validation > .form-floating:nth-last-child(n+3) > input:not([type=checkbox]),
-.ginput_container .input-group.has-validation > .form-floating:nth-last-child(n+3) > textarea,
-.input-group.has-validation > .form-floating:nth-last-child(n+3) > .form-select {
+.acf-field .acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > input[type=text],
+.acf-field .acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > input[type=email],
+.acf-field .acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > input[type=number],
+.acf-field .acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > input[type=url],
+.acf-field .acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > input[type=password],
+.acf-field .acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > textarea,
+.input-group.has-validation > .form-floating:nth-last-child(n+3) > .form-select,
+.acf-input .input-group.has-validation > .form-floating:nth-last-child(n+3) > select {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
@@ -2603,8 +2803,14 @@ textarea.form-control-lg {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
-.input-group > .form-floating:not(:first-child) > .form-control, .input-group > .form-floating:not(:first-child) > #cmApp_signupEmail, .ginput_container .input-group > .form-floating:not(:first-child) > input:not([type=checkbox]), .ginput_container .input-group > .form-floating:not(:first-child) > textarea,
-.input-group > .form-floating:not(:first-child) > .form-select {
+.input-group > .form-floating:not(:first-child) > .form-control, .acf-field .acf-input .input-group > .form-floating:not(:first-child) > input[type=text],
+.acf-field .acf-input .input-group > .form-floating:not(:first-child) > input[type=email],
+.acf-field .acf-input .input-group > .form-floating:not(:first-child) > input[type=number],
+.acf-field .acf-input .input-group > .form-floating:not(:first-child) > input[type=url],
+.acf-field .acf-input .input-group > .form-floating:not(:first-child) > input[type=password],
+.acf-field .acf-input .input-group > .form-floating:not(:first-child) > textarea,
+.input-group > .form-floating:not(:first-child) > .form-select,
+.acf-input .input-group > .form-floating:not(:first-child) > select {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -2638,7 +2844,22 @@ textarea.form-control-lg {
   display: block;
 }
 
-.was-validated .form-control:valid, .was-validated #cmApp_signupEmail:valid, .was-validated .ginput_container input:valid:not([type=checkbox]), .ginput_container .was-validated input:valid:not([type=checkbox]), .was-validated .ginput_container textarea:valid, .ginput_container .was-validated textarea:valid, .form-control.is-valid, .is-valid#cmApp_signupEmail, .ginput_container input.is-valid:not([type=checkbox]), .ginput_container textarea.is-valid {
+.was-validated .form-control:valid, .was-validated .acf-field .acf-input input[type=text]:valid, .acf-field .acf-input .was-validated input[type=text]:valid,
+.was-validated .acf-field .acf-input input[type=email]:valid,
+.acf-field .acf-input .was-validated input[type=email]:valid,
+.was-validated .acf-field .acf-input input[type=number]:valid,
+.acf-field .acf-input .was-validated input[type=number]:valid,
+.was-validated .acf-field .acf-input input[type=url]:valid,
+.acf-field .acf-input .was-validated input[type=url]:valid,
+.was-validated .acf-field .acf-input input[type=password]:valid,
+.acf-field .acf-input .was-validated input[type=password]:valid,
+.was-validated .acf-field .acf-input textarea:valid,
+.acf-field .acf-input .was-validated textarea:valid, .form-control.is-valid, .acf-field .acf-input input.is-valid[type=text],
+.acf-field .acf-input input.is-valid[type=email],
+.acf-field .acf-input input.is-valid[type=number],
+.acf-field .acf-input input.is-valid[type=url],
+.acf-field .acf-input input.is-valid[type=password],
+.acf-field .acf-input textarea.is-valid {
   border-color: #198754;
   padding-right: calc(1.5em + 0.75rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
@@ -2646,26 +2867,44 @@ textarea.form-control-lg {
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
-.was-validated .form-control:valid:focus, .was-validated #cmApp_signupEmail:valid:focus, .was-validated .ginput_container input:valid:focus:not([type=checkbox]), .ginput_container .was-validated input:valid:focus:not([type=checkbox]), .was-validated .ginput_container textarea:valid:focus, .ginput_container .was-validated textarea:valid:focus, .form-control.is-valid:focus, .is-valid#cmApp_signupEmail:focus, .ginput_container input.is-valid:focus:not([type=checkbox]), .ginput_container textarea.is-valid:focus {
+.was-validated .form-control:valid:focus, .was-validated .acf-field .acf-input input[type=text]:valid:focus, .acf-field .acf-input .was-validated input[type=text]:valid:focus,
+.was-validated .acf-field .acf-input input[type=email]:valid:focus,
+.acf-field .acf-input .was-validated input[type=email]:valid:focus,
+.was-validated .acf-field .acf-input input[type=number]:valid:focus,
+.acf-field .acf-input .was-validated input[type=number]:valid:focus,
+.was-validated .acf-field .acf-input input[type=url]:valid:focus,
+.acf-field .acf-input .was-validated input[type=url]:valid:focus,
+.was-validated .acf-field .acf-input input[type=password]:valid:focus,
+.acf-field .acf-input .was-validated input[type=password]:valid:focus,
+.was-validated .acf-field .acf-input textarea:valid:focus,
+.acf-field .acf-input .was-validated textarea:valid:focus, .form-control.is-valid:focus, .acf-field .acf-input input.is-valid[type=text]:focus,
+.acf-field .acf-input input.is-valid[type=email]:focus,
+.acf-field .acf-input input.is-valid[type=number]:focus,
+.acf-field .acf-input input.is-valid[type=url]:focus,
+.acf-field .acf-input input.is-valid[type=password]:focus,
+.acf-field .acf-input textarea.is-valid:focus {
   border-color: #198754;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
 }
 
-.was-validated textarea.form-control:valid, .was-validated textarea#cmApp_signupEmail:valid, .was-validated .ginput_container textarea:valid, .ginput_container .was-validated textarea:valid, textarea.form-control.is-valid, textarea.is-valid#cmApp_signupEmail, .ginput_container textarea.is-valid {
+.was-validated textarea.form-control:valid,
+.was-validated .acf-field .acf-input textarea:valid,
+.acf-field .acf-input .was-validated textarea:valid, textarea.form-control.is-valid,
+.acf-field .acf-input textarea.is-valid {
   padding-right: calc(1.5em + 0.75rem);
   background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
 }
 
-.was-validated .form-select:valid, .form-select.is-valid {
+.was-validated .form-select:valid, .was-validated .acf-input select:valid, .acf-input .was-validated select:valid, .form-select.is-valid, .acf-input select.is-valid {
   border-color: #198754;
 }
-.was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"] {
+.was-validated .form-select:valid:not([multiple]):not([size]), .was-validated .acf-input select:valid:not([multiple]):not([size]), .acf-input .was-validated select:valid:not([multiple]):not([size]), .was-validated .form-select:valid:not([multiple])[size="1"], .was-validated .acf-input select:valid:not([multiple])[size="1"], .acf-input .was-validated select:valid:not([multiple])[size="1"], .form-select.is-valid:not([multiple]):not([size]), .acf-input select.is-valid:not([multiple]):not([size]), .form-select.is-valid:not([multiple])[size="1"], .acf-input select.is-valid:not([multiple])[size="1"] {
   padding-right: 4.125rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%23198754' d='M2.3 6.73.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
-.was-validated .form-select:valid:focus, .form-select.is-valid:focus {
+.was-validated .form-select:valid:focus, .was-validated .acf-input select:valid:focus, .acf-input .was-validated select:valid:focus, .form-select.is-valid:focus, .acf-input select.is-valid:focus {
   border-color: #198754;
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
 }
@@ -2674,26 +2913,64 @@ textarea.form-control-lg {
   width: calc(3rem + calc(1.5em + 0.75rem));
 }
 
-.was-validated .form-check-input:valid, .form-check-input.is-valid {
+.was-validated .form-check-input:valid, .was-validated .acf-field[data-type=checkbox] input:valid, .acf-field[data-type=checkbox] .was-validated input:valid,
+.was-validated .acf-field[data-type=radio] input:valid,
+.acf-field[data-type=radio] .was-validated input:valid, .form-check-input.is-valid, .acf-field[data-type=checkbox] input.is-valid,
+.acf-field[data-type=radio] input.is-valid {
   border-color: #198754;
 }
-.was-validated .form-check-input:valid:checked, .form-check-input.is-valid:checked {
+.was-validated .form-check-input:valid:checked, .was-validated .acf-field[data-type=checkbox] input:valid:checked, .acf-field[data-type=checkbox] .was-validated input:valid:checked,
+.was-validated .acf-field[data-type=radio] input:valid:checked,
+.acf-field[data-type=radio] .was-validated input:valid:checked, .form-check-input.is-valid:checked, .acf-field[data-type=checkbox] input.is-valid:checked,
+.acf-field[data-type=radio] input.is-valid:checked {
   background-color: #198754;
 }
-.was-validated .form-check-input:valid:focus, .form-check-input.is-valid:focus {
+.was-validated .form-check-input:valid:focus, .was-validated .acf-field[data-type=checkbox] input:valid:focus, .acf-field[data-type=checkbox] .was-validated input:valid:focus,
+.was-validated .acf-field[data-type=radio] input:valid:focus,
+.acf-field[data-type=radio] .was-validated input:valid:focus, .form-check-input.is-valid:focus, .acf-field[data-type=checkbox] input.is-valid:focus,
+.acf-field[data-type=radio] input.is-valid:focus {
   box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
 }
-.was-validated .form-check-input:valid ~ .form-check-label, .form-check-input.is-valid ~ .form-check-label {
+.was-validated .form-check-input:valid ~ .form-check-label, .was-validated .acf-field[data-type=checkbox] .form-check-input:valid ~ label, .acf-field[data-type=checkbox] .was-validated .form-check-input:valid ~ label,
+.was-validated .acf-field[data-type=radio] .form-check-input:valid ~ label,
+.acf-field[data-type=radio] .was-validated .form-check-input:valid ~ label, .was-validated .acf-field[data-type=checkbox] input:valid ~ .form-check-label, .was-validated .acf-field[data-type=checkbox] input:valid ~ label, .acf-field[data-type=checkbox] .was-validated input:valid ~ .form-check-label, .acf-field[data-type=checkbox] .was-validated input:valid ~ label,
+.was-validated .acf-field[data-type=radio] input:valid ~ .form-check-label,
+.was-validated .acf-field[data-type=radio] input:valid ~ label,
+.acf-field[data-type=radio] .was-validated input:valid ~ .form-check-label,
+.acf-field[data-type=radio] .was-validated input:valid ~ label, .form-check-input.is-valid ~ .form-check-label, .acf-field[data-type=checkbox] .form-check-input.is-valid ~ label,
+.acf-field[data-type=radio] .form-check-input.is-valid ~ label, .acf-field[data-type=checkbox] input.is-valid ~ .form-check-label, .acf-field[data-type=checkbox] input.is-valid ~ label,
+.acf-field[data-type=radio] input.is-valid ~ .form-check-label,
+.acf-field[data-type=radio] input.is-valid ~ label {
   color: #198754;
 }
 
-.form-check-inline .form-check-input ~ .valid-feedback {
+.form-check-inline .form-check-input ~ .valid-feedback, .form-check-inline .acf-field[data-type=checkbox] input ~ .valid-feedback, .acf-field[data-type=checkbox] .form-check-inline input ~ .valid-feedback,
+.form-check-inline .acf-field[data-type=radio] input ~ .valid-feedback,
+.acf-field[data-type=radio] .form-check-inline input ~ .valid-feedback {
   margin-left: 0.5em;
 }
 
-.was-validated .input-group > .form-control:not(:focus):valid, .was-validated .input-group > #cmApp_signupEmail:not(:focus):valid, .was-validated .ginput_container .input-group > input:not(:focus):valid:not([type=checkbox]), .ginput_container .was-validated .input-group > input:not(:focus):valid:not([type=checkbox]), .was-validated .ginput_container .input-group > textarea:not(:focus):valid, .ginput_container .was-validated .input-group > textarea:not(:focus):valid, .input-group > .form-control:not(:focus).is-valid, .input-group > #cmApp_signupEmail:not(:focus).is-valid, .ginput_container .input-group > input:not(:focus).is-valid:not([type=checkbox]), .ginput_container .input-group > textarea:not(:focus).is-valid,
+.was-validated .input-group > .form-control:not(:focus):valid, .was-validated .acf-field .acf-input .input-group > input[type=text]:not(:focus):valid, .acf-field .acf-input .was-validated .input-group > input[type=text]:not(:focus):valid,
+.was-validated .acf-field .acf-input .input-group > input[type=email]:not(:focus):valid,
+.acf-field .acf-input .was-validated .input-group > input[type=email]:not(:focus):valid,
+.was-validated .acf-field .acf-input .input-group > input[type=number]:not(:focus):valid,
+.acf-field .acf-input .was-validated .input-group > input[type=number]:not(:focus):valid,
+.was-validated .acf-field .acf-input .input-group > input[type=url]:not(:focus):valid,
+.acf-field .acf-input .was-validated .input-group > input[type=url]:not(:focus):valid,
+.was-validated .acf-field .acf-input .input-group > input[type=password]:not(:focus):valid,
+.acf-field .acf-input .was-validated .input-group > input[type=password]:not(:focus):valid,
+.was-validated .acf-field .acf-input .input-group > textarea:not(:focus):valid,
+.acf-field .acf-input .was-validated .input-group > textarea:not(:focus):valid, .input-group > .form-control:not(:focus).is-valid, .acf-field .acf-input .input-group > input[type=text]:not(:focus).is-valid,
+.acf-field .acf-input .input-group > input[type=email]:not(:focus).is-valid,
+.acf-field .acf-input .input-group > input[type=number]:not(:focus).is-valid,
+.acf-field .acf-input .input-group > input[type=url]:not(:focus).is-valid,
+.acf-field .acf-input .input-group > input[type=password]:not(:focus).is-valid,
+.acf-field .acf-input .input-group > textarea:not(:focus).is-valid,
 .was-validated .input-group > .form-select:not(:focus):valid,
+.was-validated .acf-input .input-group > select:not(:focus):valid,
+.acf-input .was-validated .input-group > select:not(:focus):valid,
 .input-group > .form-select:not(:focus).is-valid,
+.acf-input .input-group > select:not(:focus).is-valid,
 .was-validated .input-group > .form-floating:not(:focus-within):valid,
 .input-group > .form-floating:not(:focus-within).is-valid {
   z-index: 3;
@@ -2728,7 +3005,22 @@ textarea.form-control-lg {
   display: block;
 }
 
-.was-validated .form-control:invalid, .was-validated #cmApp_signupEmail:invalid, .was-validated .ginput_container input:invalid:not([type=checkbox]), .ginput_container .was-validated input:invalid:not([type=checkbox]), .was-validated .ginput_container textarea:invalid, .ginput_container .was-validated textarea:invalid, .form-control.is-invalid, .is-invalid#cmApp_signupEmail, .ginput_container input.is-invalid:not([type=checkbox]), .ginput_container textarea.is-invalid {
+.was-validated .form-control:invalid, .was-validated .acf-field .acf-input input[type=text]:invalid, .acf-field .acf-input .was-validated input[type=text]:invalid,
+.was-validated .acf-field .acf-input input[type=email]:invalid,
+.acf-field .acf-input .was-validated input[type=email]:invalid,
+.was-validated .acf-field .acf-input input[type=number]:invalid,
+.acf-field .acf-input .was-validated input[type=number]:invalid,
+.was-validated .acf-field .acf-input input[type=url]:invalid,
+.acf-field .acf-input .was-validated input[type=url]:invalid,
+.was-validated .acf-field .acf-input input[type=password]:invalid,
+.acf-field .acf-input .was-validated input[type=password]:invalid,
+.was-validated .acf-field .acf-input textarea:invalid,
+.acf-field .acf-input .was-validated textarea:invalid, .form-control.is-invalid, .acf-field .acf-input input.is-invalid[type=text],
+.acf-field .acf-input input.is-invalid[type=email],
+.acf-field .acf-input input.is-invalid[type=number],
+.acf-field .acf-input input.is-invalid[type=url],
+.acf-field .acf-input input.is-invalid[type=password],
+.acf-field .acf-input textarea.is-invalid {
   border-color: #dc3545;
   padding-right: calc(1.5em + 0.75rem);
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
@@ -2736,26 +3028,44 @@ textarea.form-control-lg {
   background-position: right calc(0.375em + 0.1875rem) center;
   background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
-.was-validated .form-control:invalid:focus, .was-validated #cmApp_signupEmail:invalid:focus, .was-validated .ginput_container input:invalid:focus:not([type=checkbox]), .ginput_container .was-validated input:invalid:focus:not([type=checkbox]), .was-validated .ginput_container textarea:invalid:focus, .ginput_container .was-validated textarea:invalid:focus, .form-control.is-invalid:focus, .is-invalid#cmApp_signupEmail:focus, .ginput_container input.is-invalid:focus:not([type=checkbox]), .ginput_container textarea.is-invalid:focus {
+.was-validated .form-control:invalid:focus, .was-validated .acf-field .acf-input input[type=text]:invalid:focus, .acf-field .acf-input .was-validated input[type=text]:invalid:focus,
+.was-validated .acf-field .acf-input input[type=email]:invalid:focus,
+.acf-field .acf-input .was-validated input[type=email]:invalid:focus,
+.was-validated .acf-field .acf-input input[type=number]:invalid:focus,
+.acf-field .acf-input .was-validated input[type=number]:invalid:focus,
+.was-validated .acf-field .acf-input input[type=url]:invalid:focus,
+.acf-field .acf-input .was-validated input[type=url]:invalid:focus,
+.was-validated .acf-field .acf-input input[type=password]:invalid:focus,
+.acf-field .acf-input .was-validated input[type=password]:invalid:focus,
+.was-validated .acf-field .acf-input textarea:invalid:focus,
+.acf-field .acf-input .was-validated textarea:invalid:focus, .form-control.is-invalid:focus, .acf-field .acf-input input.is-invalid[type=text]:focus,
+.acf-field .acf-input input.is-invalid[type=email]:focus,
+.acf-field .acf-input input.is-invalid[type=number]:focus,
+.acf-field .acf-input input.is-invalid[type=url]:focus,
+.acf-field .acf-input input.is-invalid[type=password]:focus,
+.acf-field .acf-input textarea.is-invalid:focus {
   border-color: #dc3545;
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
 
-.was-validated textarea.form-control:invalid, .was-validated textarea#cmApp_signupEmail:invalid, .was-validated .ginput_container textarea:invalid, .ginput_container .was-validated textarea:invalid, textarea.form-control.is-invalid, textarea.is-invalid#cmApp_signupEmail, .ginput_container textarea.is-invalid {
+.was-validated textarea.form-control:invalid,
+.was-validated .acf-field .acf-input textarea:invalid,
+.acf-field .acf-input .was-validated textarea:invalid, textarea.form-control.is-invalid,
+.acf-field .acf-input textarea.is-invalid {
   padding-right: calc(1.5em + 0.75rem);
   background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
 }
 
-.was-validated .form-select:invalid, .form-select.is-invalid {
+.was-validated .form-select:invalid, .was-validated .acf-input select:invalid, .acf-input .was-validated select:invalid, .form-select.is-invalid, .acf-input select.is-invalid {
   border-color: #dc3545;
 }
-.was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"], .form-select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"] {
+.was-validated .form-select:invalid:not([multiple]):not([size]), .was-validated .acf-input select:invalid:not([multiple]):not([size]), .acf-input .was-validated select:invalid:not([multiple]):not([size]), .was-validated .form-select:invalid:not([multiple])[size="1"], .was-validated .acf-input select:invalid:not([multiple])[size="1"], .acf-input .was-validated select:invalid:not([multiple])[size="1"], .form-select.is-invalid:not([multiple]):not([size]), .acf-input select.is-invalid:not([multiple]):not([size]), .form-select.is-invalid:not([multiple])[size="1"], .acf-input select.is-invalid:not([multiple])[size="1"] {
   padding-right: 4.125rem;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e"), url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
   background-position: right 0.75rem center, center right 2.25rem;
   background-size: 16px 12px, calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
 }
-.was-validated .form-select:invalid:focus, .form-select.is-invalid:focus {
+.was-validated .form-select:invalid:focus, .was-validated .acf-input select:invalid:focus, .acf-input .was-validated select:invalid:focus, .form-select.is-invalid:focus, .acf-input select.is-invalid:focus {
   border-color: #dc3545;
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
@@ -2764,26 +3074,64 @@ textarea.form-control-lg {
   width: calc(3rem + calc(1.5em + 0.75rem));
 }
 
-.was-validated .form-check-input:invalid, .form-check-input.is-invalid {
+.was-validated .form-check-input:invalid, .was-validated .acf-field[data-type=checkbox] input:invalid, .acf-field[data-type=checkbox] .was-validated input:invalid,
+.was-validated .acf-field[data-type=radio] input:invalid,
+.acf-field[data-type=radio] .was-validated input:invalid, .form-check-input.is-invalid, .acf-field[data-type=checkbox] input.is-invalid,
+.acf-field[data-type=radio] input.is-invalid {
   border-color: #dc3545;
 }
-.was-validated .form-check-input:invalid:checked, .form-check-input.is-invalid:checked {
+.was-validated .form-check-input:invalid:checked, .was-validated .acf-field[data-type=checkbox] input:invalid:checked, .acf-field[data-type=checkbox] .was-validated input:invalid:checked,
+.was-validated .acf-field[data-type=radio] input:invalid:checked,
+.acf-field[data-type=radio] .was-validated input:invalid:checked, .form-check-input.is-invalid:checked, .acf-field[data-type=checkbox] input.is-invalid:checked,
+.acf-field[data-type=radio] input.is-invalid:checked {
   background-color: #dc3545;
 }
-.was-validated .form-check-input:invalid:focus, .form-check-input.is-invalid:focus {
+.was-validated .form-check-input:invalid:focus, .was-validated .acf-field[data-type=checkbox] input:invalid:focus, .acf-field[data-type=checkbox] .was-validated input:invalid:focus,
+.was-validated .acf-field[data-type=radio] input:invalid:focus,
+.acf-field[data-type=radio] .was-validated input:invalid:focus, .form-check-input.is-invalid:focus, .acf-field[data-type=checkbox] input.is-invalid:focus,
+.acf-field[data-type=radio] input.is-invalid:focus {
   box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
 }
-.was-validated .form-check-input:invalid ~ .form-check-label, .form-check-input.is-invalid ~ .form-check-label {
+.was-validated .form-check-input:invalid ~ .form-check-label, .was-validated .acf-field[data-type=checkbox] .form-check-input:invalid ~ label, .acf-field[data-type=checkbox] .was-validated .form-check-input:invalid ~ label,
+.was-validated .acf-field[data-type=radio] .form-check-input:invalid ~ label,
+.acf-field[data-type=radio] .was-validated .form-check-input:invalid ~ label, .was-validated .acf-field[data-type=checkbox] input:invalid ~ .form-check-label, .was-validated .acf-field[data-type=checkbox] input:invalid ~ label, .acf-field[data-type=checkbox] .was-validated input:invalid ~ .form-check-label, .acf-field[data-type=checkbox] .was-validated input:invalid ~ label,
+.was-validated .acf-field[data-type=radio] input:invalid ~ .form-check-label,
+.was-validated .acf-field[data-type=radio] input:invalid ~ label,
+.acf-field[data-type=radio] .was-validated input:invalid ~ .form-check-label,
+.acf-field[data-type=radio] .was-validated input:invalid ~ label, .form-check-input.is-invalid ~ .form-check-label, .acf-field[data-type=checkbox] .form-check-input.is-invalid ~ label,
+.acf-field[data-type=radio] .form-check-input.is-invalid ~ label, .acf-field[data-type=checkbox] input.is-invalid ~ .form-check-label, .acf-field[data-type=checkbox] input.is-invalid ~ label,
+.acf-field[data-type=radio] input.is-invalid ~ .form-check-label,
+.acf-field[data-type=radio] input.is-invalid ~ label {
   color: #dc3545;
 }
 
-.form-check-inline .form-check-input ~ .invalid-feedback {
+.form-check-inline .form-check-input ~ .invalid-feedback, .form-check-inline .acf-field[data-type=checkbox] input ~ .invalid-feedback, .acf-field[data-type=checkbox] .form-check-inline input ~ .invalid-feedback,
+.form-check-inline .acf-field[data-type=radio] input ~ .invalid-feedback,
+.acf-field[data-type=radio] .form-check-inline input ~ .invalid-feedback {
   margin-left: 0.5em;
 }
 
-.was-validated .input-group > .form-control:not(:focus):invalid, .was-validated .input-group > #cmApp_signupEmail:not(:focus):invalid, .was-validated .ginput_container .input-group > input:not(:focus):invalid:not([type=checkbox]), .ginput_container .was-validated .input-group > input:not(:focus):invalid:not([type=checkbox]), .was-validated .ginput_container .input-group > textarea:not(:focus):invalid, .ginput_container .was-validated .input-group > textarea:not(:focus):invalid, .input-group > .form-control:not(:focus).is-invalid, .input-group > #cmApp_signupEmail:not(:focus).is-invalid, .ginput_container .input-group > input:not(:focus).is-invalid:not([type=checkbox]), .ginput_container .input-group > textarea:not(:focus).is-invalid,
+.was-validated .input-group > .form-control:not(:focus):invalid, .was-validated .acf-field .acf-input .input-group > input[type=text]:not(:focus):invalid, .acf-field .acf-input .was-validated .input-group > input[type=text]:not(:focus):invalid,
+.was-validated .acf-field .acf-input .input-group > input[type=email]:not(:focus):invalid,
+.acf-field .acf-input .was-validated .input-group > input[type=email]:not(:focus):invalid,
+.was-validated .acf-field .acf-input .input-group > input[type=number]:not(:focus):invalid,
+.acf-field .acf-input .was-validated .input-group > input[type=number]:not(:focus):invalid,
+.was-validated .acf-field .acf-input .input-group > input[type=url]:not(:focus):invalid,
+.acf-field .acf-input .was-validated .input-group > input[type=url]:not(:focus):invalid,
+.was-validated .acf-field .acf-input .input-group > input[type=password]:not(:focus):invalid,
+.acf-field .acf-input .was-validated .input-group > input[type=password]:not(:focus):invalid,
+.was-validated .acf-field .acf-input .input-group > textarea:not(:focus):invalid,
+.acf-field .acf-input .was-validated .input-group > textarea:not(:focus):invalid, .input-group > .form-control:not(:focus).is-invalid, .acf-field .acf-input .input-group > input[type=text]:not(:focus).is-invalid,
+.acf-field .acf-input .input-group > input[type=email]:not(:focus).is-invalid,
+.acf-field .acf-input .input-group > input[type=number]:not(:focus).is-invalid,
+.acf-field .acf-input .input-group > input[type=url]:not(:focus).is-invalid,
+.acf-field .acf-input .input-group > input[type=password]:not(:focus).is-invalid,
+.acf-field .acf-input .input-group > textarea:not(:focus).is-invalid,
 .was-validated .input-group > .form-select:not(:focus):invalid,
+.was-validated .acf-input .input-group > select:not(:focus):invalid,
+.acf-input .was-validated .input-group > select:not(:focus):invalid,
 .input-group > .form-select:not(:focus).is-invalid,
+.acf-input .input-group > select:not(:focus).is-invalid,
 .was-validated .input-group > .form-floating:not(:focus-within):invalid,
 .input-group > .form-floating:not(:focus-within).is-invalid {
   z-index: 4;
@@ -2816,6 +3164,8 @@ textarea.form-control-lg {
   text-decoration: none;
   vertical-align: middle;
   cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
   border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
   border-radius: var(--bs-btn-border-radius);
@@ -5177,6 +5527,8 @@ textarea.form-control-lg {
 }
 .btn-close:disabled, .btn-close.disabled {
   pointer-events: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
   user-select: none;
   opacity: 0.25;
 }
@@ -5223,6 +5575,7 @@ textarea.form-control-lg {
   --bs-toast-zindex: 1090;
   position: absolute;
   z-index: var(--bs-toast-zindex);
+  width: -moz-max-content;
   width: max-content;
   max-width: 100%;
   pointer-events: none;
@@ -5828,6 +6181,7 @@ textarea.form-control-lg {
   float: left;
   width: 100%;
   margin-right: -100%;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   transition: transform 0.6s ease-in-out;
 }
@@ -6654,13 +7008,16 @@ textarea.form-control-lg {
   }
 }
 .placeholder-wave {
+  -webkit-mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
   mask-image: linear-gradient(130deg, #000 55%, rgba(0, 0, 0, 0.8) 75%, #000 95%);
+  -webkit-mask-size: 200% 100%;
   mask-size: 200% 100%;
   animation: placeholder-wave 2s linear infinite;
 }
 
 @keyframes placeholder-wave {
   100% {
+    -webkit-mask-position: -200% 0%;
     mask-position: -200% 0%;
   }
 }
@@ -7674,7 +8031,7 @@ textarea.form-control-lg {
   margin-bottom: 0.5rem !important;
 }
 
-.mb-3 {
+.mb-3, .acf-field {
   margin-bottom: 1rem !important;
 }
 
@@ -8225,14 +8582,20 @@ textarea.form-control-lg {
 }
 
 .user-select-all {
+  -webkit-user-select: all !important;
+  -moz-user-select: all !important;
   user-select: all !important;
 }
 
 .user-select-auto {
+  -webkit-user-select: auto !important;
+  -moz-user-select: auto !important;
   user-select: auto !important;
 }
 
 .user-select-none {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
   user-select: none !important;
 }
 
@@ -10983,6 +11346,8 @@ body {
   border: 1px solid #ced4da;
   border-radius: 0.375rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  -webkit-appearance: none;
+  -moz-appearance: none;
   appearance: none;
 }
 @media (prefers-reduced-motion: reduce) {
@@ -21660,7 +22025,7 @@ strong,
   background-image: url(../img/bg-3.svg);
 }
 
-.button, .wp-block-search__button, .gform_button.wp-block-search__button, .blog_index__categories a, .blog_index__categories a.gform_button, .gform_button.button.button, .gform_button.wp-block-search__button, .gform_button.wp-block-search__button, .gform_button.wp-block-search__button, .gform_button.wp-block-search__button, .blog_index__categories a.gform_button, .blog_index__categories a.gform_button, .blog_index__categories a.gform_button, .blog_index__categories a.gform_button, header .nav-button > a.gform_button.nav-link, header .nav-button > a.nav-link {
+.button, .wp-block-search__button, .blog_index__categories a, header .nav-button > a.nav-link {
   display: inline-block;
   padding: 1rem 2rem;
   align-self: center;
@@ -21673,7 +22038,7 @@ strong,
   line-height: 1;
   transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
-.button:disabled, .wp-block-search__button:disabled, .gform_button.wp-block-search__button:disabled, .blog_index__categories a:disabled, .blog_index__categories a.gform_button:disabled, .gform_button.button:disabled, header .nav-button > a.nav-link:disabled {
+.button:disabled, .wp-block-search__button:disabled, .blog_index__categories a:disabled, header .nav-button > a.nav-link:disabled {
   border-color: var(--col-grey-200);
   background-color: var(--col-grey-200);
 }
@@ -21803,8 +22168,10 @@ header .dropdown.current-menu-item::after {
   margin-inline: auto;
 }
 .footer__menu ul {
+  -moz-columns: 2;
   columns: 2;
   list-style: none;
+  -webkit-padding-start: 0;
   padding-inline-start: 0;
 }
 .footer__socials {
@@ -21832,51 +22199,8 @@ header .dropdown.current-menu-item::after {
   color: var(--col-green-200);
 }
 
-.gform_required_legend,
-.gfield_required {
-  display: none !important;
-}
-
-.ginput_container input {
-  border-radius: 0 !important;
-}
-
-.gfield_label {
-  font-weight: var(--fw-500) !important;
-}
-
-.gform_button.button.button, .gform_button.wp-block-search__button, .gform_button.wp-block-search__button, .gform_button.wp-block-search__button, .gform_button.wp-block-search__button, .blog_index__categories a.gform_button, .blog_index__categories a.gform_button, .blog_index__categories a.gform_button, .blog_index__categories a.gform_button, header .nav-button > a.gform_button.nav-link {
-  border-radius: 100vw;
-  display: inline-block;
-  background-color: var(--col-blue-700);
-  color: #fff;
-  text-align: center;
-  transition: all var(--transition);
-  flex-basis: 274px;
-  font-weight: var(--fw-400);
-  padding: 0.75rem 1rem;
-  line-height: 22.4px;
-  font-size: 1rem;
-}
-
-.cmApp_signupContainer.cmApp_embedded {
-  max-width: unset !important;
-  width: unset !important;
-}
-
-#cmApp_signupEmail {
-  border-radius: 0.365rem !important;
-}
-
-#cmApp_signupForm {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-#cmApp_signupForm #cmApp_errorAll {
-  grid-column: 1/4;
-}
-#cmApp_signupForm .cmApp_fieldWrap {
-  grid-column: 1/4;
+.acf-field .acf-label label {
+  font-weight: var(--fw-700) !important;
 }
 
 .blog_index {
@@ -21939,6 +22263,7 @@ header .dropdown.current-menu-item::after {
 .blog_index__card .blog_index__image {
   border-radius: 0 var(--_br2) 0 var(--_br2);
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   aspect-ratio: 9/6;
 }
@@ -22009,6 +22334,7 @@ header .dropdown.current-menu-item::after {
 .single__image {
   border-radius: 0 var(--_br2) 0 var(--_br2);
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   aspect-ratio: 16/9;
   margin-bottom: 1rem;
@@ -22040,6 +22366,7 @@ header .dropdown.current-menu-item::after {
 .related__image {
   border-radius: 0 var(--_br2) 0 var(--_br2);
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   aspect-ratio: 16/9;
   margin-bottom: 0.5rem;
@@ -22062,6 +22389,7 @@ header .dropdown.current-menu-item::after {
   height: 450px;
 }
 .home_hero .splide__slide img {
+  -o-object-fit: cover;
   object-fit: cover;
   width: 100%;
 }
@@ -22080,6 +22408,7 @@ header .dropdown.current-menu-item::after {
   height: 450px;
 }
 .page_hero .splide__slide img {
+  -o-object-fit: cover;
   object-fit: cover;
   width: 100%;
 }
@@ -22095,6 +22424,7 @@ header .dropdown.current-menu-item::after {
 .event_row {
   display: grid;
   grid-template-areas: "title" "date" "address" "detail";
+  -moz-column-gap: 0.5rem;
   column-gap: 0.5rem;
   align-items: center;
   padding-block: 0.5rem;
@@ -22146,6 +22476,7 @@ header .dropdown.current-menu-item::after {
 
 .text_image__image img {
   aspect-ratio: 4/3;
+  -o-object-fit: cover;
   object-fit: cover;
   border-radius: 0 24px 0 24px;
   box-shadow: var(--shadow-lg);
@@ -22154,6 +22485,7 @@ header .dropdown.current-menu-item::after {
 .latest_blogs .blog__grid {
   display: grid;
   grid-template-areas: "feature" "first" "second" "third";
+  -moz-column-gap: 3rem;
   column-gap: 3rem;
   row-gap: 1.5rem;
 }
@@ -22195,6 +22527,7 @@ header .dropdown.current-menu-item::after {
 .latest_blogs .blog__card .blog__image {
   border-radius: 0 var(--_br2) 0 var(--_br2);
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
 }
 .latest_blogs .blog__card .blog__content {
@@ -22256,6 +22589,7 @@ header .dropdown.current-menu-item::after {
 .recent_posts__card .recent_posts__image {
   grid-area: stack;
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   aspect-ratio: 1;
 }
@@ -22301,12 +22635,14 @@ header .dropdown.current-menu-item::after {
 .product__image {
   grid-area: stack;
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   aspect-ratio: 5/6;
 }
 .product__detail {
   grid-area: stack;
   background-color: var(--col-green-100);
+  height: -moz-max-content;
   height: max-content;
   align-self: end;
   justify-items: start;
@@ -22336,7 +22672,9 @@ header .dropdown.current-menu-item::after {
   grid-area: stack;
   margin-top: var(--_pad);
   margin-left: var(--_pad);
+  width: -moz-max-content;
   width: max-content;
+  height: -moz-max-content;
   height: max-content;
   background-color: var(--col-green-100);
   padding-inline: 0.5rem;
@@ -22353,6 +22691,7 @@ header .dropdown.current-menu-item::after {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 0.5rem;
+  width: -moz-max-content;
   width: max-content;
 }
 @media (min-width: 576px) {
@@ -22423,6 +22762,7 @@ header .dropdown.current-menu-item::after {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-areas: "image common" "image scientific" "aka aka";
+  -moz-column-gap: 1rem;
   column-gap: 1rem;
   row-gap: 0.25rem;
   align-items: center;
@@ -22436,6 +22776,7 @@ header .dropdown.current-menu-item::after {
   grid-area: image;
   width: 80px;
   height: 80px;
+  -o-object-fit: cover;
   object-fit: cover;
   border-radius: 5px;
 }
@@ -22502,6 +22843,7 @@ header .dropdown.current-menu-item::after {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  width: -moz-max-content;
   width: max-content;
   margin-bottom: 1rem;
   font-size: var(--fs-500);
@@ -22512,6 +22854,7 @@ header .dropdown.current-menu-item::after {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
+  -moz-column-gap: 1rem;
   column-gap: 1rem;
   padding-bottom: 0.25rem;
   border-bottom: 1px solid var(--col-green-300);
@@ -22541,7 +22884,9 @@ header .dropdown.current-menu-item::after {
 .woocommerce-product-gallery__image img {
   width: 100%;
   height: 100%;
+  -o-object-fit: cover;
   object-fit: cover; /* Ensures the image fills the container */
+  -o-object-position: center;
   object-position: center; /* Centers the image */
 }
 
@@ -22582,6 +22927,7 @@ header .dropdown.current-menu-item::after {
   width: 100%;
   display: flex;
   justify-content: center;
+  -moz-column-gap: 1rem;
   column-gap: 1rem;
   z-index: 999;
   border-radius: 0 var(--_br1) 0 var(--_br1);
@@ -22597,6 +22943,7 @@ header .dropdown.current-menu-item::after {
     top: 15vh;
     right: 0;
     bottom: unset;
+    width: -moz-max-content;
     width: max-content;
     display: block;
   }
@@ -22634,6 +22981,7 @@ header .dropdown.current-menu-item::after {
   grid-area: stack;
   margin-bottom: 0 !important;
   width: 100%;
+  -o-object-fit: cover;
   object-fit: cover;
   aspect-ratio: 1;
 }
@@ -22641,7 +22989,9 @@ header .dropdown.current-menu-item::after {
   grid-area: stack;
   margin-top: var(--_pad);
   margin-left: var(--_pad);
+  width: -moz-max-content;
   width: max-content;
+  height: -moz-max-content;
   height: max-content;
   background-color: var(--col-green-100);
   padding-inline: 0.5rem;
@@ -22649,6 +22999,7 @@ header .dropdown.current-menu-item::after {
 }
 .woocommerce-LoopProduct-link .product-details {
   background-color: var(--col-green-100);
+  height: -moz-max-content;
   height: max-content;
   align-self: end;
   justify-items: start;
@@ -22708,6 +23059,7 @@ main a.anchor {
 }
 main a.arrow-link {
   position: relative;
+  width: -moz-max-content;
   width: max-content;
 }
 main a.arrow-link::before, main a.arrow-link::after {
@@ -22733,9 +23085,11 @@ main a.arrow-link:hover::before {
 
 @media (min-width: 992px) {
   .cols-lg-2 {
+    -moz-columns: 2;
     columns: 2;
   }
   .cols-lg-3 {
+    -moz-columns: 3;
     columns: 3;
   }
 }
@@ -22837,6 +23191,7 @@ main a.arrow-link:hover::before {
 }
 
 .col-gap-3 {
+  -moz-column-gap: 1rem;
   column-gap: 1rem;
 }
 
@@ -22848,7 +23203,12 @@ main a.arrow-link:hover::before {
   margin-bottom: 1em;
 }
 
-.form-control, .ginput_container input:not([type=checkbox]), .ginput_container textarea, #cmApp_signupEmail {
+.form-control, .acf-field .acf-input input[type=text],
+.acf-field .acf-input input[type=email],
+.acf-field .acf-input input[type=number],
+.acf-field .acf-input input[type=url],
+.acf-field .acf-input input[type=password],
+.acf-field .acf-input textarea {
   border-radius: 0 0.75rem 0 0.75rem;
 }
 

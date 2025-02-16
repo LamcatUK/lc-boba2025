@@ -1,58 +1,37 @@
-.gform_required_legend,
-.gfield_required {
-    display: none !important;
+// Extend Bootstrap 5 form classes for ACF
+.acf-field {
+  @extend .mb-3; // Adds Bootstrap spacing between fields
 }
 
-.ginput_container input {
-    border-radius: 0 !important;
-}
-.gfield_label {
-    font-weight: var(--fw-500) !important;
+.acf-field .acf-label label {
+  @extend .form-label;
+  font-weight: var(--fw-700) !important;
 }
 
-.gform_button.button.button {
-    @extend .button;
-    border-radius: 100vw;
-    display: inline-block;
-    background-color: var(--col-blue-700);
-    color: #fff;
-    text-align: center;
-    transition: all var(--transition);
-    flex-basis: 274px;
-    font-weight: var(--fw-400);
-    padding: 0.75rem 1rem;
-    line-height: 22.4px;
-    font-size: 1rem;
+.acf-field .acf-input input[type="text"],
+.acf-field .acf-input input[type="email"],
+.acf-field .acf-input input[type="number"],
+.acf-field .acf-input input[type="url"],
+.acf-field .acf-input input[type="password"],
+.acf-field .acf-input textarea {
+  @extend .form-control;
 }
 
-.ginput_container {
-    input:not([type="checkbox"]), textarea {
-        @extend .form-control;
-    }
-    input[type="checkbox"] {
-        @extend .form-check;
-    }
+.acf-input select {
+  @extend .form-select;
 }
 
-
-// I THOUGHT GRAVITY FORMS WAS BAD
-// UNTIL I ENCOUNTERED CAMPAIGN MONITOR 
-.cmApp_signupContainer.cmApp_embedded {
-    max-width: unset !important;
-    width: unset !important;
+.acf-field[data-type="checkbox"],
+.acf-field[data-type="radio"] {
+  @extend .form-check;
 }
-#cmApp_signupEmail {
-    @extend .form-control;
-    border-radius: .365rem !important;
-}
-#cmApp_signupForm {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    #cmApp_errorAll {
-        grid-column: 1 / 4;
-    }
-    .cmApp_fieldWrap {
-        grid-column: 1 / 4;
-    }
 
+.acf-field[data-type="checkbox"] input,
+.acf-field[data-type="radio"] input {
+  @extend .form-check-input;
+}
+
+.acf-field[data-type="checkbox"] label,
+.acf-field[data-type="radio"] label {
+  @extend .form-check-label;
 }
