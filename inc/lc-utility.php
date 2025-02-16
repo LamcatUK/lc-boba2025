@@ -83,7 +83,7 @@ foreach ($social_types as $type) {
 }
 
 // Generate a single shortcode to output all social icons
-add_shortcode('social_icons', function () {
+add_shortcode('social_icons', function ($atts) {
     $atts = shortcode_atts([
         'class' => '',
     ], $atts, 'social_icons');
