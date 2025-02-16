@@ -88,11 +88,11 @@ get_header('shop'); ?>
 						$permalink = get_permalink($related_id);
 					?>
 						<div class="product col-md-6 col-lg-3">
-							<a href="<?= esc_url(get_permalink()) ?>" class="product__card">
+							<a href="<?= esc_url($permalink) ?>" class="product__card">
 								<?= get_the_post_thumbnail($related_id, 'woocommerce_thumbnail', array('class' => 'product__image')) ?>
 								<div class="product__price"><?= $related_product->get_price_html() ?></div>
 								<div class="product__detail">
-									<h3><?= esc_html(get_the_title()) ?></h3>
+									<h3><?= esc_html(get_the_title($related_id)) ?></h3>
 									<div class="mb-3"><?= $related_product->get_short_description() ?></div>
 									<div class="reserve">View Details</div>
 								</div>
