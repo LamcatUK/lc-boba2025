@@ -110,6 +110,8 @@ add_shortcode('social_icons', function ($atts) {
         }
     }
 
+    $class = esc_attr(trim($atts['class']));
+
     return !empty($icons) ? '<div class="social-icons ' . $class . '">' . implode(' ', $icons) . '</div>' : '';
 });
 
