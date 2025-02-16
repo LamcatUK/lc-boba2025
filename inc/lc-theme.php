@@ -5,6 +5,7 @@ defined('ABSPATH') || exit;
 require_once LC_THEME_DIR . '/inc/lc-utility.php';
 require_once LC_THEME_DIR . '/inc/lc-blocks.php';
 require_once LC_THEME_DIR . '/inc/post-types.php';
+require_once LC_THEME_DIR . '/inc/lc-woocommerce.php';
 // require_once LC_THEME_DIR . '/inc/lc-news.php';
 
 
@@ -44,7 +45,6 @@ function remove_comments_menu()
 add_filter('theme_page_templates', 'child_theme_remove_page_template');
 function child_theme_remove_page_template($page_templates)
 {
-    // unset($page_templates['page-templates/blank.php'],$page_templates['page-templates/empty.php'], $page_templates['page-templates/fullwidthpage.php'], $page_templates['page-templates/left-sidebarpage.php'], $page_templates['page-templates/right-sidebarpage.php'], $page_templates['page-templates/both-sidebarspage.php']);
     unset($page_templates['page-templates/blank.php'], $page_templates['page-templates/empty.php'], $page_templates['page-templates/left-sidebarpage.php'], $page_templates['page-templates/right-sidebarpage.php'], $page_templates['page-templates/both-sidebarspage.php']);
     return $page_templates;
 }
@@ -204,8 +204,8 @@ function cb_theme_enqueue()
     wp_enqueue_script('aos', 'https://unpkg.com/aos@2.3.1/dist/aos.js', array(), null, true);
     wp_enqueue_style('splide-css', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/css/splide.min.css', array(), null);
     wp_enqueue_script('splide-js', 'https://cdn.jsdelivr.net/npm/@splidejs/splide@4/dist/js/splide.min.js', array(), null, true);
-    // wp_deregister_script('jquery');
-    // wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.6.3.min.js', array(), null, true);
+    wp_deregister_script('jquery');
+    wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.6.3.min.js', array(), null, true);
     // wp_enqueue_script('parallax', get_stylesheet_directory_uri() . '/js/parallax.min.js', array('jquery'), null, true);
 
 }

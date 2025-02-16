@@ -70,9 +70,43 @@ get_header('shop'); ?>
 		</div>
 
 		<!-- Related Products -->
-		<div class="related-products mt-5">
-			<?php woocommerce_output_related_products(); ?>
-		</div>
+
+		<?php
+		// Get the current product
+		$product = wc_get_product(get_the_ID());
+
+		// Get related product IDs
+		$related_ids = wc_get_related_products($product->get_id(), 4); // Get up to 4 related products
+
+		if (! empty($related_ids)) { ?>
+			<div class="container-xl mt-5 mb-5">
+				<h2 class="mb-4">You May Also Like</h2>
+				<div class="row">
+					<?php
+					foreach ($related_ids as $related_id) {
+						$related_product = wc_get_product($related_id);
+						$permalink = get_permalink($related_id);
+					?>
+						<div class="product col-md-6 col-lg-3">
+							<a href="<?= esc_url(get_permalink()) ?>" class="product__card">
+								<?= get_the_post_thumbnail($related_id, 'woocommerce_thumbnail', array('class' => 'product__image')) ?>
+								<div class="product__price"><?= $related_product->get_price_html() ?></div>
+								<div class="product__detail">
+									<h3><?= esc_html(get_the_title()) ?></h3>
+									<div class="mb-3"><?= $related_product->get_short_description() ?></div>
+									<div class="reserve">View Details</div>
+								</div>
+							</a>
+						</div>
+
+
+					<?php
+					}
+					?>
+				</div>
+			</div>
+		<?php } ?>
+
 
 		<?php do_action('woocommerce_after_single_product'); ?>
 

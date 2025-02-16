@@ -38,7 +38,7 @@
   --fw-400: 400;
   --fw-700: 700;
   /* Effects */
-  --transition: 250ms ease-out;
+  --transition: 200ms ease-in-out;
   /* Shadow */
   --shadow-lg: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
@@ -22408,6 +22408,7 @@ header .dropdown.current-menu-item::after {
   height: max-content;
   background-color: var(--col-green-100);
   padding-inline: 0.5rem;
+  color: var(--col-green-900);
   transition: opacity var(--transition);
 }
 @media (hover: hover) and (pointer: fine) {
@@ -22647,6 +22648,98 @@ header .dropdown.current-menu-item::after {
   background-color: white;
   padding: var(--_pad);
   box-shadow: var(--shadow-sm);
+}
+
+#stickyCart {
+  --_br1: 1rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  -moz-column-gap: 1rem;
+  column-gap: 1rem;
+  z-index: 999;
+  border-radius: 0 var(--_br1) 0 var(--_br1);
+  background-color: var(--col-green-400);
+  color: white;
+  padding: 1rem;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--transition), transform var(--transition), background-color var(--transition);
+}
+@media (min-width: 768px) {
+  #stickyCart {
+    top: 15vh;
+    right: 0;
+    bottom: unset;
+    width: -moz-max-content;
+    width: max-content;
+    display: block;
+  }
+  #stickyCart div {
+    margin-bottom: 0.25rem;
+  }
+}
+#stickyCart:hover {
+  color: white;
+  box-shadow: var(--shadow-sm);
+  transform: translateY(2px);
+  background-color: var(--col-green-500);
+}
+
+.woocommerce-LoopProduct-link {
+  display: block;
+  text-decoration: none;
+  border-radius: 0 var(--_br1) 0 var(--_br1);
+  background-color: var(--col-green-100);
+  color: var(--col-green-900);
+  height: 100%;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.woocommerce-LoopProduct-link:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(2px);
+}
+.woocommerce-LoopProduct-link .product-image-wrapper {
+  display: grid;
+  grid-template-areas: "stack";
+}
+.woocommerce-LoopProduct-link .product-image-wrapper img {
+  grid-area: stack;
+  margin-bottom: 0 !important;
+  width: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  aspect-ratio: 1;
+}
+.woocommerce-LoopProduct-link .product-image-wrapper .product-price {
+  grid-area: stack;
+  margin-top: var(--_pad);
+  margin-left: var(--_pad);
+  width: -moz-max-content;
+  width: max-content;
+  height: -moz-max-content;
+  height: max-content;
+  background-color: var(--col-green-100);
+  padding-inline: 0.5rem;
+  color: var(--col-green-900);
+}
+.woocommerce-LoopProduct-link .product-details {
+  background-color: var(--col-green-100);
+  height: -moz-max-content;
+  height: max-content;
+  align-self: end;
+  justify-items: start;
+  padding: var(--_pad) calc(var(--_pad) * 2);
+  color: var(--col-green-900);
+}
+.woocommerce-LoopProduct-link .product-details h3, .woocommerce-LoopProduct-link .product-details .h3 {
+  color: var(--col-green-500);
+  font-size: var(--fs-500);
+  margin-bottom: 0.5rem;
 }
 
 main {

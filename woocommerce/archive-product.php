@@ -1,97 +1,73 @@
 <?php
-/**
- * The Template for displaying product archives, including the main shop page which is a post type archive
- *
- * This template can be overridden by copying it to yourtheme/woocommerce/archive-product.php.
- *
- * HOWEVER, on occasion WooCommerce will need to update template files and you
- * (the theme developer) will need to copy the new files to your theme to
- * maintain compatibility. We try to do this as little as possible, but it does
- * happen. When this occurs the version of the template file will be bumped and
- * the readme will list any important changes.
- *
- * @see https://woocommerce.com/document/template-structure/
- * @package WooCommerce\Templates
- * @version 8.6.0
- */
-
-defined( 'ABSPATH' ) || exit;
-
-get_header( 'shop' );
 
 /**
- * Hook: woocommerce_before_main_content.
- *
- * @hooked woocommerce_output_content_wrapper - 10 (outputs opening divs for the content)
- * @hooked woocommerce_breadcrumb - 20
- * @hooked WC_Structured_Data::generate_website_data() - 30
+ * Clean WooCommerce Archive Product Template
+ * Removes all hooks and uses normal PHP + Bootstrap 5
  */
-do_action( 'woocommerce_before_main_content' );
 
-/**
- * Hook: woocommerce_shop_loop_header.
- *
- * @since 8.6.0
- *
- * @hooked woocommerce_product_taxonomy_archive_header - 10
- */
-do_action( 'woocommerce_shop_loop_header' );
+defined('ABSPATH') || exit;
 
-if ( woocommerce_product_loop() ) {
+get_header('shop'); ?>
 
-	/**
-	 * Hook: woocommerce_before_shop_loop.
-	 *
-	 * @hooked woocommerce_output_all_notices - 10
-	 * @hooked woocommerce_result_count - 20
-	 * @hooked woocommerce_catalog_ordering - 30
-	 */
-	do_action( 'woocommerce_before_shop_loop' );
+<div class="container-xl py-5">
 
-	woocommerce_product_loop_start();
+	<!-- Page Title -->
+	<header class="woocommerce-products-header mb-4">
+		<h1 class="woocommerce-products-header__title page-title"><?php woocommerce_page_title(); ?></h1>
+	</header>
 
-	if ( wc_get_loop_prop( 'total' ) ) {
-		while ( have_posts() ) {
-			the_post();
+	<!-- WooCommerce Notices -->
+	<div class="woocommerce-notices-wrapper"><?php wc_print_notices(); ?></div>
 
-			/**
-			 * Hook: woocommerce_shop_loop.
-			 */
-			do_action( 'woocommerce_shop_loop' );
+	<!-- Sorting & Result Count -->
+	<div class="row align-items-center mb-4">
+		<div class="col-md-6">
+			<p class="woocommerce-result-count mb-0">
+				<?php woocommerce_result_count(); ?>
+			</p>
+		</div>
+		<div class="col-md-6 text-md-end">
+			<?php woocommerce_catalog_ordering(); ?>
+		</div>
+	</div>
 
-			wc_get_template_part( 'content', 'product' );
+	<!-- Product Grid -->
+	<div class="row">
+		<?php
+		if (have_posts()) {
+			while (have_posts()) {
+				the_post();
+				$product = wc_get_product(get_the_ID());
+		?>
+
+				<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+					<a href="<?php the_permalink(); ?>" class="product woocommerce-LoopProduct-link woocommerce-loop-product__link">
+						<div class="product-image-wrapper">
+							<?= woocommerce_get_product_thumbnail() ?>
+							<div class="product-price"><?= $product->get_price_html() ?></div>
+						</div>
+						<div class="product-details">
+							<h3 class="product-title h5 mb-2"><?= get_the_title() ?></h3>
+							<div><?= $product->get_short_description() ?></div>
+						</div>
+					</a>
+				</div>
+
+			<?php
+			}
+		} else {
+			?>
+			<p class="col-12 text-center"><?php esc_html_e('No products found', 'woocommerce'); ?></p>
+		<?php
 		}
-	}
+		?>
+	</div>
 
-	woocommerce_product_loop_end();
+	<!-- Pagination -->
+	<div class="mt-5">
+		<?php woocommerce_pagination(); ?>
+	</div>
 
-	/**
-	 * Hook: woocommerce_after_shop_loop.
-	 *
-	 * @hooked woocommerce_pagination - 10
-	 */
-	do_action( 'woocommerce_after_shop_loop' );
-} else {
-	/**
-	 * Hook: woocommerce_no_products_found.
-	 *
-	 * @hooked wc_no_products_found - 10
-	 */
-	do_action( 'woocommerce_no_products_found' );
-}
+</div>
 
-/**
- * Hook: woocommerce_after_main_content.
- *
- * @hooked woocommerce_output_content_wrapper_end - 10 (outputs closing divs for the content)
- */
-do_action( 'woocommerce_after_main_content' );
-
-/**
- * Hook: woocommerce_sidebar.
- *
- * @hooked woocommerce_get_sidebar - 10
- */
-do_action( 'woocommerce_sidebar' );
-
-get_footer( 'shop' );
+<?php get_footer('shop'); ?>
