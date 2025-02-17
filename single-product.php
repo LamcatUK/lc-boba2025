@@ -29,19 +29,69 @@ get_header('shop'); ?>
 
 				<!-- Left Column: Product Images with Lightbox Fix -->
 				<div class="col-md-6">
-					<?php
-					do_action('woocommerce_before_single_product');
+					<div id="product-gallery" class="splide mb-4">
+						<div class="splide__track">
+							<ul class="splide__list">
+								<?php
+								global $product;
+								$post_thumbnail_id = $product->get_image_id();
+								$attachment_ids = $product->get_gallery_image_ids();
 
-					if (post_password_required()) {
-						echo get_the_password_form();
-						return;
-					}
+								// Add Primary Image
+								if ($post_thumbnail_id) {
+									$full_image_url = wp_get_attachment_image_url($post_thumbnail_id, 'full');
+									$large_image_url = wp_get_attachment_image_url($post_thumbnail_id, 'large');
+								?>
+									<li class="splide__slide">
+										<a href="<?php echo esc_url($full_image_url); ?>" data-lightbox="product-gallery">
+											<img src="<?php echo esc_url($large_image_url); ?>" alt="Primary Image">
+										</a>
+									</li>
+									<?php
+								}
 
-					// Ensure WooCommerce's product gallery scripts are enqueued properly
-					if (function_exists('woocommerce_show_product_images')) {
-						woocommerce_show_product_images();
-					}
-					?>
+								// Add Gallery Images
+								if ($attachment_ids) {
+									foreach ($attachment_ids as $attachment_id) {
+										$full_image_url = wp_get_attachment_image_url($attachment_id, 'full');
+										$large_image_url = wp_get_attachment_image_url($attachment_id, 'large');
+									?>
+										<li class="splide__slide">
+											<a href="<?php echo esc_url($full_image_url); ?>" data-lightbox="product-gallery">
+												<img src="<?php echo esc_url($large_image_url); ?>" alt="">
+											</a>
+										</li>
+								<?php
+									}
+								}
+								?>
+							</ul>
+						</div>
+					</div>
+
+					<!-- Thumbnail Navigation -->
+					<div id="product-thumbnails" class="splide">
+						<div class="splide__track">
+							<ul class="splide__list">
+								<?php
+								// Thumbnails (Primary + Gallery)
+								if ($post_thumbnail_id) {
+									$thumb_url = wp_get_attachment_image_url($post_thumbnail_id, 'thumbnail');
+									echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
+								}
+
+								if ($attachment_ids) {
+									foreach ($attachment_ids as $attachment_id) {
+										$thumb_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
+										echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
+									}
+								}
+								?>
+							</ul>
+						</div>
+					</div>
+
+
 				</div>
 
 				<!-- Right Column: Product Summary -->

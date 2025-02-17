@@ -35,70 +35,89 @@ function create_woocommerce_product($post_id)
         return;
     }
 
-    // Ensure this is only for new product submissions
+    // Prevent running on autosave or revisions
     if (wp_is_post_revision($post_id) || wp_is_post_autosave($post_id)) {
         return;
     }
 
-    // Get form data
+    // Get ACF fields
     $product_name = get_field('product_name', $post_id);
     $short_desc = get_field('short_description', $post_id);
     $long_desc = get_field('long_description', $post_id);
     $price = get_field('price', $post_id);
     $category = get_field('category', $post_id);
     $tags = get_field('tags', $post_id);
-    $images = get_field('product_images', $post_id); // Assuming this is a gallery field
+    $images = get_field('product_images', $post_id); // ACF Gallery Field
 
+    // Ensure post slug is clean
     $post_slug = sanitize_title($product_name);
 
-    // Set product title and descriptions
-    wp_update_post(array(
+    // Update the post
+    wp_update_post([
         'ID'           => $post_id,
         'post_title'   => $product_name,
         'post_content' => $long_desc,
         'post_excerpt' => $short_desc,
         'post_name'    => $post_slug,
-    ));
+    ]);
 
     // Set product price
     update_post_meta($post_id, '_price', $price);
     update_post_meta($post_id, '_regular_price', $price);
 
-    // Ensure $category is an array
-    $category = get_field('category', $post_id);
+    // Assign categories
     if (!empty($category)) {
         if (!is_array($category)) {
-            $category = array($category); // Convert single category to array
+            $category = [$category];
         }
-        wp_set_object_terms($post_id, $category, 'product_cat'); // Assign categories
+        wp_set_object_terms($post_id, $category, 'product_cat');
     }
 
-    // Ensure $tags is processed correctly
-    $tags = get_field('tags', $post_id);
+    // Assign tags
     if (!empty($tags)) {
         if (is_array($tags)) {
-            wp_set_object_terms($post_id, $tags, 'product_tag'); // Assign multiple tags
+            wp_set_object_terms($post_id, $tags, 'product_tag');
         } else {
-            wp_set_object_terms($post_id, array_map('trim', explode(',', $tags)), 'product_tag'); // Handle comma-separated string
+            wp_set_object_terms($post_id, array_map('trim', explode(',', $tags)), 'product_tag');
         }
     }
 
-    // Handle images & videos
-    if (!empty($images)) {
-        $gallery_ids = array();
-        foreach ($images as $image) {
+    // Handle images
+    if (!empty($images) && is_array($images)) {
+        $gallery_ids = [];
+        $first_image_set = false;
+
+        foreach ($images as $index => $image) {
             $attachment_id = is_numeric($image) ? $image : attachment_url_to_postid($image);
+
             if ($attachment_id) {
-                $gallery_ids[] = $attachment_id;
+                if (!$first_image_set) {
+                    // ✅ Ensure first image is the thumbnail
+                    set_post_thumbnail($post_id, $attachment_id);
+                    update_post_meta($post_id, '_thumbnail_id', $attachment_id);
+                    $first_image_set = true;
+                } else {
+                    // ✅ Store remaining images for gallery
+                    $gallery_ids[] = $attachment_id;
+                }
             }
         }
+
         if (!empty($gallery_ids)) {
             update_post_meta($post_id, '_product_image_gallery', implode(',', $gallery_ids));
-            set_post_thumbnail($post_id, $gallery_ids[0]); // Set first image as featured image
+            // Ensure WooCommerce picks up gallery images correctly
+            delete_transient('wc_product_images_' . $post_id);
+            delete_transient('wc_product_variations_' . $post_id);
         }
     }
+
+    // ✅ Force WooCommerce to refresh the product images
+    delete_transient('wc_product_children_' . $post_id);
+    wc_delete_product_transients($post_id);
 }
 add_action('acf/save_post', 'create_woocommerce_product', 20);
+
+
 
 
 function custom_product_success_message($post_id)
@@ -161,7 +180,7 @@ function force_product_tags($post_id, $post, $update)
     // Only run for WooCommerce products, and prevent admin interference
     if ($post->post_type !== 'product' || is_admin()) return;
 
-    error_log("🔥 force_product_tags() running for post ID: $post_id");
+    // error_log("🔥 force_product_tags() running for post ID: $post_id");
 
     global $wpdb;
 
@@ -173,7 +192,7 @@ function force_product_tags($post_id, $post, $update)
 
     // Get new tags from the text field
     $new_tags_text = get_field('new_tags', $post_id);
-    error_log("🆕 New Tags Field: " . $new_tags_text);
+    // error_log("🆕 New Tags Field: " . $new_tags_text);
 
     if (!empty($new_tags_text)) {
         $new_tags_array = array_map('trim', explode(',', $new_tags_text));
@@ -185,14 +204,14 @@ function force_product_tags($post_id, $post, $update)
 
             if ($existing_term) {
                 $tag_id = (int) $existing_term['term_id'];
-                error_log("✅ Tag exists: $tag_name (ID: $tag_id)");
+                // error_log("✅ Tag exists: $tag_name (ID: $tag_id)");
             } else {
                 $new_term = wp_insert_term($tag_name, 'product_tag');
                 if (!is_wp_error($new_term)) {
                     $tag_id = (int) $new_term['term_id'];
-                    error_log("🆕 Tag created: $tag_name (ID: $tag_id)");
+                    // error_log("🆕 Tag created: $tag_name (ID: $tag_id)");
                 } else {
-                    error_log("❌ Error creating tag: " . $new_term->get_error_message());
+                    // error_log("❌ Error creating tag: " . $new_term->get_error_message());
                     continue;
                 }
             }
@@ -204,16 +223,16 @@ function force_product_tags($post_id, $post, $update)
     }
 
     $final_tags = array_unique($selected_tags);
-    error_log("🎯 Final Tags to Assign: " . print_r($final_tags, true));
+    // error_log("🎯 Final Tags to Assign: " . print_r($final_tags, true));
 
     if (!empty($final_tags)) {
         // 🚀 Force WooCommerce to accept these tags AFTER it finishes saving
         add_action('shutdown', function () use ($post_id, $final_tags) {
-            error_log("🔄 Running `wp_set_object_terms()` on shutdown for post ID: $post_id");
+            // error_log("🔄 Running `wp_set_object_terms()` on shutdown for post ID: $post_id");
             wp_set_object_terms($post_id, $final_tags, 'product_tag');
         });
 
-        error_log("✅ Tags scheduled for assignment on post ID: $post_id");
+        // error_log("✅ Tags scheduled for assignment on post ID: $post_id");
     }
 }
 

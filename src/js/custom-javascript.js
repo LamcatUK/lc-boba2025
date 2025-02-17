@@ -52,10 +52,6 @@ AOS.init({
   // Header background
   document.addEventListener("scroll", function () {
     var nav = document.getElementById("navbar");
-    //   var primaryNav = document.getElementById('primaryNav');
-    //   if (!primaryNav.classList.contains('show')) {
-    //       nav.classList.toggle('scrolled', window.scrollY > nav.offsetHeight);
-    //   }
     document.querySelectorAll(".dropdown-menu").forEach(function (dropdown) {
       dropdown.classList.remove("show");
     });
@@ -65,22 +61,27 @@ AOS.init({
     });
   });
 
-  // Toggle navdark class on nav toggle button click
-  //   document.getElementById('navToggle').addEventListener('click', function() {
-  //       var nav = document.getElementById('navbar');
-  //       nav.classList.toggle('navdark');
-  //   });
+  document.addEventListener("DOMContentLoaded", function () {
+    var main = new Splide("#product-gallery", {
+      type: "slide", // Prevents looping issues
+      perPage: 1,
+      pagination: false,
+      arrows: true,
+      cover: false,
+    });
 
-  // Hide menu on click outside
-  //   document.body.addEventListener('click', function(event) {
-  //       if (!event.target.closest('.navbar')) {
-  //           var navbarCollapse = document.querySelector('.navbar .navbar-collapse');
-  //           if (navbarCollapse) {
-  //               var collapseInstance = bootstrap.Collapse.getInstance(navbarCollapse);
-  //               if (collapseInstance) {
-  //                   collapseInstance.hide();
-  //               }
-  //           }
-  //       }
-  //   });
+    var thumbs = new Splide("#product-thumbnails", {
+      fixedWidth: 80,
+      fixedHeight: 80,
+      isNavigation: true,
+      gap: 10,
+      focus: 0,
+      pagination: false,
+      arrows: false,
+    });
+
+    main.sync(thumbs);
+    main.mount();
+    thumbs.mount();
+  });
 })();
