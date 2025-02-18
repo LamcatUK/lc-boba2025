@@ -29,6 +29,8 @@
                             if (!$thumbnail) {
                                 $thumbnail = '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="Placeholder Image" class="product__image">';
                             }
+                            print_r($thumbnail);
+
                             echo $thumbnail;
                             ?>
                             <div class="product__price"><?= $product->get_price_html() ?></div>
