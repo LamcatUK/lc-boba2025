@@ -613,6 +613,16 @@ function custom_image_optimizer($upload)
 }
 
 
+// CF7 honeypot
+add_filter('wpcf7_validate', function ($result, $tags) {
+    if (isset($_POST['honeypot']) && !empty($_POST['honeypot'])) {
+        $result->invalidate($tags[0], 'Spam detected.');
+    }
+    return $result;
+}, 10, 2);
+
+
+
 // CUSTOM LOGIN URL
 /*
 add_action('init', 'custom_login_url');
