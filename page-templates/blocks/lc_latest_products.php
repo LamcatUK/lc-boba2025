@@ -23,7 +23,14 @@
             ?>
                     <div class="product col-md-6 col-lg-3">
                         <a href="<?= esc_url(get_permalink()) ?>" class="product__card">
-                            <?= get_the_post_thumbnail(get_the_ID(), 'woocommerce_thumbnail', array('class' => 'product__image')) ?>
+                            <?php
+                            $thumbnail = get_the_post_thumbnail(get_the_ID(), 'woocommerce_thumbnail', array('class' => 'product__image'));
+
+                            if (!$thumbnail) {
+                                $thumbnail = '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="Placeholder Image" class="product__image">';
+                            }
+                            echo $thumbnail;
+                            ?>
                             <div class="product__price"><?= $product->get_price_html() ?></div>
                             <div class="product__detail">
                                 <h3><?= esc_html(get_the_title()) ?></h3>
