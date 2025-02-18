@@ -191,9 +191,9 @@
     "location": [
         [
             {
-                "param": "page_template",
+                "param": "user_role",
                 "operator": "==",
-                "value": "lc_add_product_form.php"
+                "value": "administrator"
             }
         ]
     ],
@@ -206,5 +206,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1739731264
+    "modified": 1739905191
 }
