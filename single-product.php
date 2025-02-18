@@ -162,7 +162,16 @@ get_header('shop'); ?>
 					?>
 						<div class="product col-md-6 col-lg-3">
 							<a href="<?= esc_url($permalink) ?>" class="product__card">
-								<?= get_the_post_thumbnail($related_id, 'woocommerce_thumbnail', array('class' => 'product__image')) ?>
+								<?php
+								$thumbnail = get_the_post_thumbnail($related_id, 'woocommerce_thumbnail', array('class' => 'product__image'));
+
+								if (!$thumbnail) {
+									$thumbnail = '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="Placeholder Image" class="product__image">';
+								}
+								print_r($thumbnail);
+
+								echo $thumbnail;
+								?>
 								<div class="product__price"><?= $related_product->get_price_html() ?></div>
 								<div class="product__detail">
 									<h3><?= esc_html(get_the_title($related_id)) ?></h3>
@@ -185,4 +194,35 @@ get_header('shop'); ?>
 
 	</div>
 </main>
-<?php get_footer('shop'); ?>
+<?php
+add_action('wp_footer', function () {
+?>
+	<script>
+		document.addEventListener("DOMContentLoaded", function() {
+			var main = new Splide("#product-gallery", {
+				type: "slide", // Prevents looping issues
+				perPage: 1,
+				pagination: false,
+				arrows: true,
+				cover: false,
+			});
+
+			var thumbs = new Splide("#product-thumbnails", {
+				fixedWidth: 80,
+				fixedHeight: 80,
+				isNavigation: true,
+				gap: 10,
+				focus: 0,
+				pagination: false,
+				arrows: false,
+			});
+
+			main.sync(thumbs);
+			main.mount();
+			thumbs.mount();
+		});
+	</script>
+<?php
+}, 9999);
+
+get_footer('shop'); ?>

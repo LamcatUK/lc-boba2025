@@ -62,26 +62,39 @@ AOS.init({
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    var main = new Splide("#product-gallery", {
-      type: "slide", // Prevents looping issues
-      perPage: 1,
-      pagination: false,
-      arrows: true,
-      cover: false,
-    });
+    var mainSlider = document.querySelector("#product-gallery");
+    var thumbSlider = document.querySelector("#product-thumbnails");
 
-    var thumbs = new Splide("#product-thumbnails", {
-      fixedWidth: 80,
-      fixedHeight: 80,
-      isNavigation: true,
-      gap: 10,
-      focus: 0,
-      pagination: false,
-      arrows: false,
-    });
+    // Ensure the main slider exists before running anything
+    if (mainSlider) {
+      var slideCount = mainSlider.querySelectorAll(".splide__slide").length;
+      var showArrows = slideCount > 1;
 
-    main.sync(thumbs);
-    main.mount();
-    thumbs.mount();
+      var main = new Splide(mainSlider, {
+        type: "slide", // Prevents looping issues
+        perPage: 1,
+        pagination: false,
+        arrows: showArrows,
+        cover: false,
+      });
+
+      // If the thumbnail slider also exists, sync it
+      if (thumbSlider) {
+        var thumbs = new Splide(thumbSlider, {
+          fixedWidth: 80,
+          fixedHeight: 80,
+          isNavigation: true,
+          gap: 10,
+          focus: 0,
+          pagination: false,
+          arrows: false,
+        });
+
+        main.sync(thumbs);
+        thumbs.mount();
+      }
+
+      main.mount();
+    }
   });
 })();
