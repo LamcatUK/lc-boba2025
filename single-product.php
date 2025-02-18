@@ -36,6 +36,7 @@ get_header('shop'); ?>
 								global $product;
 								$post_thumbnail_id = $product->get_image_id();
 								$attachment_ids = $product->get_gallery_image_ids();
+								$total_images = ($post_thumbnail_id ? 1 : 0) + count($attachment_ids); // Count total images
 
 								// Add Primary Image
 								if ($post_thumbnail_id) {
@@ -61,8 +62,20 @@ get_header('shop'); ?>
 												<img src="<?php echo esc_url($large_image_url); ?>" alt="">
 											</a>
 										</li>
-								<?php
+									<?php
 									}
+								}
+
+								// If no images exist, show WooCommerce placeholder
+								if ($total_images < 1) {
+									$placeholder_url = esc_url(wc_placeholder_img_src());
+									?>
+									<li class="splide__slide">
+										<a href="<?php echo esc_url($placeholder_url); ?>" data-lightbox="product-gallery">
+											<img src="<?php echo esc_url($placeholder_url); ?>" alt="Placeholder Image">
+										</a>
+									</li>
+								<?php
 								}
 								?>
 							</ul>
@@ -70,28 +83,38 @@ get_header('shop'); ?>
 					</div>
 
 					<!-- Thumbnail Navigation -->
-					<div id="product-thumbnails" class="splide">
-						<div class="splide__track">
-							<ul class="splide__list">
-								<?php
-								// Thumbnails (Primary + Gallery)
-								if ($post_thumbnail_id) {
-									$thumb_url = wp_get_attachment_image_url($post_thumbnail_id, 'thumbnail');
-									echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
-								}
-
-								if ($attachment_ids) {
-									foreach ($attachment_ids as $attachment_id) {
-										$thumb_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
+					<?php
+					if ($total_images > 1) {
+					?>
+						<div id="product-thumbnails" class="splide">
+							<div class="splide__track">
+								<ul class="splide__list">
+									<?php
+									// Thumbnails (Primary + Gallery)
+									if ($post_thumbnail_id) {
+										$thumb_url = wp_get_attachment_image_url($post_thumbnail_id, 'thumbnail');
 										echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
 									}
-								}
-								?>
-							</ul>
+
+									if ($attachment_ids) {
+										foreach ($attachment_ids as $attachment_id) {
+											$thumb_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
+											echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
+										}
+									}
+
+									// If no images exist, show WooCommerce placeholder as thumbnail
+									if (!$post_thumbnail_id && empty($attachment_ids)) {
+										$placeholder_url = esc_url(wc_placeholder_img_src());
+										echo '<li class="splide__slide"><img src="' . esc_url($placeholder_url) . '" alt="Placeholder Thumbnail"></li>';
+									}
+									?>
+								</ul>
+							</div>
 						</div>
-					</div>
-
-
+					<?php
+					}
+					?>
 				</div>
 
 				<!-- Right Column: Product Summary -->
