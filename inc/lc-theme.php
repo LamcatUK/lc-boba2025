@@ -150,8 +150,8 @@ function widgets_init()
 add_action('widgets_init', 'widgets_init', 11);
 
 
-remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
-remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
+// remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
+// remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 
 //Custom Dashboard Widget
 add_action('wp_dashboard_setup', 'register_lc_dashboard_widget');
