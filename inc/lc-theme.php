@@ -333,3 +333,38 @@ function format_photo_attribution($attribution)
 
 
 add_filter('wpcf7_autop_or_not', '__return_false');
+
+
+// Block video upload
+function block_video_uploads($mimes)
+{
+    unset($mimes['mp4']); // Block MP4
+    unset($mimes['mov']); // Block MOV
+    unset($mimes['avi']); // Block AVI
+    unset($mimes['mkv']); // Block MKV
+    unset($mimes['flv']); // Block FLV
+    unset($mimes['wmv']); // Block WMV
+    return $mimes;
+}
+add_filter('upload_mimes', 'block_video_uploads');
+
+function hide_video_upload_button()
+{
+    echo '<style>
+        .media-frame-content .media-menu-item[data-type="video"] { display: none !important; }
+    </style>';
+}
+add_action('admin_head', 'hide_video_upload_button');
+
+function block_video_file_upload($file)
+{
+    $filetype = wp_check_filetype($file['name']);
+    $blocked_types = array('mp4', 'mov', 'avi', 'mkv', 'flv', 'wmv');
+
+    if (in_array($filetype['ext'], $blocked_types)) {
+        $file['error'] = "❌ Video uploads are not allowed.";
+    }
+
+    return $file;
+}
+add_filter('wp_handle_upload_prefilter', 'block_video_file_upload');
