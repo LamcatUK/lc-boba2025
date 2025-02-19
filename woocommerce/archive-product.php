@@ -9,7 +9,7 @@ defined('ABSPATH') || exit;
 
 get_header('shop'); ?>
 
-<main id="main">
+<main id="main" class="products-archive">
 	<div class="container-xl py-5">
 
 		<!-- Page Title -->
@@ -20,55 +20,71 @@ get_header('shop'); ?>
 		<!-- WooCommerce Notices -->
 		<div class="woocommerce-notices-wrapper"><?php wc_print_notices(); ?></div>
 
-		<!-- Sorting & Result Count -->
-		<div class="row align-items-center mb-4">
-			<div class="col-md-6">
-				<p class="woocommerce-result-count mb-0">
-					<?php woocommerce_result_count(); ?>
-				</p>
-			</div>
-			<div class="col-md-6 text-md-end">
-				<?php woocommerce_catalog_ordering(); ?>
-			</div>
-		</div>
-
-		<!-- Product Grid -->
 		<div class="row">
-			<?php
-			if (have_posts()) {
-				while (have_posts()) {
-					the_post();
-					$product = wc_get_product(get_the_ID());
-			?>
+			<div class="col-md-3">
+				<!-- category and tag filtering -->
+				<form id="product-filter-form">
+					<div class="row">
+						<div class="col-sm-6 col-md-12">
+							<!-- Product Categories -->
+							<div class="filter-group mb-4">
+								<div class="h3">By Category</div>
+								<?php
+								$categories = get_terms(array(
+									'taxonomy'   => 'product_cat',
+									'hide_empty' => true,
+								));
 
-					<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-						<a href="<?php the_permalink(); ?>" class="product woocommerce-LoopProduct-link woocommerce-loop-product__link">
-							<div class="product-image-wrapper">
-								<?= woocommerce_get_product_thumbnail() ?>
-								<div class="product-price"><?= $product->get_price_html() ?></div>
+								foreach ($categories as $category) {
+									echo '<div class="form-check">
+    <input class="form-check-input" type="checkbox" name="product_cat[]" value="' . esc_attr($category->slug) . '" id="cat-' . esc_attr($category->slug) . '">
+    <label class="form-check-label" for="cat-' . esc_attr($category->slug) . '">
+        ' . esc_html($category->name) . '
+    </label>
+</div>';
+								}
+								?>
 							</div>
-							<div class="product-details">
-								<h3 class="product-title h5 mb-2"><?= get_the_title() ?></h3>
-								<div><?= $product->get_short_description() ?></div>
+						</div>
+						<div class="col-sm-6 col-md-12">
+
+							<!-- Product Tags -->
+							<div class="filter-group">
+								<div class="h3">By Tags</div>
+								<?php
+								$tags = get_terms(array(
+									'taxonomy'   => 'product_tag',
+									'hide_empty' => true,
+								));
+
+								foreach ($tags as $tag) {
+									echo '<div class="form-check">
+    <input class="form-check-input" type="checkbox" name="product_tag[]" value="' . esc_attr($tag->slug) . '" id="tag-' . esc_attr($tag->slug) . '">
+    <label class="form-check-label" for="tag-' . esc_attr($tag->slug) . '">
+        ' . esc_html($tag->name) . '
+    </label>
+</div>';
+								}
+								?>
 							</div>
-						</a>
+						</div>
 					</div>
+				</form>
+			</div>
+			<div class="col-md-9">
 
-				<?php
-				}
-			} else {
-				?>
-				<p class="col-12 text-center"><?php esc_html_e('No products found', 'woocommerce'); ?></p>
-			<?php
-			}
-			?>
+				<!-- Results Count Placeholder -->
+				<p id="product-count" class="product-count">Loading products...</p>
+
+				<!-- Product Results Will Be Updated Here -->
+				<div id="product-results">
+					<p class="loading-message">Loading products...</p>
+				</div>
+			</div>
+
 		</div>
-
-		<!-- Pagination -->
-		<div class="mt-5">
-			<?php woocommerce_pagination(); ?>
-		</div>
-
 	</div>
 </main>
-<?php get_footer('shop'); ?>
+<?php
+
+get_footer('shop'); ?>

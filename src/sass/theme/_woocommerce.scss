@@ -135,3 +135,31 @@
   float: none;
   width: auto;
 }
+
+#product-results {
+  min-height: 50vh;
+}
+#product-filter-form {
+  label {
+    cursor: pointer;
+  }
+}
+
+.products-archive {
+  background-color: var(--col-green-100);
+}
+.woocommerce-products-header {
+  background-color: unset;
+}
+
+#product-filter-form {
+  --_pad: 1rem;
+  --_br1: 1rem;
+  background-color: white;
+  padding: var(--_pad) calc(var(--_pad) * 2);
+  border-radius: 0 var(--_br1) 0 var(--_br1);
+  box-shadow: var(--shadow-sm);
+  .h3 {
+    font-size: var(--fs-500);
+  }
+}

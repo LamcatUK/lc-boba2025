@@ -19,7 +19,7 @@ function add_cart_icon_to_header_nav()
         <div class="fw-700">My Basket</div>
         <span><i class="fa-solid fa-basket-shopping"></i> <?php echo WC()->cart->get_cart_contents_count(); ?></span>
     </a>
-<?php
+    <?php
 
 }
 
@@ -238,3 +238,153 @@ function force_product_tags($post_id, $post, $update)
 
 // ✅ Ensure this function runs for WooCommerce products
 add_action('wp_after_insert_post', 'force_product_tags', 99, 3);
+
+
+// filtering 
+function enqueue_product_filter_scripts()
+{
+    wp_enqueue_script('product-filter', get_stylesheet_directory_uri() . '/js/filter-products.js', array('jquery'), null, true);
+    // wp_localize_script('product-filter', 'ajaxurl', admin_url('admin-ajax.php'));
+    wp_localize_script('product-filter', 'ajax_object', array(
+        'ajaxurl' => admin_url('admin-ajax.php')
+    ));
+}
+add_action('wp_enqueue_scripts', 'enqueue_product_filter_scripts');
+
+
+function filter_products_ajax()
+{
+    $tax_query = array('relation' => 'AND');
+
+    if (!empty($_POST['product_cat'])) {
+        $tax_query[] = array(
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $_POST['product_cat'],
+        );
+    }
+
+    if (!empty($_POST['product_tag'])) {
+        $tax_query[] = array(
+            'taxonomy' => 'product_tag',
+            'field'    => 'slug',
+            'terms'    => $_POST['product_tag'],
+            'operator' => 'AND',
+        );
+    }
+
+    $query = new WP_Query(array(
+        'post_type'      => 'product',
+        'posts_per_page' => 12,
+        'tax_query'      => $tax_query,
+    ));
+
+    if ($query->have_posts()) {
+        echo '<div class="row">';
+        while ($query->have_posts()) {
+            $query->the_post();
+            // wc_get_template_part('content', 'product');
+            $product = wc_get_product(get_the_ID());
+            // $cats = wp_get_post_terms(get_the_ID(), 'product_cat', array('fields' => 'names'));
+            // $tags = wp_get_post_terms(get_the_ID(), 'product_tag', array('fields' => 'names'));
+    ?>
+            <div class="col-12 col-sm-6 col-md-4 mb-4">
+                <a href="<?php the_permalink(); ?>" class="product woocommerce-LoopProduct-link woocommerce-loop-product__link">
+                    <div class="product-image-wrapper">
+                        <?= woocommerce_get_product_thumbnail() ?>
+                        <div class="product-price"><?= $product->get_price_html() ?></div>
+                    </div>
+                    <div class="product-details">
+                        <h3 class="product-title h5 mb-2"><?= get_the_title() ?></h3>
+                        <div><?= $product->get_short_description() ?></div>
+                    </div>
+                </a>
+            </div>
+
+<?php
+        }
+        echo '</div>';
+        wp_reset_postdata();
+    } else {
+        echo '<p>No products found.</p>';
+    }
+    wp_die();
+}
+add_action('wp_ajax_filter_products', 'filter_products_ajax');
+add_action('wp_ajax_nopriv_filter_products', 'filter_products_ajax');
+
+
+function update_available_filters()
+{
+    $selected_tags = isset($_POST['selected_tags']) && $_POST['selected_tags'] !== "none"
+        ? explode(',', sanitize_text_field($_POST['selected_tags']))
+        : [];
+
+    $selected_categories = isset($_POST['selected_categories']) && $_POST['selected_categories'] !== "none"
+        ? explode(',', sanitize_text_field($_POST['selected_categories']))
+        : [];
+
+    // error_log("Received Filters - Categories: " . print_r($selected_categories, true));
+    // error_log("Received Filters - Tags: " . print_r($selected_tags, true));
+
+    $available_cats = [];
+    $available_tags = [];
+
+    $tax_query = ['relation' => 'AND'];
+
+    if (!empty($selected_tags)) {
+        $tax_query[] = [
+            'taxonomy' => 'product_tag',
+            'field'    => 'slug',
+            'terms'    => $selected_tags,
+        ];
+    }
+
+    if (!empty($selected_categories)) {
+        $tax_query[] = [
+            'taxonomy' => 'product_cat',
+            'field'    => 'slug',
+            'terms'    => $selected_categories,
+        ];
+    }
+
+    if (empty($selected_tags) && empty($selected_categories)) {
+        // error_log("No filters selected, returning all categories and tags.");
+        $query = new WP_Query([
+            'post_type'      => 'product',
+            'posts_per_page' => -1,
+            'fields'         => 'ids',
+        ]);
+    } else {
+        // error_log("Running Filtered Query...");
+        $query = new WP_Query([
+            'post_type'      => 'product',
+            'posts_per_page' => -1,
+            'fields'         => 'ids',
+            'tax_query'      => $tax_query,
+        ]);
+    }
+
+    if ($query->have_posts()) {
+        foreach ($query->posts as $post_id) {
+            $categories = wp_get_post_terms($post_id, 'product_cat', ['fields' => 'slugs']);
+            $tags = wp_get_post_terms($post_id, 'product_tag', ['fields' => 'slugs']);
+
+            $available_cats = array_merge($available_cats, $categories);
+            $available_tags = array_merge($available_tags, $tags);
+        }
+    }
+
+    $available_cats = array_values(array_unique($available_cats));
+    $available_tags = array_values(array_unique($available_tags));
+
+    // error_log("Filtered Categories: " . print_r($available_cats, true));
+    // error_log("Filtered Tags: " . print_r($available_tags, true));
+
+    wp_send_json([
+        'categories' => $available_cats,
+        'tags'       => $available_tags,
+    ]);
+}
+add_action('wp_ajax_update_filters', 'update_available_filters');
+add_action('wp_ajax_nopriv_update_filters', 'update_available_filters');
