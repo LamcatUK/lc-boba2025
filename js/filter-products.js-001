@@ -4,6 +4,18 @@ document.addEventListener("DOMContentLoaded", function () {
   let productCount = document.querySelector("#product-count");
   let activeFilters = document.querySelector("#active-filters");
 
+  // Ensure clicking labels toggles checkboxes correctly
+  form.querySelectorAll("label.form-check-label").forEach((label) => {
+    label.addEventListener("click", function (event) {
+      let checkbox = document.getElementById(label.getAttribute("for"));
+      if (checkbox) {
+        event.preventDefault(); // Prevent default label behavior
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event("change", { bubbles: true })); // Trigger change event
+      }
+    });
+  });
+
   // Use ajax_object.ajaxurl if available, otherwise fallback to global ajaxurl
   let ajaxUrl =
     typeof ajax_object !== "undefined"
@@ -45,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Update product results
         productResults.innerHTML = data;
+        updateActiveFilters();
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -105,11 +118,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateActiveFilters() {
     let selectedCategories = Array.from(
       form.querySelectorAll("input[name='product_cat[]']:checked")
-    ).map((el) => el.labels[0]?.textContent.trim());
-
+    ).map((el) => el.nextElementSibling.textContent.trim());
     let selectedTags = Array.from(
       form.querySelectorAll("input[name='product_tag[]']:checked")
-    ).map((el) => el.labels[0]?.textContent.trim());
+    ).map((el) => el.nextElementSibling.textContent.trim());
 
     let filtersHtml = "";
 
@@ -124,33 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .join(" ")}`;
     }
 
-    // Add Reset Button If Filters Are Applied
-    if (selectedCategories.length > 0 || selectedTags.length > 0) {
-      filtersHtml += ` <span id="reset-filters" class="badge bg-danger text-white" style="cursor: pointer;">Reset</span>`;
-    }
-
     activeFilters.innerHTML = filtersHtml || "";
-
-    // Attach Event Listener to Reset Button
-    let resetButton = document.querySelector("#reset-filters");
-    if (resetButton) {
-      resetButton.addEventListener("click", function () {
-        // Uncheck all checkboxes
-        document
-          .querySelectorAll("#product-filter-form input[type='checkbox']")
-          .forEach((checkbox) => {
-            checkbox.checked = false;
-          });
-
-        // Trigger filtering to reset products
-        updateProducts();
-
-        setTimeout(() => {
-          updateFilters();
-          updateActiveFilters();
-        }, 250);
-      });
-    }
   }
 
   // Call updateFilters() after products are updated
@@ -158,10 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .querySelector("#product-filter-form")
     .addEventListener("change", function () {
       updateProducts();
-      setTimeout(() => {
-        updateFilters();
-        updateActiveFilters();
-      }, 250);
+      setTimeout(updateFilters, 500); // Allow products to load before updating filters
     });
 
   // Trigger AJAX filtering on load
@@ -171,26 +154,4 @@ document.addEventListener("DOMContentLoaded", function () {
   form.addEventListener("change", function () {
     updateProducts();
   });
-
-  let filterContainer = document.getElementById("product-filter-container");
-  let offcanvasContainer = document.getElementById(
-    "offcanvas-filter-container"
-  );
-  let offcanvas = document.getElementById("productFilterSidebar");
-
-  if (filterContainer && offcanvasContainer && offcanvas) {
-    let originalParent = filterContainer.parentNode; // Store original sidebar location
-
-    offcanvas.addEventListener("show.bs.offcanvas", function () {
-      // Show filters when inside the offcanvas
-      filterContainer.classList.remove("d-none");
-      offcanvasContainer.appendChild(filterContainer);
-    });
-
-    offcanvas.addEventListener("hidden.bs.offcanvas", function () {
-      // Hide filters when switching back to sidebar on mobile
-      filterContainer.classList.add("d-none");
-      originalParent.appendChild(filterContainer);
-    });
-  }
 });

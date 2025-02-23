@@ -152,7 +152,7 @@
   background-color: unset;
 }
 
-#product-filter-form {
+#product-filter-container {
   --_pad: 1rem;
   --_br1: 1rem;
   background-color: white;
@@ -162,4 +162,24 @@
   .h3 {
     font-size: var(--fs-500);
   }
+}
+
+#active-filters {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#active-filters .badge {
+  margin-right: 5px;
+  padding: 5px 10px;
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  pointer-events: all !important;
+  position: relative !important;
+  z-index: 10 !important;
+  opacity: 1 !important;
+  width: 16px;
+  height: 16px;
 }

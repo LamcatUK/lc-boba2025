@@ -4,7 +4,6 @@
   align-self: center;
   text-align: center;
   text-decoration: none;
-  transition: all var(--transition);
   height: 48px;
   border-radius: 0 24px 0 24px;
   font-weight: var(--fw-700);
@@ -28,4 +27,35 @@
     box-shadow: var(--shadow-sm);
     transform: translateY(2px);
   }
+}
+
+.woocommerce .filter-button {
+  display: inline-block;
+  padding: 0.5rem 0rem;
+  align-self: center;
+  text-align: center;
+  text-decoration: none;
+  height: 36px;
+  border-radius: 0 18px 0 18px;
+  font-weight: var(--fw-700);
+  line-height: 1;
+  transition: background-color var(--transition), box-shadow var(--transition),
+    transform var(--transition);
+  &:disabled {
+    border-color: var(--col-grey-200);
+    background-color: var(--col-grey-200);
+  }
+  border-color: var(--col-accent-400);
+  background-color: var(--col-accent-400);
+  color: white;
+  box-shadow: var(--shadow-lg);
+  &:hover {
+    color: white;
+    background-color: color-mix(in srgb, var(--col-accent-400), white 10%);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(2px);
+  }
+
+  width: min(90vw, 100%);
+  margin-inline: auto;
 }

@@ -19,6 +19,24 @@ document.addEventListener("DOMContentLoaded", function () {
     return;
   }
 
+  // Ensure clicking labels toggles checkboxes correctly
+  form.querySelectorAll("label.form-check-label").forEach((label) => {
+    label.addEventListener("click", function (event) {
+      let checkbox = document.getElementById(label.getAttribute("for"));
+      if (checkbox) {
+        event.preventDefault(); // Prevent default label behavior
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event("change", { bubbles: true })); // Trigger change event
+      }
+    });
+  });
+  // ✅ Explicitly attach "change" event listener to checkboxes
+  form.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      updateProducts();
+    });
+  });
+
   // Function to update products dynamically
   function updateProducts() {
     productResults.innerHTML =
@@ -34,17 +52,15 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then((response) => response.text())
       .then((data) => {
-        // Extract product count from response
         let parser = new DOMParser();
         let doc = parser.parseFromString(data, "text/html");
         let products = doc.querySelectorAll(".product").length; // Count product elements
 
-        // Update results count
         productCount.innerHTML =
           products > 0 ? `${products} results found` : "No products found";
 
-        // Update product results
         productResults.innerHTML = data;
+        updateActiveFilters();
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
@@ -54,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Function to update available categories & tags
   function updateFilters() {
     let selectedCategories = Array.from(
       document.querySelectorAll(
@@ -72,8 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedCategories.length > 0 ? selectedCategories.join(",") : "none";
     let tagParam = selectedTags.length > 0 ? selectedTags.join(",") : "none";
 
-    // console.log("Sending Filters:", { selectedCategories, selectedTags });
-
     fetch(ajaxUrl, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -85,8 +98,6 @@ document.addEventListener("DOMContentLoaded", function () {
     })
       .then((response) => response.json())
       .then((data) => {
-        // console.log("Filter data received:", data);
-
         document
           .querySelectorAll(".filter-group input[name='product_cat[]']")
           .forEach((checkbox) => {
@@ -105,11 +116,11 @@ document.addEventListener("DOMContentLoaded", function () {
   function updateActiveFilters() {
     let selectedCategories = Array.from(
       form.querySelectorAll("input[name='product_cat[]']:checked")
-    ).map((el) => el.labels[0]?.textContent.trim());
+    ).map((el) => el.nextElementSibling.textContent.trim());
 
     let selectedTags = Array.from(
       form.querySelectorAll("input[name='product_tag[]']:checked")
-    ).map((el) => el.labels[0]?.textContent.trim());
+    ).map((el) => el.nextElementSibling.textContent.trim());
 
     let filtersHtml = "";
 
@@ -124,73 +135,66 @@ document.addEventListener("DOMContentLoaded", function () {
         .join(" ")}`;
     }
 
-    // Add Reset Button If Filters Are Applied
-    if (selectedCategories.length > 0 || selectedTags.length > 0) {
-      filtersHtml += ` <span id="reset-filters" class="badge bg-danger text-white" style="cursor: pointer;">Reset</span>`;
-    }
-
     activeFilters.innerHTML = filtersHtml || "";
-
-    // Attach Event Listener to Reset Button
-    let resetButton = document.querySelector("#reset-filters");
-    if (resetButton) {
-      resetButton.addEventListener("click", function () {
-        // Uncheck all checkboxes
-        document
-          .querySelectorAll("#product-filter-form input[type='checkbox']")
-          .forEach((checkbox) => {
-            checkbox.checked = false;
-          });
-
-        // Trigger filtering to reset products
-        updateProducts();
-
-        setTimeout(() => {
-          updateFilters();
-          updateActiveFilters();
-        }, 250);
-      });
-    }
   }
 
-  // Call updateFilters() after products are updated
-  document
-    .querySelector("#product-filter-form")
-    .addEventListener("change", function () {
-      updateProducts();
-      setTimeout(() => {
-        updateFilters();
-        updateActiveFilters();
-      }, 250);
-    });
+  // Attach "change" event directly to checkboxes
+  // Fix event handling for checkboxes and labels
+  //   form.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+  //     checkbox.addEventListener("click", function (event) {
+  //       console.log("Checkbox clicked:", this.name, "Checked:", this.checked);
+  //       // Ensure change event fires properly
+  //       this.dispatchEvent(new Event("change", { bubbles: true }));
+  //     });
+
+  //     checkbox.addEventListener("change", function () {
+  //       console.log("Checkbox changed:", this.name, "Checked:", this.checked);
+  //       updateProducts();
+  //       setTimeout(updateFilters, 250);
+  //     });
+  //   });
+
+  //   // Ensure labels toggle checkboxes correctly but don’t trigger duplicate events
+  //   form.querySelectorAll("label.form-check-label").forEach((label) => {
+  //     label.addEventListener("click", function (event) {
+  //       let checkbox = document.getElementById(label.getAttribute("for"));
+  //       if (checkbox) {
+  //         event.preventDefault(); // Stop default action
+  //         if (!event.detail || event.detail === 1) {
+  //           // Prevent duplicate firing
+  //           checkbox.checked = !checkbox.checked;
+  //           checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+  //         }
+  //       }
+  //     });
+  //   });
 
   // Trigger AJAX filtering on load
   updateProducts();
 
-  // Event listener for filter changes (Category & Tag checkboxes)
-  form.addEventListener("change", function () {
-    updateProducts();
+  //   let form = document.querySelector("#product-filter-form");
+
+  // Log clicks on checkboxes
+  form.querySelectorAll("input[type='checkbox']").forEach((checkbox) => {
+    checkbox.addEventListener("change", function (event) {
+      console.log("Checkbox changed:", this.name, "Checked:", this.checked);
+      updateProducts();
+      setTimeout(() => {
+        updateFilters();
+        updateActiveFilters(); // ✅ Ensure active filters are updated
+      }, 250);
+    });
   });
 
-  let filterContainer = document.getElementById("product-filter-container");
-  let offcanvasContainer = document.getElementById(
-    "offcanvas-filter-container"
-  );
-  let offcanvas = document.getElementById("productFilterSidebar");
-
-  if (filterContainer && offcanvasContainer && offcanvas) {
-    let originalParent = filterContainer.parentNode; // Store original sidebar location
-
-    offcanvas.addEventListener("show.bs.offcanvas", function () {
-      // Show filters when inside the offcanvas
-      filterContainer.classList.remove("d-none");
-      offcanvasContainer.appendChild(filterContainer);
+  // Log clicks on labels
+  form.querySelectorAll("label.form-check-label").forEach((label) => {
+    label.addEventListener("click", function (event) {
+      let checkbox = document.getElementById(label.getAttribute("for"));
+      if (checkbox) {
+        event.preventDefault();
+        checkbox.checked = !checkbox.checked;
+        checkbox.dispatchEvent(new Event("change", { bubbles: true }));
+      }
     });
-
-    offcanvas.addEventListener("hidden.bs.offcanvas", function () {
-      // Hide filters when switching back to sidebar on mobile
-      filterContainer.classList.add("d-none");
-      originalParent.appendChild(filterContainer);
-    });
-  }
+  });
 });
