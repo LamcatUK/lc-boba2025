@@ -20,19 +20,21 @@ $img = get_the_post_thumbnail_url(get_the_ID(), 'full');
             ?>
         </section>
         <div class="row g-4 pb-4">
-            <div class="col-lg-9 single__content">
-                <h1 class="single__title"><?= get_the_title() ?></h1>
-                <?= get_the_post_thumbnail(get_the_ID(), 'large', ['class' => 'single__image']) ?>
-                <?php
-                $count = estimate_reading_time_in_minutes(get_the_content(), 200, true, true) ?? null;
-                if ($count) {
-                    echo '<div class="fs-200">' . $count . '</div>';
-                }
+            <div class="col-lg-9">
+                <div class="single__content">
+                    <h1 class="single__title"><?= get_the_title() ?></h1>
+                    <?= get_the_post_thumbnail(get_the_ID(), 'large', ['class' => 'single__image']) ?>
+                    <?php
+                    $count = estimate_reading_time_in_minutes(get_the_content(), 200, true, true) ?? null;
+                    if ($count) {
+                        echo '<div class="fs-200">' . $count . '</div>';
+                    }
 
-                foreach ($blocks as $block) {
-                    echo render_block($block);
-                }
-                ?>
+                    foreach ($blocks as $block) {
+                        echo render_block($block);
+                    }
+                    ?>
+                </div>
             </div>
             <div class="col-lg-3">
                 <div class="sidebar">
@@ -46,32 +48,35 @@ $img = get_the_post_thumbnail_url(get_the_ID(), 'full');
                     ));
                     if ($r->have_posts()) {
                     ?>
-                        <div class="ff-heading fs-600 has-green-500-color d-none d-lg-block">Related Posts</div>
+                        <div class="ff-heading fs-600 has-green-500-color">Related Posts</div>
                         <div class="related">
-                            <?php
-                            while ($r->have_posts()) {
-                                $r->the_post();
-                            ?>
-                                <a class="related__card"
-                                    href="<?= get_the_permalink() ?>">
-                                    <?= get_the_post_thumbnail(get_the_ID(), 'large', ['class' => 'related__image']) ?>
-                                    <div class="related__content">
-                                        <h3 class="related__title">
-                                            <?= get_the_title() ?>
-                                        </h3>
+                            <div class="row g-4">
+                                <?php
+                                while ($r->have_posts()) {
+                                    $r->the_post();
+                                ?>
+                                    <div class="col-sm-6 col-lg-12">
+                                        <a class="related__card"
+                                            href="<?= get_the_permalink() ?>">
+                                            <?= get_the_post_thumbnail(get_the_ID(), 'large', ['class' => 'related__image']) ?>
+                                            <div class="related__content">
+                                                <h3 class="related__title">
+                                                    <?= get_the_title() ?>
+                                                </h3>
+                                            </div>
+                                        </a>
                                     </div>
-                                </a>
-                            <?php
-                            }
-                            ?>
-                        </div>
-                    <?php
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        <?php
                     }
-                    ?>
+                        ?>
+                        </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
 <?php
 get_footer();

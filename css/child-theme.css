@@ -22756,6 +22756,7 @@ header .dropdown.current-menu-item::after {
   margin-bottom: 0;
   border-radius: 0 var(--_br1) 0 var(--_br1);
   color: var(--col-green-500);
+  width: 100%;
 }
 
 .product {
