@@ -140,7 +140,7 @@ function lc_register_plants_cpt()
     );
 
     $args = array(
-        'label'              => __('Plants'),
+        'label'              => __('Plant Guide'),
         'labels'             => $labels,
         'public'             => true,
         'show_ui'            => true,
