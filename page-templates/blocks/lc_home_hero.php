@@ -1,18 +1,7 @@
 <section class="home_hero">
     <div class="container-xl px-0">
-        <div class="row g-4">
-            <div class="col-md-6 d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade">
-                <img src="<?= get_stylesheet_directory_uri() ?>/img/boba-full.svg" alt="Boba's Plants" class="home_hero__logo d-block mx-auto mb-5 mt-3">
-                <?php
-                $l = get_field('cta_link') ?? null;
-                if ($l) {
-                ?>
-                    <a href="<?= $l['url'] ?>" target="<?= $l['target'] ?>" class="button button-primary mb-3"><?= $l['title'] ?></a>
-                <?php
-                }
-                ?>
-            </div>
-            <div class="col-md-6">
+        <div class="home_hero__grid g-4">
+            <div class="home_hero__right">
                 <div id="home-hero-carousel" class="splide" data-aos="fadein" data-aos-delay="200">
                     <div class="splide__track">
                         <ul class="splide__list">
@@ -30,7 +19,20 @@
                     </div>
                 </div>
             </div>
+            <div class="home_hero__left d-flex flex-column align-items-center justify-content-center text-center" data-aos="fade">
+                <div class="overlay"></div>
+                <img src="<?= get_stylesheet_directory_uri() ?>/img/boba-full.svg" alt="Boba's Plants" class="home_hero__logo d-block mx-auto mb-5 mt-3">
+                <?php
+                $l = get_field('cta_link') ?? null;
+                if ($l) {
+                ?>
+                    <a href="<?= $l['url'] ?>" target="<?= $l['target'] ?>" class="button button-primary mb-3"><?= $l['title'] ?></a>
+                <?php
+                }
+                ?>
+            </div>
         </div>
+    </div>
 </section>
 <?php
 global $lc_home_hero_script_added;

@@ -22378,8 +22378,52 @@ header .dropdown.current-menu-item::after {
   align-items: center;
   background-color: var(--col-green-300);
 }
+.home_hero__grid {
+  display: grid;
+  grid-template-areas: "stack";
+  isolation: isolate;
+}
+.home_hero__left, .home_hero__right {
+  grid-area: stack;
+  position: relative;
+}
+.home_hero .overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  z-index: -1;
+}
 .home_hero__logo {
   width: min(300px, 80vw);
+  filter: drop-shadow(0px 1px 1px var(--col-green-900));
+}
+.home_hero .splide__arrows,
+.home_hero .splide__pagination {
+  display: none;
+}
+@media (min-width: 992px) {
+  .home_hero .overlay {
+    display: none;
+  }
+  .home_hero .home_hero__grid {
+    grid-template-areas: "logo slider";
+    grid-template-columns: 1fr 1fr;
+  }
+  .home_hero .home_hero__left {
+    grid-area: logo;
+  }
+  .home_hero .home_hero__right {
+    grid-area: slider;
+  }
+  .home_hero .home_hero__logo {
+    filter: none;
+  }
+  .home_hero .splide__arrows {
+    display: block;
+  }
+  .home_hero .splide__pagination {
+    display: flex;
+  }
 }
 .home_hero #home-hero-carousel .splide__track {
   overflow: hidden;
