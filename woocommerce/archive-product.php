@@ -62,7 +62,7 @@ function render_tag_filters($tags)
 					<!-- Offcanvas Toggle for Mobile -->
 					<div class="d-md-none mb-3">
 						<button class="filter-button" type="button" data-bs-toggle="offcanvas" data-bs-target="#productFilterSidebar" aria-controls="productFilterSidebar">
-							Open Filters
+							Filters
 						</button>
 					</div>
 
