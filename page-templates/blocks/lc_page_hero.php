@@ -1,27 +1,31 @@
 <section class="page_hero">
     <div class="container-xl px-0">
-        <div class="row g-4">
-            <div class="col-md-6 d-flex flex-column align-items-start justify-content-center" data-aos="fade">
+        <div class="page_hero__grid">
+            <div class="page_hero__title">
                 <?php
                 $title = get_field('title') ?: get_the_title();
-
                 echo '<h1>' . $title . '</h1>';
-
-                if (get_field('content') ?? null) {
-                ?>
-                    <div class="mb-3"><?= get_field('content') ?></div>
-                <?php
-                }
-
-                $l = get_field('cta_link') ?? null;
-                if ($l) {
-                ?>
-                    <a href="<?= $l['url'] ?>" target="<?= $l['target'] ?>" class="button button-primary mb-3 align-self-start"><?= $l['title'] ?></a>
-                <?php
-                }
                 ?>
             </div>
-            <div class="col-md-6">
+            <?php
+            if (get_field('content') ?? null) {
+            ?>
+                <div class="page_hero__inner">
+                    <?= get_field('content') ?>
+                </div>
+            <?php
+            }
+            $l = get_field('cta_link') ?? null;
+            if ($l) {
+            ?>
+                <div class="page_hero__cta">
+                    <a href="<?= $l['url'] ?>" target="<?= $l['target'] ?>" class="button button-primary mb-3 align-self-start"><?= $l['title'] ?></a>
+                </div>
+            <?php
+            }
+            ?>
+            <div class="page_hero__slider">
+                <div class="overlay"></div>
                 <div id="page-hero-carousel" class="splide" data-aos="fadein" data-aos-delay="200">
                     <div class="splide__track">
                         <ul class="splide__list">
@@ -40,6 +44,7 @@
                 </div>
             </div>
         </div>
+
 </section>
 <?php
 global $lc_page_hero_script_added;
