@@ -22208,6 +22208,7 @@ header .dropdown.current-menu-item::after {
 }
 .blog_index__categories {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
 }
 .blog_index__categories a {
@@ -22219,6 +22220,7 @@ header .dropdown.current-menu-item::after {
   background-color: var(--col-green-200);
   transition: color var(--transition), background-color var(--transition), transform var(--transition), box-shadow var(--transition);
   box-shadow: var(--shadow-lg);
+  width: 100%;
 }
 .blog_index__categories a:hover {
   background-color: white;
@@ -22232,6 +22234,11 @@ header .dropdown.current-menu-item::after {
   color: white;
   box-shadow: var(--shadow-sm);
   transform: translateY(2px);
+}
+@media (min-width: 576px) {
+  .blog_index__categories a {
+    width: auto;
+  }
 }
 .blog_index__grid {
   display: grid;
