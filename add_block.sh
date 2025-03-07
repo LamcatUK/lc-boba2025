@@ -14,7 +14,7 @@ php_file="./page-templates/blocks/${block_slug}.php"
 scss_file="./src/sass/theme/blocks/_${block_slug}.scss"
 blocks_scss="./src/sass/theme/blocks/_blocks.scss"
 blocks_php="./inc/lc-blocks.php"
-acf_json_file="./acf-json/${block_slug}.json"
+acf_json_file="./acf-json/group_${block_slug}.json"
 
 # Create PHP and SCSS files
 touch "$php_file"

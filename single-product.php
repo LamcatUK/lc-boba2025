@@ -125,7 +125,27 @@ get_header('shop'); ?>
 						woocommerce_template_single_excerpt();
 						woocommerce_template_single_price();
 						woocommerce_template_single_add_to_cart();
-						woocommerce_template_single_meta(); // Categories
+
+						// woocommerce_template_single_meta(); // Categories
+						// $product = wc_get_product( get_the_ID() );
+
+						// Get product categories (keep this)
+						$categories = wc_get_product_category_list($product->get_id(), ', ', '<span class="posted_in">' . __('Categories:', 'woocommerce') . ' ', '</span>');
+
+						// Get product tags (keep this)
+						$tags = wc_get_product_tag_list($product->get_id(), ', ', '<span class="tagged_as">' . __('Tags:', 'woocommerce') . ' ', '</span>');
+
+						// Output categories and tags (but NOT brands)
+						if ($categories || $tags) {
+							echo '<div class="product-meta">';
+							if ($categories) {
+								echo $categories;
+							}
+							if ($tags) {
+								echo '  ' . $tags;
+							}
+							echo '</div>';
+						}
 
 						// Move the full product description here
 						$product = wc_get_product(get_the_ID());
@@ -187,7 +207,13 @@ get_header('shop'); ?>
 					?>
 				</div>
 			</div>
-		<?php } ?>
+		<?php
+		} else {
+		?>
+			<div class="container-xl my-5"></div>
+		<?php
+		}
+		?>
 
 
 		<?php do_action('woocommerce_after_single_product'); ?>

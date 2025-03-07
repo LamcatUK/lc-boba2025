@@ -22577,7 +22577,7 @@ header .dropdown.current-menu-item::after {
 
 .event_row {
   display: grid;
-  grid-template-areas: "title" "date" "address" "detail";
+  grid-template-areas: "date" "title" "address" "detail";
   -moz-column-gap: 0.5rem;
   column-gap: 0.5rem;
   align-items: center;
@@ -22586,9 +22586,9 @@ header .dropdown.current-menu-item::after {
 }
 @media (min-width: 768px) {
   .event_row {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr 2fr 1fr;
     grid-template-rows: 1fr auto;
-    grid-template-areas: "title date address" "detail detail detail";
+    grid-template-areas: "date title address" "detail detail detail";
   }
 }
 .event_row:last-child {

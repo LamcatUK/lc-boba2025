@@ -4,6 +4,17 @@ function acf_blocks()
     if (function_exists('acf_register_block_type')) {
 
         acf_register_block_type(array(
+            'name'                => 'lc_products_by_brand', 
+            'title'               => __('LC Products by Brand'), 
+            'category'            => 'layout',
+            'icon'                => 'cover-image', 
+            'render_template'    => 'page-templates/blocks/lc_products_by_brand.php', 
+            'mode'                => 'edit',
+            'supports'            => array('mode' => false),
+        ));
+
+
+        acf_register_block_type(array(
             'name'                => 'lc_latest_products', 
             'title'               => __('LC Latest Products'), 
             'category'            => 'layout',

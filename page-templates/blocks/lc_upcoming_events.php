@@ -31,7 +31,6 @@
                     $events->the_post();
             ?>
                     <div class="event_row">
-                        <div class="event_title"><?= get_the_title(); ?></div>
                         <div class="event_date">
                             📅
                             <?php
@@ -67,6 +66,7 @@
                             }
                             ?>
                         </div>
+                        <div class="event_title"><?= get_the_title(); ?></div>
                         <div class="event_address">
                             <?php
                             $address = get_field('event_address', get_the_ID());

@@ -73,6 +73,9 @@ function create_woocommerce_product($post_id)
         wp_set_object_terms($post_id, $category, 'product_cat');
     }
 
+    // default to brand boba
+    wp_set_object_terms($post_id, 'boba', 'product_brand');
+
     // Assign tags
     if (!empty($tags)) {
         if (is_array($tags)) {
@@ -273,6 +276,13 @@ function filter_products_ajax()
         );
     }
 
+    // restrict to Boba products
+    $tax_query[] = array(
+        'taxonomy' => 'product_brand',
+        'field'    => 'slug',
+        'terms'    => 'boba',
+    );
+
     $query = new WP_Query(array(
         'post_type'      => 'product',
         'posts_per_page' => 12,
@@ -348,22 +358,30 @@ function update_available_filters()
         ];
     }
 
-    if (empty($selected_tags) && empty($selected_categories)) {
-        // error_log("No filters selected, returning all categories and tags.");
-        $query = new WP_Query([
-            'post_type'      => 'product',
-            'posts_per_page' => -1,
-            'fields'         => 'ids',
-        ]);
-    } else {
-        // error_log("Running Filtered Query...");
-        $query = new WP_Query([
-            'post_type'      => 'product',
-            'posts_per_page' => -1,
-            'fields'         => 'ids',
-            'tax_query'      => $tax_query,
-        ]);
-    }
+    $tax_query[] = array(
+        'taxonomy' => 'product_brand',
+        'field'    => 'slug',
+        'terms'    => 'boba',
+    );
+
+    // if (empty($selected_tags) && empty($selected_categories)) {
+    //     // error_log("No filters selected, returning all categories and tags.");
+    //     $query = new WP_Query([
+    //         'post_type'      => 'product',
+    //         'posts_per_page' => -1,
+    //         'fields'         => 'ids',
+    //         'tax_query'      => $tax_query,
+    //     ]);
+    // } else {
+    //     // error_log("Running Filtered Query...");
+    // }
+
+    $query = new WP_Query([
+        'post_type'      => 'product',
+        'posts_per_page' => -1,
+        'fields'         => 'ids',
+        'tax_query'      => $tax_query,
+    ]);
 
     if ($query->have_posts()) {
         foreach ($query->posts as $post_id) {
