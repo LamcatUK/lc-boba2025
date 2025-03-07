@@ -129,8 +129,19 @@ get_header('shop'); ?>
 						// woocommerce_template_single_meta(); // Categories
 						// $product = wc_get_product( get_the_ID() );
 
-						// Get product categories (keep this)
-						$categories = wc_get_product_category_list($product->get_id(), ', ', '<span class="posted_in">' . __('Categories:', 'woocommerce') . ' ', '</span>');
+						// Get product categories
+						// $categories = wc_get_product_category_list($product->get_id(), ', ', '<span class="posted_in">' . __('Categories:', 'woocommerce') . ' ', '</span>');
+
+						$categories = wc_get_product_category_list($product->get_id(), ', ');
+
+						// Remove "Uncategorised" (case-sensitive check)
+						$categories = str_replace('Uncategorised, ', '', $categories);
+						$categories = str_replace(', Uncategorised', '', $categories);
+						$categories = str_replace('Uncategorised', '', $categories); // Edge case: only category
+
+						// Remove empty <a> tags
+						$categories = preg_replace('/<a[^>]*><\/a>\s*,?\s*/', '', $categories);
+						$categories = trim($categories, ', ');
 
 						// Get product tags (keep this)
 						$tags = wc_get_product_tag_list($product->get_id(), ', ', '<span class="tagged_as">' . __('Tags:', 'woocommerce') . ' ', '</span>');
@@ -138,8 +149,8 @@ get_header('shop'); ?>
 						// Output categories and tags (but NOT brands)
 						if ($categories || $tags) {
 							echo '<div class="product-meta">';
-							if ($categories) {
-								echo $categories;
+							if (!empty(trim($categories))) {
+								echo '<span class="posted_in">' . __('Categories:', 'woocommerce') . ' ' . $categories . '</span>';
 							}
 							if ($tags) {
 								echo '  ' . $tags;

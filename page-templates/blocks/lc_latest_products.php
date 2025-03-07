@@ -6,12 +6,20 @@
         </div>
         <div class="row g-4">
             <?php
+            // restrict to Boba products
+            $tax_query[] = array(
+                'taxonomy' => 'product_brand',
+                'field'    => 'slug',
+                'terms'    => 'boba',
+            );
+
             $args = array(
                 'post_type'      => 'product',
                 'posts_per_page' => 4,
                 'orderby'        => 'date',
                 'order'          => 'DESC',
                 'post_status'    => 'publish',
+                'tax_query'      => $tax_query,
             );
 
             $query = new WP_Query($args);

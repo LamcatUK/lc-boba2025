@@ -11,10 +11,14 @@ get_header();
 // get_header('shop');
 
 // Fetch categories and tags before the Bootstrap .row structure
+$uncategorised_id = get_term_by('slug', 'uncategorised', 'product_cat')->term_id;
+
 $categories = get_terms(array(
 	'taxonomy'   => 'product_cat',
 	'hide_empty' => true,
+	'exclude'    => array($uncategorised_id), // Exclude "Uncategorised"
 ));
+
 
 $tags = get_terms(array(
 	'taxonomy'   => 'product_tag',
