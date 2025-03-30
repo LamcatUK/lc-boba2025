@@ -22025,7 +22025,8 @@ strong,
   background-image: url(../img/bg-3.svg);
 }
 
-.button, .wp-block-search__button, .blog_index__categories a, header .nav-button > a.nav-link {
+.button, .wp-block-search__button, .blog_index__categories a, header .nav-button > a.nav-link, .wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
   display: inline-block;
   padding: 1rem 2rem;
   align-self: center;
@@ -22037,18 +22038,21 @@ strong,
   line-height: 1;
   transition: background-color var(--transition), box-shadow var(--transition), transform var(--transition);
 }
-.button:disabled, .wp-block-search__button:disabled, .blog_index__categories a:disabled, header .nav-button > a.nav-link:disabled {
+.button:disabled, .wp-block-search__button:disabled, .blog_index__categories a:disabled, header .nav-button > a.nav-link:disabled, .wc-block-cart__submit-button:disabled,
+.wc-block-components-checkout-place-order-button:disabled {
   border-color: var(--col-grey-200);
   background-color: var(--col-grey-200);
 }
 
-.button-primary, header .nav-button > a.nav-link {
+.button-primary, header .nav-button > a.nav-link, .wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
   border-color: var(--col-accent-400);
   background-color: var(--col-accent-400);
   color: white;
   box-shadow: var(--shadow-lg);
 }
-.button-primary:hover, header .nav-button > a.nav-link:hover {
+.button-primary:hover, header .nav-button > a.nav-link:hover, .wc-block-cart__submit-button:hover,
+.wc-block-components-checkout-place-order-button:hover {
   color: white;
   background-color: color-mix(in srgb, var(--col-accent-400), white 10%);
   box-shadow: var(--shadow-sm);

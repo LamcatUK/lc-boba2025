@@ -59,3 +59,9 @@
   width: min(90vw, 100%);
   margin-inline: auto;
 }
+
+.wc-block-cart__submit-button,
+.wc-block-components-checkout-place-order-button {
+  @extend .button;
+  @extend .button-primary;
+}
