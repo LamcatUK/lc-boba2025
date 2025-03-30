@@ -22843,11 +22843,13 @@ header .dropdown.current-menu-item::after {
 }
 
 .beyond_showcase .splide__slide img {
-  aspect-ratio: 16/9;
+  aspect-ratio: 4/3;
   max-width: 100%;
   height: auto;
   -o-object-fit: cover;
   object-fit: cover;
+  border-radius: 0 24px 0 24px;
+  box-shadow: var(--shadow-lg);
 }
 
 .az-filter {

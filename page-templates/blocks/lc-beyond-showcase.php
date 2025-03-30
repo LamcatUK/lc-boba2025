@@ -13,10 +13,10 @@
             <a href="/beyond-boba/" class="button button-primary">See More</a>
         </div>
 		<div class="row g-5">
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<?= esc_html( get_field( 'content' ) ); ?>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-5">
                 <div id="beyond-boba-carousel" class="splide" data-aos="fadein" data-aos-delay="200">
 					<div class="splide__track">
 						<ul class="splide__list">
