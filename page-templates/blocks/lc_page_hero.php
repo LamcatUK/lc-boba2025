@@ -19,7 +19,7 @@
             if ( get_field( 'content' ) ?? null ) {
                 ?>
                 <div class="page_hero__inner">
-                    <?= esc_html( get_field( 'content' ) ); ?>
+                    <?= get_field( 'content' ); ?>
                 </div>
                 <?php
             }
