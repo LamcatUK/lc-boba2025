@@ -22842,6 +22842,14 @@ header .dropdown.current-menu-item::after {
   }
 }
 
+.beyond_showcase .splide__slide img {
+  aspect-ratio: 16/9;
+  max-width: 100%;
+  height: auto;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
 .az-filter {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

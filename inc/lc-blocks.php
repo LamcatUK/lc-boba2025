@@ -1,18 +1,39 @@
 <?php
-function acf_blocks()
-{
-    if (function_exists('acf_register_block_type')) {
+/**
+ * LC Blocks Registration
+ *
+ * This file contains the registration of custom ACF blocks and modifications
+ * to Gutenberg core blocks for the LC Boba 2025 theme.
+ *
+ * @package LC_Boba2025
+ */
 
-        acf_register_block_type(array(
-            'name'                => 'lc_products_by_brand', 
-            'title'               => __('LC Products by Brand'), 
-            'category'            => 'layout',
-            'icon'                => 'cover-image', 
-            'render_template'    => 'page-templates/blocks/lc_products_by_brand.php', 
-            'mode'                => 'edit',
-            'supports'            => array('mode' => false),
-        ));
+function acf_blocks() {
+    if ( function_exists( 'acf_register_block_type' ) ) {
 
+        acf_register_block_type(
+            array(
+                'name'            => 'lc_beyond_showcase',
+                'title'           => __( 'LC Beyond Boba Showcase' ),
+                'category'        => 'layout',
+                'icon'            => 'cover-image',
+                'render_template' => 'page-templates/blocks/lc-beyond-showcase.php',
+                'mode'            => 'edit',
+                'supports'        => array( 'mode' => false ),
+            )
+        );
+
+        acf_register_block_type(
+            array(
+                'name'            => 'lc_products_by_brand',
+                'title'           => __( 'LC Products by Brand' ),
+                'category'        => 'layout',
+                'icon'            => 'cover-image',
+                'render_template' => 'page-templates/blocks/lc_products_by_brand.php',
+                'mode'            => 'edit',
+                'supports'        => array( 'mode' => false ),
+            )
+        );
 
         acf_register_block_type(array(
             'name'                => 'lc_latest_products', 
