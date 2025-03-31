@@ -1,26 +1,25 @@
 <?php
-
 /**
  * Single Product Template (Bootstrap 5 / Understrap Compatible)
  *
  * Fixes layout issues, restores breadcrumbs, related products, and click-to-lightbox.
  *
  * @package WooCommerce/Templates
- * 
+ *
  * @version 1.6.4
  */
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-get_header('shop'); ?>
+get_header( 'shop' ); ?>
 <main id="main">
 
-	<div id="product-<?php the_ID(); ?>" <?php wc_product_class('woocommerce-single-product container-xl', get_the_ID()); ?>>
+	<div id="product-<?php the_ID(); ?>" <?php wc_product_class( 'woocommerce-single-product container-xl', get_the_ID() ); ?>>
 
 		<section class="breadcrumbs pt-4">
 			<?php
-			if (function_exists('yoast_breadcrumb')) {
-				yoast_breadcrumb('<p id="breadcrumbs">', '</p>');
+			if ( function_exists( 'yoast_breadcrumb' ) ) {
+				yoast_breadcrumb( '<p id="breadcrumbs">', '</p>' );
 			}
 			?>
 		</section>
@@ -35,47 +34,47 @@ get_header('shop'); ?>
 								<?php
 								global $product;
 								$post_thumbnail_id = $product->get_image_id();
-								$attachment_ids = $product->get_gallery_image_ids();
-								$total_images = ($post_thumbnail_id ? 1 : 0) + count($attachment_ids); // Count total images
+								$attachment_ids    = $product->get_gallery_image_ids();
+								$total_images      = ( $post_thumbnail_id ? 1 : 0 ) + count( $attachment_ids ); // Count total images.
 
-								// Add Primary Image
-								if ($post_thumbnail_id) {
-									$full_image_url = wp_get_attachment_image_url($post_thumbnail_id, 'full');
-									$large_image_url = wp_get_attachment_image_url($post_thumbnail_id, 'large');
-								?>
+								// Add Primary Image.
+								if ( $post_thumbnail_id ) {
+									$full_image_url  = wp_get_attachment_image_url( $post_thumbnail_id, 'full' );
+									$large_image_url = wp_get_attachment_image_url( $post_thumbnail_id, 'large' );
+									?>
 									<li class="splide__slide">
-										<a href="<?php echo esc_url($full_image_url); ?>" data-lightbox="product-gallery">
-											<img src="<?php echo esc_url($large_image_url); ?>" alt="Primary Image">
+										<a href="<?= esc_url( $full_image_url ); ?>" data-lightbox="product-gallery">
+											<img src="<?= esc_url( $large_image_url ); ?>" alt="Primary Image">
 										</a>
 									</li>
 									<?php
 								}
 
-								// Add Gallery Images
-								if ($attachment_ids) {
-									foreach ($attachment_ids as $attachment_id) {
-										$full_image_url = wp_get_attachment_image_url($attachment_id, 'full');
-										$large_image_url = wp_get_attachment_image_url($attachment_id, 'large');
-									?>
+								// Add Gallery Images.
+								if ( $attachment_ids ) {
+									foreach ( $attachment_ids as $attachment_id ) {
+										$full_image_url  = wp_get_attachment_image_url( $attachment_id, 'full' );
+										$large_image_url = wp_get_attachment_image_url( $attachment_id, 'large' );
+										?>
 										<li class="splide__slide">
-											<a href="<?php echo esc_url($full_image_url); ?>" data-lightbox="product-gallery">
-												<img src="<?php echo esc_url($large_image_url); ?>" alt="">
+											<a href="<?= esc_url( $full_image_url ); ?>" data-lightbox="product-gallery">
+												<img src="<?= esc_url( $large_image_url ); ?>" alt="">
 											</a>
 										</li>
-									<?php
+										<?php
 									}
 								}
 
-								// If no images exist, show WooCommerce placeholder
-								if ($total_images < 1) {
-									$placeholder_url = esc_url(wc_placeholder_img_src());
+								// If no images exist, show WooCommerce placeholder.
+								if ( $total_images < 1 ) {
+									$placeholder_url = wc_placeholder_img_src();
 									?>
 									<li class="splide__slide">
-										<a href="<?php echo esc_url($placeholder_url); ?>" data-lightbox="product-gallery">
-											<img src="<?php echo esc_url($placeholder_url); ?>" alt="Placeholder Image">
+										<a href="<?= esc_url( $placeholder_url ); ?>" data-lightbox="product-gallery">
+											<img src="<?= esc_url( $placeholder_url ); ?>" alt="Placeholder Image">
 										</a>
 									</li>
-								<?php
+									<?php
 								}
 								?>
 							</ul>
@@ -84,35 +83,35 @@ get_header('shop'); ?>
 
 					<!-- Thumbnail Navigation -->
 					<?php
-					if ($total_images > 1) {
-					?>
+					if ( $total_images > 1 ) {
+						?>
 						<div id="product-thumbnails" class="splide">
 							<div class="splide__track">
 								<ul class="splide__list">
 									<?php
-									// Thumbnails (Primary + Gallery)
-									if ($post_thumbnail_id) {
-										$thumb_url = wp_get_attachment_image_url($post_thumbnail_id, 'thumbnail');
-										echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
+									// Thumbnails (Primary + Gallery).
+									if ( $post_thumbnail_id ) {
+										$thumb_url = wp_get_attachment_image_url( $post_thumbnail_id, 'thumbnail' );
+										echo '<li class="splide__slide"><img src="' . esc_url( $thumb_url ) . '" alt="Thumbnail"></li>';
 									}
 
-									if ($attachment_ids) {
-										foreach ($attachment_ids as $attachment_id) {
-											$thumb_url = wp_get_attachment_image_url($attachment_id, 'thumbnail');
-											echo '<li class="splide__slide"><img src="' . esc_url($thumb_url) . '" alt="Thumbnail"></li>';
+									if ( $attachment_ids ) {
+										foreach ( $attachment_ids as $attachment_id ) {
+											$thumb_url = wp_get_attachment_image_url( $attachment_id, 'thumbnail' );
+											echo '<li class="splide__slide"><img src="' . esc_url( $thumb_url ) . '" alt="Thumbnail"></li>';
 										}
 									}
 
-									// If no images exist, show WooCommerce placeholder as thumbnail
-									if (!$post_thumbnail_id && empty($attachment_ids)) {
-										$placeholder_url = esc_url(wc_placeholder_img_src());
-										echo '<li class="splide__slide"><img src="' . esc_url($placeholder_url) . '" alt="Placeholder Thumbnail"></li>';
+									// If no images exist, show WooCommerce placeholder as thumbnail.
+									if ( ! $post_thumbnail_id && empty( $attachment_ids ) ) {
+										$placeholder_url = wc_placeholder_img_src();
+										echo '<li class="splide__slide"><img src="' . esc_url( $placeholder_url ) . '" alt="Placeholder Thumbnail"></li>';
 									}
 									?>
 								</ul>
 							</div>
 						</div>
-					<?php
+						<?php
 					}
 					?>
 				</div>
@@ -126,44 +125,38 @@ get_header('shop'); ?>
 						woocommerce_template_single_price();
 						woocommerce_template_single_add_to_cart();
 
-						// woocommerce_template_single_meta(); // Categories
-						// $product = wc_get_product( get_the_ID() );
+						$categories = wc_get_product_category_list( $product->get_id(), ', ' );
 
-						// Get product categories
-						// $categories = wc_get_product_category_list($product->get_id(), ', ', '<span class="posted_in">' . __('Categories:', 'woocommerce') . ' ', '</span>');
+						// Remove "Uncategorised" (case-sensitive check).
+						$categories = str_replace( 'Uncategorised, ', '', $categories );
+						$categories = str_replace( ', Uncategorised', '', $categories );
+						$categories = str_replace( 'Uncategorised', '', $categories ); // Edge case: only category.
 
-						$categories = wc_get_product_category_list($product->get_id(), ', ');
+						// Remove empty <a> tags.
+						$categories = preg_replace( '/<a[^>]*><\/a>\s*,?\s*/', '', $categories );
+						$categories = trim( $categories, ', ' );
 
-						// Remove "Uncategorised" (case-sensitive check)
-						$categories = str_replace('Uncategorised, ', '', $categories);
-						$categories = str_replace(', Uncategorised', '', $categories);
-						$categories = str_replace('Uncategorised', '', $categories); // Edge case: only category
+						// Get product tags (keep this).
+						$tags = wc_get_product_tag_list( $product->get_id(), ', ', '<span class="tagged_as">' . __( 'Tags:', 'woocommerce' ) . ' ', '</span>' );
 
-						// Remove empty <a> tags
-						$categories = preg_replace('/<a[^>]*><\/a>\s*,?\s*/', '', $categories);
-						$categories = trim($categories, ', ');
-
-						// Get product tags (keep this)
-						$tags = wc_get_product_tag_list($product->get_id(), ', ', '<span class="tagged_as">' . __('Tags:', 'woocommerce') . ' ', '</span>');
-
-						// Output categories and tags (but NOT brands)
-						if ($categories || $tags) {
+						// Output categories and tags (but NOT brands).
+						if ( $categories || $tags ) {
 							echo '<div class="product-meta">';
-							if (!empty(trim($categories))) {
-								echo '<span class="posted_in">' . __('Categories:', 'woocommerce') . ' ' . $categories . '</span>';
+							if ( ! empty( trim( $categories ) ) ) {
+								echo '<span class="posted_in">' . esc_html__( 'Categories:', 'woocommerce' ) . ' ' . wp_kses_post( $categories ) . '</span>';
 							}
-							if ($tags) {
-								echo '  ' . $tags;
+							if ( $tags ) {
+								echo wp_kses_post( '  ' . $tags );
 							}
 							echo '</div>';
 						}
 
-						// Move the full product description here
-						$product = wc_get_product(get_the_ID());
-						if ($product->get_description()) {
+						// Move the full product description here.
+						$product = wc_get_product( get_the_ID() );
+						if ( $product->get_description() ) {
 							echo '<div class="woocommerce-product-description mt-4">';
-							echo '<h2 class="h4">' . esc_html__('Product Description', 'woocommerce') . '</h2>';
-							echo wpautop($product->get_description());
+							echo '<h2 class="h4">' . esc_html__( 'Product Description', 'woocommerce' ) . '</h2>';
+							echo wp_kses_post( wpautop( $product->get_description() ) );
 							echo '</div>';
 						}
 						?>
@@ -176,90 +169,91 @@ get_header('shop'); ?>
 		<!-- Related Products -->
 
 		<?php
-		// Get the current product
-		$product = wc_get_product(get_the_ID());
+		// Get the current product.
+		$product = wc_get_product( get_the_ID() );
 
-		// Get related product IDs
-		$related_ids = wc_get_related_products($product->get_id(), 4); // Get up to 4 related products
+		// Get related product IDs.
+		$related_ids = wc_get_related_products( $product->get_id(), 4 ); // Get up to 4 related products.
 
-		if (! empty($related_ids)) { ?>
+		if ( ! empty( $related_ids ) ) {
+			?>
 			<div class="container-xl mt-5 mb-5">
 				<h2 class="mb-4">You May Also Like</h2>
-				<div class="row">
+				<div class="row gy-4">
 					<?php
-					foreach ($related_ids as $related_id) {
-						$related_product = wc_get_product($related_id);
-						$permalink = get_permalink($related_id);
-					?>
+					foreach ( $related_ids as $related_id ) {
+						$related_product = wc_get_product( $related_id );
+						$permalink       = get_permalink( $related_id );
+						?>
 						<div class="product col-md-6 col-lg-3">
-							<a href="<?= esc_url($permalink) ?>" class="product__card">
+							<a href="<?= esc_url( $permalink ); ?>" class="product__card">
 								<?php
-								$thumbnail = get_the_post_thumbnail($related_id, 'woocommerce_thumbnail', array('class' => 'product__image'));
+								$thumbnail = get_the_post_thumbnail( $related_id, 'woocommerce_thumbnail', array( 'class' => 'product__image' ) );
 
-								if (!$thumbnail) {
-									$thumbnail = '<img src="' . esc_url(wc_placeholder_img_src()) . '" alt="Placeholder Image" class="product__image">';
+								if ( ! $thumbnail ) {
+									$thumbnail = '<img src="' . esc_url( wc_placeholder_img_src() ) . '" alt="Placeholder Image" class="product__image">';
 								}
-								print_r($thumbnail);
 
+								// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo $thumbnail;
+
 								?>
-								<div class="product__price"><?= $related_product->get_price_html() ?></div>
+								<div class="product__price"><?= wp_kses_post( $related_product->get_price_html() ); ?></div>
 								<div class="product__detail">
-									<h3><?= esc_html(get_the_title($related_id)) ?></h3>
-									<div class="mb-3"><?= $related_product->get_short_description() ?></div>
+									<h3><?= esc_html( get_the_title( $related_id ) ); ?></h3>
+									<div class="mb-3"><?= wp_kses_post( $related_product->get_short_description() ); ?></div>
 									<div class="reserve">View Details</div>
 								</div>
 							</a>
 						</div>
-
-
-					<?php
+						<?php
 					}
 					?>
 				</div>
 			</div>
-		<?php
+			<?php
 		} else {
-		?>
+			?>
 			<div class="container-xl my-5"></div>
-		<?php
+			<?php
 		}
 		?>
-
-
-		<?php do_action('woocommerce_after_single_product'); ?>
-
+		<?php do_action( 'woocommerce_after_single_product' ); ?>
 	</div>
 </main>
 <?php
-add_action('wp_footer', function () {
-?>
-	<script>
-		document.addEventListener("DOMContentLoaded", function() {
-			var main = new Splide("#product-gallery", {
-				type: "slide", // Prevents looping issues
-				perPage: 1,
-				pagination: false,
-				arrows: true,
-				cover: false,
-			});
-
-			var thumbs = new Splide("#product-thumbnails", {
-				fixedWidth: 80,
-				fixedHeight: 80,
-				isNavigation: true,
-				gap: 10,
-				focus: 0,
-				pagination: false,
-				arrows: false,
-			});
-
-			main.sync(thumbs);
-			main.mount();
-			thumbs.mount();
+add_action(
+	'wp_footer',
+	function () {
+		?>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var main = new Splide("#product-gallery", {
+			type: "slide", // Prevents looping issues
+			perPage: 1,
+			pagination: false,
+			arrows: true,
+			cover: false,
 		});
-	</script>
-<?php
-}, 9999);
 
-get_footer('shop'); ?>
+		var thumbs = new Splide("#product-thumbnails", {
+			fixedWidth: 80,
+			fixedHeight: 80,
+			isNavigation: true,
+			gap: 10,
+			focus: 0,
+			pagination: false,
+			arrows: false,
+		});
+
+		main.sync(thumbs);
+		main.mount();
+		thumbs.mount();
+	});
+</script>
+		<?php
+	},
+	9999
+);
+
+get_footer( 'shop' ); ?>

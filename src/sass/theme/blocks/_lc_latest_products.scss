@@ -45,6 +45,7 @@
     grid-area: stack;
     background-color: var(--col-green-100);
     height: max-content;
+    display: grid;
     align-self: end;
     justify-items: start;
     padding: var(--_pad) calc(var(--_pad) * 2);

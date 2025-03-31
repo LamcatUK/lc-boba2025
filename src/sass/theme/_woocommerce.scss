@@ -185,6 +185,7 @@ input[type="checkbox"] {
 }
 
 .woocommerce {
-  @extend .container-xl;
-  @extend .mx-auto;
+  // @extend .container-xl;
+  // // padding-inline: 0;
+  // @extend .mx-auto;
 }
