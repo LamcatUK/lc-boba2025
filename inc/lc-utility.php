@@ -1,143 +1,195 @@
 <?php
+/**
+ * Utility functions for the LC Boba 2025 theme.
+ *
+ * This file contains various helper functions, shortcodes, and customizations
+ * used throughout the theme to enhance functionality and improve usability.
+ *
+ * @package LC_Boba2025
+ */
 
-function parse_phone($phone)
-{
-    $phone = preg_replace('/\s+/', '', $phone);
-    $phone = preg_replace('/\(0\)/', '', $phone);
-    $phone = preg_replace('/[\(\)\.]/', '', $phone);
-    $phone = preg_replace('/-/', '', $phone);
-    $phone = preg_replace('/^0/', '+44', $phone);
+/**
+ * Parses and formats a phone number.
+ *
+ * @param string $phone The phone number to be parsed.
+ * @return string The formatted phone number.
+ */
+function parse_phone( $phone ) {
+    $phone = preg_replace( '/\s+/', '', $phone );
+    $phone = preg_replace( '/\(0\)/', '', $phone );
+    $phone = preg_replace( '/[\(\)\.]/', '', $phone );
+    $phone = preg_replace( '/-/', '', $phone );
+    $phone = preg_replace( '/^0/', '+44', $phone );
     return $phone;
 }
 
-function split_lines($content)
-{
-    $content = preg_replace('/<br \/>/', '<br>&nbsp;<br>', $content);
+/**
+ * Splits lines in the given content by replacing <br /> tags with <br>&nbsp;<br>.
+ *
+ * @param string $content The content to be processed.
+ * @return string The processed content with split lines.
+ */
+function split_lines( $content ) {
+    $content = preg_replace( '/<br \/>/', '<br>&nbsp;<br>', $content );
     return $content;
 }
 
-add_shortcode('contact_address', function () {
-    $output = get_field('contact_address', 'option');
-    return $output;
-});
+add_shortcode(
+    'contact_address',
+    function () {
+        $output = get_field( 'contact_address', 'option' );
+        return $output;
+    }
+);
 
-add_shortcode('contact_phone', function () {
-    if (get_field('contact_phone', 'option')) {
-        return '<a href="tel:' . parse_phone(get_field('contact_phone', 'option')) . '">' . get_field('contact_phone', 'option') . '</a>';
+add_shortcode(
+    'contact_phone',
+    function () {
+        if ( get_field( 'contact_phone', 'option' ) ) {
+            return '<a href="tel:' . parse_phone( get_field( 'contact_phone', 'option' ) ) . '">' . get_field( 'contact_phone', 'option' ) . '</a>';
+        }
     }
-    return;
-});
-add_shortcode('contact_email', function () {
-    if (get_field('contact_email', 'option')) {
-        return '<a href="mailto:' . get_field('contact_email', 'option') . '">' . get_field('contact_email', 'option') . '</a>';
-    }
-    return;
-});
-add_shortcode('contact_email_icon', function () {
-    if (get_field('contact_email', 'option')) {
-        return '<a href="mailto:' . get_field('contact_email', 'option') . '"><i class="fas fa-envelope"></i></a>';
-    }
-    return;
-});
-add_shortcode('contact_email_icon_text', function () {
-    if (get_field('contact_email', 'option')) {
-        return '<a href="mailto:' . get_field('contact_email', 'option') . '"><i class="far fa-envelope"></i> ' . get_field('contact_email', 'option') . '</a>';
-    }
-    return;
-});
+);
 
-// Generate individual social icon shortcodes
-function lc_social_icon_shortcode($atts)
-{
-    $atts = shortcode_atts(['type' => ''], $atts);
-    if (!$atts['type']) {
+add_shortcode(
+    'contact_email',
+    function () {
+        if ( get_field( 'contact_email', 'option' ) ) {
+            return '<a href="mailto:' . get_field( 'contact_email', 'option' ) . '">' . get_field( 'contact_email', 'option' ) . '</a>';
+        }
+    }
+);
+
+add_shortcode(
+    'contact_email_icon',
+    function () {
+        if ( get_field( 'contact_email', 'option' ) ) {
+            return '<a href="mailto:' . get_field( 'contact_email', 'option' ) . '"><i class="fas fa-envelope"></i></a>';
+        }
+    }
+);
+
+add_shortcode(
+    'contact_email_icon_text',
+    function () {
+        if ( get_field( 'contact_email', 'option' ) ) {
+            return '<a href="mailto:' . get_field( 'contact_email', 'option' ) . '"><i class="far fa-envelope"></i> ' . get_field( 'contact_email', 'option' ) . '</a>';
+        }
+    }
+);
+
+
+/**
+ * Generates a social media icon link based on the provided type.
+ *
+ * @param array $atts Shortcode attributes, expects 'type' to specify the social media platform.
+ * @return string HTML for the social media icon link or an empty string if the type is invalid.
+ */
+function lc_social_icon_shortcode( $atts ) {
+    $atts = shortcode_atts( array( 'type' => '' ), $atts );
+    if ( ! $atts['type'] ) {
         return '';
     }
 
-    $social = get_field('social', 'option');
-    $urls = [
+    $social = get_field( 'social', 'option' );
+    $urls = array(
         'facebook'  => $social['facebook_url'] ?? '',
         'instagram' => $social['instagram_url'] ?? '',
         'twitter'   => $social['twitter_url'] ?? '',
         'pinterest' => $social['pinterest_url'] ?? '',
         'youtube'   => $social['youtube_url'] ?? '',
         'linkedin'  => $social['linkedin_url'] ?? '',
-    ];
+    );
 
-    if (!isset($urls[$atts['type']]) || empty($urls[$atts['type']])) {
+    if ( ! isset( $urls[ $atts['type'] ] ) || empty( $urls[ $atts['type'] ] ) ) {
         return '';
     }
 
-    $url = esc_url($urls[$atts['type']]);
-    $icon = esc_attr($atts['type']);
+    $url  = esc_url( $urls[ $atts['type'] ] );
+    $icon = esc_attr( $atts['type'] );
 
-    return '<a href="' . $url . '" target="_blank" rel="nofollow noopener noreferrer"><i class="fa-brands fa-' . $icon . '"></i></a>';
+    return '<a href="' . esc_url( $url ) . '" target="_blank" rel="nofollow noopener noreferrer"><i class="fa-brands fa-' . esc_attr( $icon ) . '"></i></a>';
 }
 
-// Register individual social icon shortcodes
-$social_types = ['facebook', 'instagram', 'twitter', 'pinterest', 'youtube', 'linkedin'];
-foreach ($social_types as $type) {
-    add_shortcode('social_' . $type . '_icon', function () use ($type) {
-        return lc_social_icon_shortcode(['type' => $type]);
-    });
-}
-
-// Generate a single shortcode to output all social icons
-add_shortcode('social_icons', function ($atts) {
-    $atts = shortcode_atts([
-        'class' => '',
-    ], $atts, 'social_icons');
-
-    $social = get_field('social', 'option');
-    if (!$social) {
-        return '';
-    }
-
-    $icons = [];
-    $social_map = [
-        'facebook'  => 'facebook-f',
-        'instagram' => 'instagram',
-        'twitter'   => 'x-twitter',
-        'pinterest' => 'pinterest',
-        'youtube'   => 'youtube',
-        'linkedin'  => 'linkedin',
-    ];
-
-    foreach ($social_map as $key => $icon) {
-        if (!empty($social[$key . '_url'])) {
-            $url = esc_url($social[$key . '_url']);
-            $icons[] = '<a href="' . $url . '" target="_blank" rel="nofollow noopener noreferrer"><i class="fa-brands fa-' . $icon . '"></i></a>';
+// Register individual social icon shortcodes.
+$social_types = array( 'facebook', 'instagram', 'twitter', 'pinterest', 'youtube', 'linkedin' );
+foreach ( $social_types as $social_type ) {
+    add_shortcode(
+        'social_' . $social_type . '_icon',
+        function () use ( $social_type ) {
+            return lc_social_icon_shortcode( array( 'type' => $social_type ) );
         }
+    );
+}
+
+// Generate a single shortcode to output all social icons.
+add_shortcode(
+    'social_icons',
+    function ( $atts ) {
+        $atts = shortcode_atts(
+            array(
+                'class' => '',
+            ),
+            $atts,
+            'social_icons'
+        );
+
+        $social = get_field( 'social', 'option' );
+
+        if ( ! $social ) {
+            return '';
+        }
+
+        $icons      = array();
+        $social_map = array(
+            'facebook'  => 'facebook-f',
+            'instagram' => 'instagram',
+            'twitter'   => 'x-twitter',
+            'pinterest' => 'pinterest',
+            'youtube'   => 'youtube',
+            'linkedin'  => 'linkedin',
+        );
+
+        foreach ( $social_map as $key => $icon ) {
+            if ( ! empty( $social[ $key . '_url' ] ) ) {
+                $url     = esc_url( $social[ $key . '_url' ] );
+                $icons[] = '<a href="' . esc_url( $url ) . '" target="_blank" rel="nofollow noopener noreferrer"><i class="fa-brands fa-' . esc_attr( $icon ) . '"></i></a>';
+            }
+        }
+
+        $class = esc_attr( trim( $atts['class'] ) );
+
+        return ! empty( $icons ) ? '<div class="social-icons ' . esc_attr( $class ) . '">' . implode( ' ', $icons ) . '</div>' : '';
     }
-
-    $class = esc_attr(trim($atts['class']));
-
-    return !empty($icons) ? '<div class="social-icons ' . $class . '">' . implode(' ', $icons) . '</div>' : '';
-});
-
+);
 
 
 /**
  * Grab the specified data like Thumbnail URL of a publicly embeddable video hosted on Vimeo.
  *
  * @param  str $video_id The ID of a Vimeo video.
- * @param  str $data 	  Video data to be fetched
- * @return str            The specified data
+ * @param  str $data     Video data to be fetched.
+ * @return str           The specified data
  */
-function get_vimeo_data_from_id($video_id, $data)
-{
-    // width can be 100, 200, 295, 640, 960 or 1280
-    $request = wp_remote_get('https://vimeo.com/api/oembed.json?url=https://vimeo.com/' . $video_id . '&width=960');
+function get_vimeo_data_from_id( $video_id, $data ) {
+    // width can be 100, 200, 295, 640, 960 or 1280.
+    $request = wp_remote_get( 'https://vimeo.com/api/oembed.json?url=https://vimeo.com/' . $video_id . '&width=960' );
 
-    $response = wp_remote_retrieve_body($request);
+    $response = wp_remote_retrieve_body( $request );
 
-    $video_array = json_decode($response, true);
+    $video_array = json_decode( $response, true );
 
-    return $video_array[$data];
+    return $video_array[ $data ];
 }
 
-function lc_gutenberg_admin_styles()
-{
+
+/**
+ * Adds custom styles to the Gutenberg editor in the WordPress admin area.
+ *
+ * This function outputs CSS styles to adjust the width of blocks and prevent
+ * horizontal overflow flicker in the block editor.
+ */
+function lc_gutenberg_admin_styles() {
     echo '
         <style>
             /* Main column width */
@@ -162,112 +214,160 @@ function lc_gutenberg_admin_styles()
         </style>
     ';
 }
-add_action('admin_head', 'lc_gutenberg_admin_styles');
+add_action( 'admin_head', 'lc_gutenberg_admin_styles' );
 
 
-// disable full-screen editor view by default
-if (is_admin()) {
-    function lc_disable_editor_fullscreen_by_default()
-    {
+// disable full-screen editor view by default.
+if ( is_admin() ) {
+    /**
+     * Disables the fullscreen editor mode by default in the WordPress block editor.
+     *
+     * This function ensures that the fullscreen mode is turned off when the block editor is loaded.
+     */
+    function lc_disable_editor_fullscreen_by_default() {
         $script = "jQuery( window ).load(function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } });";
-        wp_add_inline_script('wp-blocks', $script);
+        wp_add_inline_script( 'wp-blocks', $script );
     }
-    add_action('enqueue_block_editor_assets', 'lc_disable_editor_fullscreen_by_default');
+    add_action( 'enqueue_block_editor_assets', 'lc_disable_editor_fullscreen_by_default' );
 }
 
 
 
-function get_the_top_ancestor_id()
-{
+/**
+ * Retrieves the ID of the top-level ancestor of the current post.
+ *
+ * If the current post has no parent, it returns its own ID.
+ *
+ * @return int The ID of the top-level ancestor or the current post.
+ */
+function get_the_top_ancestor_id() {
     global $post;
-    if ($post->post_parent) {
-        $ancestors = array_reverse(get_post_ancestors($post->ID));
+    if ( $post->post_parent ) {
+        $ancestors = array_reverse( get_post_ancestors( $post->ID ) );
         return $ancestors[0];
     } else {
         return $post->ID;
     }
 }
 
-function lc_json_encode($string)
-{
-    // $value = json_encode($string);
-    $escapers = array("\\", "/", "\"", "\n", "\r", "\t", "\x08", "\x0c");
-    $replacements = array("\\\\", "\\/", "\\\"", "\\n", "\\r", "\\t", "\\f", "\\b");
-    $result = str_replace($escapers, $replacements, $string);
-    $result = json_encode($result);
+/**
+ * Encodes a string into a JSON-compatible format with additional escaping.
+ *
+ * This function escapes special characters in the input string and then encodes it as JSON.
+ *
+ * @param string $string The input string to be encoded.
+ * @return string The JSON-encoded string with additional escaping.
+ */
+function lc_json_encode( $string ) {
+    $escapers     = array( '\\', '/', '\"', "\n", "\r", "\t", "\x08", "\x0c" );
+    $replacements = array( '\\\\', '\\/', '\\"', "\\n", "\\r", "\\t", "\\f", "\\b" );
+    $result       = str_replace( $escapers, $replacements, $string );
+    $result       = wp_json_encode( $result );
     return $result;
 }
 
-function lc_time_to_8601($string)
-{
-    $time = explode(':', $string);
+/**
+ * Converts a time string in HH:MM:SS format to ISO 8601 duration format.
+ *
+ * @param string $input_string The input time string in HH:MM:SS format.
+ * @return string The time string converted to ISO 8601 duration format.
+ */
+function lc_time_to_8601( $input_string ) {
+    $time   = explode( ':', $input_string );
     $output = 'PT' . $time[0] . 'H' . $time[1] . 'M' . $time[2] . 'S';
     return $output;
 }
 
 
-function lcdump($var)
-{
-    // ob_start();
+/**
+ * Dumps a variable in a readable format for debugging purposes.
+ *
+ * @param mixed $var The variable to be dumped.
+ * @return void
+ */
+function lcdump( $var ) {
     echo '<pre>';
-    print_r($var);
+    print_r( $var, true );
     echo '</pre>';
-    return; // ob_get_clean();
 }
 
-function lcslugify($text, string $divider = '-')
-{
-    // replace non letter or digits by divider
-    $text = preg_replace('~[^\pL\d]+~u', $divider, $text);
+/**
+ * Converts a string into  a URL-friendly slug.
+ *
+ * This function replaces non-alphanumeric characters with a specified divider,
+ * transliterates the text, removes unwanted characters, trims, and converts it to lowercase.
+ *
+ * @param string $text    The input string to be slugified.
+ * @param string $divider The character used to replace non-alphanumeric characters. Default is '-'.
+ * @return string The slugified version of the input string.
+ */
+function lcslugify( $text, string $divider = '-' ) {
+    // replace non letter or digits by divider.
+    $text = preg_replace( '~[^\pL\d]+~u', $divider, $text );
 
-    // transliterate
-    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    // transliterate.
+    $text = iconv( 'utf-8', 'us-ascii//TRANSLIT', $text );
 
-    // remove unwanted characters
-    $text = preg_replace('~[^-\w]+~', '', $text);
+    // remove unwanted characters.
+    $text = preg_replace( '~[^-\w]+~', '', $text );
 
-    // trim
-    $text = trim($text, $divider);
+    // trim.
+    $text = trim( $text, $divider );
 
-    // remove duplicate divider
-    $text = preg_replace('~-+~', $divider, $text);
+    // remove duplicate divider.
+    $text = preg_replace( '~-+~', $divider, $text );
 
-    // lowercase
-    $text = strtolower($text);
+    // lowercase.
+    $text = strtolower( $text );
 
-    if (empty($text)) {
+    if ( empty( $text ) ) {
         return 'n-a';
     }
 
     return $text;
 }
 
+/**
+ * Generates a random string of the specified length using the given keyspace.
+ *
+ * @param int    $length   The length of the random string to generate. Default is 64.
+ * @param string $keyspace The set of characters to use for generating the string. Default includes alphanumeric characters.
+ * @return string The generated random string.
+ * @throws \RangeException If the length is less than 1.
+ */
 function random_str(
     int $length = 64,
     string $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 ): string {
-    if ($length < 1) {
-        throw new \RangeException("Length must be a positive integer");
+    if ( $length < 1 ) {
+        throw new \RangeException( 'Length must be a positive integer' );
     }
-    $pieces = [];
-    $max = mb_strlen($keyspace, '8bit') - 1;
-    for ($i = 0; $i < $length; ++$i) {
-        $pieces[] = $keyspace[random_int(0, $max)];
+    $pieces = array();
+    $max = mb_strlen( $keyspace, '8bit' ) - 1;
+    for ( $i = 0; $i < $length; ++$i ) {
+        $pieces[] = $keyspace[ random_int( 0, $max ) ];
     }
-    return implode('', $pieces);
+    return implode( '', $pieces );
 }
 
-function lc_social_share($id)
-{
+/**
+ * Generates social media sharing links for a given post ID.
+ *
+ * This function creates a set of social media sharing links (Twitter, LinkedIn, Facebook)
+ * for the specified post and returns the HTML output.
+ *
+ * @param int $id The ID of the post to generate sharing links for.
+ * @return string The HTML output containing the social media sharing links.
+ */
+function lc_social_share( $id ) {
     ob_start();
-    $url = get_the_permalink($id);
-
-?>
+    $url = get_the_permalink( $id );
+    ?>
     <div class="text-larger text--yellow mb-5">
         <div class="h4 text-dark">Share</div>
-        <a target='_blank' href='https://twitter.com/share?url=<?= $url ?>' class="mr-2"><i class='fab fa-twitter'></i></a>
-        <a target='_blank' href='http://www.linkedin.com/shareArticle?url=<?= $url ?>' class="mr-2"><i class='fab fa-linkedin-in'></i></a>
-        <a target='_blank' href='http://www.facebook.com/sharer.php?u=<?= $url ?>'><i class='fab fa-facebook-f'></i></a>
+        <a target='_blank' href='<?= esc_url( 'https://twitter.com/share?url=' . $url ); ?>' class="mr-2"><i class='fab fa-twitter'></i></a>
+        <a target='_blank' href='<?= esc_url( 'https://www.linkedin.com/shareArticle?url=' . $url ); ?>' class="mr-2"><i class='fab fa-linkedin-in'></i></a>
+        <a target='_blank' href='<?= esc_url( 'https://www.facebook.com/sharer.php?u=' . $url ); ?>'><i class='fab fa-facebook-f'></i></a>
     </div>
     <?php
 
@@ -276,176 +376,194 @@ function lc_social_share($id)
 }
 
 
-function enable_strict_transport_security_hsts_header()
-{
-    header('Strict-Transport-Security: max-age=31536000');
+/**
+ * Enables the Strict-Transport-Security (HSTS) header.
+ *
+ * This function adds the HSTS header to enforce HTTPS connections
+ * for a maximum age of one year.
+ *
+ * @return void
+ */
+function enable_strict_transport_security_hsts_header() {
+    header( 'Strict-Transport-Security: max-age=31536000' );
 }
-add_action('send_headers', 'enable_strict_transport_security_hsts_header');
+add_action( 'send_headers', 'enable_strict_transport_security_hsts_header' );
 
 
-function lc_list($field)
-{
+/**
+ * Generates an HTML list from a given string of text.
+ *
+ * This function takes a string, splits it into lines, and creates an HTML list.
+ * Empty lines are ignored.
+ *
+ * @param string $field The input string containing text to be converted into a list.
+ * @return string The generated HTML list as a string.
+ */
+function lc_list( $field ) {
     ob_start();
-    $field = strip_tags($field, '<br />');
-    $bullets = preg_split("/\r\n|\n|\r/", $field);
-    foreach ($bullets as $b) {
-        if ($b == '') {
+    $field   = strip_tags( $field, '<br />' );
+    $bullets = preg_split( "/\r\n|\n|\r/", $field );
+    foreach ( $bullets as $b ) {
+        if ( '' === $b ) {
             continue;
         }
-    ?>
-        <li><?= $b ?></li>
-<?php
+        ?>
+        <li><?= wp_kses_post( $b ); ?></li>
+        <?php
     }
     return ob_get_clean();
 }
 
+
 /**
- * formatBytes
+ * Converts a file size in bytes to a human-readable format.
  *
- * Returns img tag with srcset.
+ * This function takes a file size in bytes and converts it to a more readable
+ * format (e.g., KB, MB, GB) with the specified precision.
  *
- * @param	string $size
- * @param	int    $precision
- * @return	string
+ * @param int $size The file size in bytes.
+ * @param int $precision The number of decimal places to include in the result. Default is 2.
+ * @return string The formatted file size with the appropriate unit.
  */
-function formatBytes($size, $precision = 2)
-{
-    if ($size <= 0) {
-        return '0 B'; // Return 0 bytes as a default value
+function format_bytes( $size, $precision = 2 ) {
+    if ( $size <= 0 ) {
+        return '0 B'; // Return 0 bytes as a default value.
     }
 
-    $base = log($size, 1024);
-    $suffixes = array('', 'K', 'M', 'G', 'T');
+    $base     = log( $size, 1024 );
+    $suffixes = array( '', 'K', 'M', 'G', 'T' );
 
-    return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
+    return round( pow( 1024, $base - floor( $base ) ), $precision ) . ' ' . $suffixes[ floor( $base ) ];
 }
 
 
+
 /**
- * lc_featured_image
+ * Retrieves the featured image HTML for a given post ID with responsive srcset attributes.
  *
- * Returns img tag with srcset.
- *
- * @param	string $id The post ID.
- * @return	string
+ * @param int $id The ID of the post for which to retrieve the featured image.
+ * @return string The HTML markup for the featured image.
  */
-function lc_featured_image($id)
-{
+function lc_featured_image( $id ) {
     $tag = get_the_post_thumbnail(
         $id,
         'full',
         array(
-            'srcset' => wp_get_attachment_image_url(get_post_thumbnail_id(), 'medium') . ' 480w, ' .
-                wp_get_attachment_image_url(get_post_thumbnail_id(), 'large') . ' 640w, ' .
-                wp_get_attachment_image_url(get_post_thumbnail_id(), 'full') . ' 960w'
+            'srcset' => wp_get_attachment_image_url( get_post_thumbnail_id(), 'medium' ) . ' 480w, ' .
+                wp_get_attachment_image_url( get_post_thumbnail_id(), 'large' ) . ' 640w, ' .
+                wp_get_attachment_image_url( get_post_thumbnail_id(), 'full' ) . ' 960w',
         )
     );
     return $tag;
 }
 
-// REMOVE TAG AND COMMENT SUPPORT
+// REMOVE TAG AND COMMENT SUPPORT.
 
-// Disable Tags Dashboard WP
-add_action('admin_menu', 'my_remove_sub_menus');
+// Disable Tags Dashboard WP.
+add_action( 'admin_menu', 'my_remove_sub_menus' );
 
-function my_remove_sub_menus()
-{
-    remove_submenu_page('edit.php', 'edit-tags.php?taxonomy=post_tag');
+function my_remove_sub_menus() {
+    remove_submenu_page( 'edit.php', 'edit-tags.php?taxonomy=post_tag' );
 }
-// Remove tags support from posts
-function myprefix_unregister_tags()
-{
-    unregister_taxonomy_for_object_type('post_tag', 'post');
+// Remove tags support from posts.
+function myprefix_unregister_tags() {
+    unregister_taxonomy_for_object_type( 'post_tag', 'post' );
 }
-add_action('init', 'myprefix_unregister_tags');
+add_action( 'init', 'myprefix_unregister_tags' );
 
-add_action('admin_init', function () {
-    // Redirect any user trying to access comments page
-    global $pagenow;
+add_action(
+    'admin_init',
+    function () {
+        // Redirect any user trying to access comments page.
+        global $pagenow;
 
-    if ($pagenow === 'edit-comments.php') {
-        wp_safe_redirect(admin_url());
-        exit;
-    }
+        if ( 'edit-comments.php' === $pagenow ) {
+            wp_safe_redirect( admin_url() );
+            exit;
+        }
 
-    // Remove comments metabox from dashboard
-    remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
+        // Remove comments metabox from dashboard.
+        remove_meta_box( 'dashboard_recent_comments', 'dashboard', 'normal' );
 
-    // Disable support for comments and trackbacks in post types
-    foreach (get_post_types() as $post_type) {
-        if (post_type_supports($post_type, 'comments')) {
-            remove_post_type_support($post_type, 'comments');
-            remove_post_type_support($post_type, 'trackbacks');
+        // Disable support for comments and trackbacks in post types.
+        foreach ( get_post_types() as $post_type ) {
+            if ( post_type_supports( $post_type, 'comments' ) ) {
+                remove_post_type_support( $post_type, 'comments' );
+                remove_post_type_support( $post_type, 'trackbacks' );
+            }
         }
     }
-});
+);
 
-// Close comments on the front-end
-add_filter('comments_open', '__return_false', 20, 2);
-add_filter('pings_open', '__return_false', 20, 2);
+// Close comments on the front-end.
+add_filter( 'comments_open', '__return_false', 20, 2 );
+add_filter( 'pings_open', '__return_false', 20, 2 );
 
-// Hide existing comments
-add_filter('comments_array', '__return_empty_array', 10, 2);
+// Hide existing comments.
+add_filter( 'comments_array', '__return_empty_array', 10, 2 );
 
-// Remove comments page in menu
-add_action('admin_menu', function () {
-    remove_menu_page('edit-comments.php');
-});
-
-// Remove comments links from admin bar
-add_action('init', function () {
-    if (is_admin_bar_showing()) {
-        remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60);
+// Remove comments page in menu.
+add_action(
+    'admin_menu',
+    function () {
+        remove_menu_page( 'edit-comments.php' );
     }
-});
+);
 
-function remove_comments()
-{
+// Remove comments links from admin bar.
+add_action(
+    'init',
+    function () {
+        if ( is_admin_bar_showing() ) {
+            remove_action( 'admin_bar_menu', 'wp_admin_bar_comments_menu', 60 );
+        }
+    }
+);
+
+function remove_comments() {
     global $wp_admin_bar;
-    $wp_admin_bar->remove_menu('comments');
+    $wp_admin_bar->remove_menu( 'comments' );
 }
-add_action('wp_before_admin_bar_render', 'remove_comments');
+add_action( 'wp_before_admin_bar_render', 'remove_comments' );
 
 
-function estimate_reading_time_in_minutes($content = '', $words_per_minute = 300, $with_gutenberg = false, $formatted = false)
-{
-    // In case if content is build with gutenberg parse blocks
-    if ($with_gutenberg) {
-        $blocks = parse_blocks($content);
-        $contentHtml = '';
+function estimate_reading_time_in_minutes( $content = '', $words_per_minute = 300, $with_gutenberg = false, $formatted = false ) {
+    // In case if content is build with gutenberg parse blocks.
+    if ( $with_gutenberg ) {
+        $blocks      = parse_blocks( $content );
+        $content_html = '';
 
-        foreach ($blocks as $block) {
-            $contentHtml .= render_block($block);
+        foreach ( $blocks as $block ) {
+            $content_html .= render_block( $block );
         }
 
-        $content = $contentHtml;
+        $content = $content_html;
     }
 
-    // Remove HTML tags from string
-    $content = wp_strip_all_tags($content);
+    // Remove HTML tags from string.
+    $content = wp_strip_all_tags( $content );
 
-    // When content is empty return 0
-    if (!$content) {
+    // When content is empty return 0.
+    if ( ! $content ) {
         return 0;
     }
 
-    // Count words containing string
-    $words_count = str_word_count($content);
+    // Count words containing string.
+    $words_count = str_word_count( $content );
 
-    // Calculate time for read all words and round
-    $minutes = ceil($words_count / $words_per_minute);
+    // Calculate time for read all words and round.
+    $minutes = ceil( $words_count / $words_per_minute );
 
-    if ($formatted) {
-        $minutes = '<p class="reading">Estimated reading time ' . $minutes . ' ' . pluralise($minutes, 'minute') . '</p>';
+    if ( $formatted ) {
+        $minutes = '<p class="reading">Estimated reading time ' . $minutes . ' ' . pluralise( $minutes, 'minute' ) . '</p>';
     }
 
     return $minutes;
 }
 
-function pluralise($quantity, $singular, $plural = null)
-{
-    if ($quantity == 1 || !strlen($singular)) return $singular;
-    if ($plural !== null) return $plural;
+function pluralise( $quantity, $singular, $plural = null ) {
+    if ( $quantity == 1 || ! strlen( $singular ) ) return $singular;
+    if ( $plural  !== null ) return $plural;
 
     $last_letter = strtolower($singular[strlen($singular) - 1]);
     switch ($last_letter) {
@@ -613,13 +731,100 @@ function custom_image_optimizer($upload)
 }
 
 
-// CF7 honeypot
-add_filter('wpcf7_validate', function ($result, $tags) {
-    if (isset($_POST['honeypot']) && !empty($_POST['honeypot'])) {
-        $result->invalidate($tags[0], 'Spam detected.');
+add_filter(
+    'wpcf7_validate',
+    function ( $result, $tags ) {
+        $submission = WPCF7_Submission::get_instance();
+        if ( ! $submission ) {
+            return $result;
+        }
+
+        $data = $submission->get_posted_data();
+
+        // Honeypot field check (spam detection).
+        if ( ! empty( $data['your-website'] ) ) {
+            $result->invalidate( 'your-website', 'Spam detected.' );
+        }
+
+        // Check for excessive links in the message field.
+        if ( isset( $data['your-message'] ) && substr_count( $data['your-message'], 'http' ) > 3 ) {
+            $result->invalidate( 'your-message', 'Too many links detected. Possible spam.' );
+        }
+
+        // Validate email format.
+        if ( isset( $data['your-email'] ) && ! filter_var( $data['your-email'], FILTER_VALIDATE_EMAIL ) ) {
+            $result->invalidate( 'your-email', 'Invalid email address.' );
+        }
+
+        // Time-based spam check (ensure form isn't submitted too quickly).
+        $start_time   = isset( $_SESSION['form_start_time'] ) ? $_SESSION['form_start_time'] : 0;
+        $current_time = time();
+        if ( $current_time - $start_time < 15 ) { // Less than 5 seconds.
+            $result->invalidate( 'your-message', 'Form submitted too quickly. Possible spam.' );
+        }
+
+        return $result;
+    },
+    10,
+    2
+);
+
+// Start time for form submission (to be set when the form is loaded).
+add_action(
+    'wpcf7_enqueue_scripts',
+    function () {
+        if ( session_status() === PHP_SESSION_NONE ) {
+            session_start();
+        }
+        $_SESSION['form_start_time'] = time();
     }
-    return $result;
-}, 10, 2);
+);
+
+// Ensure session starts early in the WordPress lifecycle.
+add_action(
+    'init',
+    function () {
+        if ( session_status() === PHP_SESSION_NONE ) {
+            session_start();
+        }
+    }
+);
+
+// Use cookies as a fallback for form start time.
+add_action(
+    'wpcf7_enqueue_scripts',
+    function () {
+        if ( session_status() === PHP_SESSION_NONE ) {
+            session_start();
+        }
+        $start_time = time();
+        $_SESSION['form_start_time'] = $start_time;
+        setcookie( 'form_start_time', $start_time, time() + 3600, '/' ); // Cookie valid for 1 hour.
+    }
+);
+
+// Update validation to check both session and cookie.
+add_filter(
+    'wpcf7_validate',
+    function ( $result, $tags ) {
+        $submission = WPCF7_Submission::get_instance();
+        if ( ! $submission ) {
+            return $result;
+        }
+
+        $data = $submission->get_posted_data();
+
+        $start_time   = isset( $_SESSION['form_start_time'] ) ? intval( $_SESSION['form_start_time'] ) : ( isset( $_COOKIE['form_start_time'] ) ? intval( $_COOKIE['form_start_time'] ) : 0 );
+        $current_time = time();
+        if ( $current_time - $start_time < 5 ) { // Less than 5 seconds.
+            $result->invalidate( 'your-message', 'Form submitted too quickly. Possible spam.' );
+        }
+
+        return $result;
+    },
+    10,
+    2
+);
 
 
 

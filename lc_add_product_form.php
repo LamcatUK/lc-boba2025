@@ -1,62 +1,63 @@
 <?php
-
 /**
  * Template Name: Add New Product
+ *
+ * @package lc-boba2025
  */
 
 // Exit if accessed directly.
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 acf_form_head();
 get_header();
 
-// Get query parameters safely
-$product_created = filter_input(INPUT_GET, 'product_created', FILTER_SANITIZE_NUMBER_INT);
-$product_name = filter_input(INPUT_GET, 'product_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-$product_id = filter_input(INPUT_GET, 'product_id', FILTER_VALIDATE_INT);
+// Get query parameters safely.
+$product_created = filter_input( INPUT_GET, 'product_created', FILTER_SANITIZE_NUMBER_INT );
+$product_name    = filter_input( INPUT_GET, 'product_name', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+$product_id      = filter_input( INPUT_GET, 'product_id', FILTER_VALIDATE_INT );
 
-if ($product_created && $product_name) {
-    $product_url = get_permalink($product_id);
-    $form_url = remove_query_arg(array('product_created', 'product_name', 'product_id'));
-?>
+if ( $product_created && $product_name ) {
+    $product_url = get_permalink( $product_id );
+    $form_url    = remove_query_arg( array( 'product_created', 'product_name', 'product_id' ) );
+    ?>
     <main class="bg--green-200">
         <div class="container-xl py-5">
             <div id="message" class="updated notice notice-success index_intro">
                 <h1>Success!</h1>
-                <div class="mb-4">Your product "<strong><?php echo esc_html(urldecode($product_name)); ?></strong>" has been created.</div>
+                <div class="mb-4">Your product "<strong><?php echo esc_html( urldecode( $product_name ) ); ?></strong>" has been created.</div>
                 <div class="d-flex flex-wrap gap-4">
-                    <a href="<?php echo esc_url($product_url); ?>" target="_blank" class="button button-primary mb-3 w-100 w-sm-auto">View Product</a>
-                    <a href="<?php echo esc_url($form_url); ?>" class="button button-primary mb-3 w-100 w-sm-auto">Add Another Product</a></p>
+                    <a href="<?php echo esc_url( $product_url ); ?>" target="_blank" class="button button-primary mb-3 w-100 w-sm-auto">View Product</a>
+                    <a href="<?php echo esc_url( $form_url ); ?>" class="button button-primary mb-3 w-100 w-sm-auto">Add Another Product</a></p>
                 </div>
             </div>
         </div>
     </main>
-<?php
+    <?php
 } else {
-?>
+    ?>
     <main>
         <div class="container-xl py-5">
             <h1>Add a New Product</h1>
 
             <?php
             $args = array(
-                'post_id'       => 'new_post',
-                'new_post'      => array(
+                'post_id'            => 'new_post',
+                'new_post'           => array(
                     'post_type'   => 'product',
                     'post_status' => 'publish',
                 ),
-                'submit_value'  => 'Create Product',
-                'field_groups'  => array('group_67b21b2436032'), // Replace with your ACF field group ID
-                'form_attributes' => array(
-                    'class' => 'needs-validation', // Enables Bootstrap validation styles
-                    'novalidate' => '', // Disables default browser validation
+                'submit_value'       => 'Create Product',
+                'field_groups'       => array( 'group_67b21b2436032' ), // Replace with your ACF field group ID.
+                'form_attributes'    => array(
+                    'class'      => 'needs-validation', // Enables Bootstrap validation styles.
+                    'novalidate' => '', // Disables default browser validation.
                 ),
-                'html_before_fields' => '<div class="row g-3">', // Bootstrap row with gutters
+                'html_before_fields' => '<div class="row g-3">', // Bootstrap row with gutters.
                 'html_after_fields'  => '</div>',
-                'label_placement'    => 'top', // Ensures proper alignment
+                'label_placement'    => 'top', // Ensures proper alignment.
             );
 
-            acf_form($args);
+            acf_form( $args );
             ?>
         </div>
     </main>
@@ -115,7 +116,6 @@ if ($product_created && $product_name) {
             }
         });
     </script>
-
-<?php
+    <?php
 }
 get_footer();
