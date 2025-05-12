@@ -8,6 +8,21 @@
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
 
+// Restrict access to logged-in users.
+if ( ! is_user_logged_in() ) {
+    get_header();
+    ?>
+    <main>
+        <div class="container-xl py-5">
+            <h1>Access Restricted</h1>
+            <p>You need to be logged in to access this page. Please <a href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>">log in</a>.</p>
+        </div>
+    </main>
+    <?php
+    get_footer();
+    exit;
+}
+
 acf_form_head();
 get_header();
 
