@@ -3,6 +3,10 @@
 /**
  * Clean WooCommerce Archive Product Template
  * Removes all hooks and uses normal PHP + Bootstrap 5
+ *
+ * @see     https://woocommerce.com/document/template-structure/
+ * @package WooCommerce\Templates
+ * @version 8.6.0
  */
 
 defined('ABSPATH') || exit;
